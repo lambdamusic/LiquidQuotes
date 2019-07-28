@@ -1,0 +1,72 @@
+
+
+{# October 21, 2014: js to show the popup to add a koncept to a quote #}
+
+
+
+<script type="text/javascript">
+
+
+	//  http://jsfiddle.net/U7SgK/1/
+
+
+	function createCollection(userid) {
+		
+		bootbox.prompt("Please enter a new name", function(result) {    
+
+		  if (result != null) {                                                
+			 
+	        $.get('{% url addProject %}', {  name: result, userid: userid }, function (data) {
+	            if (data.saved_url) {
+					// window.location.href = data.saved_url;
+					location.reload();
+	            } else {
+					alert(data.error);
+				}
+	        });              
+		  }
+		});
+		
+	}
+
+
+
+	function editCollection(coll_id) {
+		
+		bootbox.prompt("Please enter a new name", function(result) {    
+
+		  if (result != null) {                                                
+			 
+	        $.get('{% url editProject %}', {  name: result, coll_id: coll_id }, function (data) {
+	            if (data.saved_url) {
+					window.location.href = data.saved_url;
+	            } else {
+					alert(data.error);
+				}
+	        });              
+		  }
+		});
+		
+	}
+	
+	
+	
+	function deleteCollection(coll_id) {
+		
+	
+    	var txt = "<h3 class='line-height-5'>Are you sure?</h3> <hr>This {{FOLDER_LABEL}} will be deleted.<br />The items contained in it will remain available via other {{FOLDER_LABEL|lower}}s.<br /><br /><b>Note: this operation is irreversible.</b>"
+    	bootbox.confirm(txt, function(result) {    
+
+    	  if (result) {                                                
+		 
+            location.href = "{% url deleteProject %}?coll_id=" + coll_id ;
+		             
+    	  }
+    	});
+		
+	}
+	
+	
+
+
+</script>

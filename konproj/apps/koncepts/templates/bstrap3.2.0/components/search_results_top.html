@@ -1,0 +1,170 @@
+
+
+		
+		<legend>
+			
+			<b> <span style="font-size: 140%;">{% if subjects_tree %}{{totcount}}{% else %}{{page_object.totcount}}{% endif %}</span></b> 
+			{% if ideas_search %}
+				{{KONCEPT_LABEL}}{{page_object.totcount|pluralize}}
+			{% endif %}
+			{% if subjects_search %}
+				{{SUBJECT_LABEL}}{{page_object.totcount|pluralize}}
+			{% endif %}
+			{% if subjects_tree %}
+				{{SUBJECT_LABEL}}{{totcount|pluralize}}
+			{% endif %}
+			{% if documents_search %}
+				{{DOCUMENT_LABEL}}{{page_object.totcount|pluralize}}
+			{% endif %}
+			{% if snippets_search %}
+				{{SNIPPET_LABEL}}{{page_object.totcount|pluralize}}
+			{% endif %}
+
+
+
+			{% if searchval or subject or active_source %}  {# #DB8585 #}
+				{% if searchval  %}
+					containing 
+					
+					{# <div class="-label -label-default"> #}
+
+						<b>                     
+                        <span class="label label-info">
+							
+						{% if fuzzymatch %}
+							{{searchval}}
+						{% else %}
+							"{{searchval}}"
+						{% endif %}
+						</span>
+						</b>
+
+
+										
+						<a href="?q=&d={{ active_sourcefacet.1 }}" class="quietlink2 jstooltip" title="Remove this filter" data-toggle="tooltip" data-placement="top">
+							<span class="glyphicon glyphicon-remove icon-sm"></span>
+						</a>	
+					{# </div> #}
+
+					
+					{% if 0 %}   {# 2015-08-17 #}
+					{% include "bstrap3.2.0/components/search_suggestion.html" %}
+					{% endif %}
+					
+
+					
+				{% endif %}
+
+				{% if sourcesfacet %}					
+					{# <br /> #}
+					&nbsp;
+					<small class="-text-info">from {{sourcesfacet|length}} {{DOCUMENT_LABEL}}s</small>
+
+					{% if 0 %}
+					  <div style="margin-top: 20px; margin-bottom: 20px;">
+					  		<small class="text-muted" style="font-size: 80%;">Sort by:</small>
+
+					  	{% ifequal view_var "list" %}
+							<a class="btn btn-sm btn-default active">Date</a>
+
+					  		<a href="?q={{searchval}}&v=sources&exact={{exactmatch}}" class="btn btn-sm btn-default">{{DOCUMENT_LABEL}}</a>
+
+						{% else %}
+
+							<a href="?q={{searchval}}&v=list&exact={{exactmatch}}" class="btn btn-sm btn-default">Date</a>
+					  		<a class="btn btn-sm btn-default active">{{DOCUMENT_LABEL}}</a>
+							
+
+						{% endifequal %}
+
+
+					  </div>
+					{% endif %}
+				
+					{% if 0 %}
+					<br />
+					<div class="col-md-3">
+						<select class="form-control col-md-3" name="Name" id="Name">
+							{% for el in sourcesfacet  %}
+								<option value="{{el.1}}">{{el.0}}</option>
+							{% endfor %}
+						</select>
+					</div>
+					{% endif %}
+
+					
+					
+				{% endif %}
+				
+				
+				{% if subject %}
+					with {{SUBJECT_LABEL|lower}}:
+
+                    <b>                     
+                        &nbsp;<span class="btn btn-warning btn-xs">
+							<span class="glyphicon glyphicon-tag" aria-hidden="true"></span>
+							{{subject}}
+						</span>
+					</b>
+
+                    <a href="?subject=&d={{ active_source.id }}" class="quietlink2 jstooltip" title="Remove this filter" data-toggle="tooltip" data-placement="top">
+                        <span class="glyphicon glyphicon-remove icon-sm "></span>
+                    </a>
+
+                    {% if tree_inheritance %}
+                    &nbsp;<small>(including descendants)</small>
+                    {% endif %}
+					
+				{% endif %}
+
+
+                {% if active_source %}
+
+                <span class="-text-muted">from selected {{DOCUMENT_LABEL|lower}}:</span>
+
+                        <a href="?q={{searchval}}" class="quietlink2 jstooltip btn btn-xs btn-default" title="Remove this filter" data-toggle="tooltip" data-placement="top">Remove
+                            <span class="glyphicon glyphicon-remove icon-sm"></span>
+                        </a>
+
+
+                    {% if active_source.get_nextDocument %}
+                        {% with active_source.get_nextDocument as nextDoc %}
+                        <a href="{{nextDoc.get_absolute_url}}" class="quietlink2 jstooltip btn btn-xs btn-default" title="{{nextDoc.title|truncatewords:10}}">
+			Next {{DOCUMENT_LABEL}}:
+			<span class="glyphicon glyphicon-chevron-right icon-sm"></span>
+			</a>
+                     {% endwith %}
+                    {% endif %}
+
+                 {% endif %}
+
+		
+			{% else %}
+				{% ifequal page_flag 'searchquotes' %}
+					in total
+				{% endifequal %}					
+				{% ifequal page_flag 'favorites' %}
+					in your favorites
+				{% endifequal %}
+				{% ifequal page_flag 'clipboard' %}
+					in your clipboard
+				{% endifequal %}
+			{% endif %}
+
+
+
+
+			
+
+			
+			
+			{% if 0 and page_object.totcount %}
+				{% if not ideas_search %}
+			<span style="font-size: 100%;" >&nbsp;,&nbsp;sorted by <span class="badge">{{sort_var}}</span></span>
+				{% endif %}
+			{% endif %}	
+				
+		</legend>
+		
+		
+		

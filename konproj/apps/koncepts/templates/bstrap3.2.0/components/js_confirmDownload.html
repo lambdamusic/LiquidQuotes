@@ -1,0 +1,61 @@
+
+<script>
+	
+
+
+// ---------------------------------
+
+// GENERIC page
+
+// ---------------------------------
+
+	
+	
+// select download format
+//  the first of the params is taken as the good one (can be extended in future)
+
+
+ function confirmDownload(quote_id, doc_id, kon_id) {
+
+	 var txt = "<div class='radio'><label><input type='radio' name='optsdownload' id='opt-1' value='opt1' checked>Plain Text<br /><span class='text-muted'>A .txt file which can be opened with Notepad or TextEdit.</span></label></div>       <div class='radio'><label><input type='radio' name='optsdownload' id='opt-2' value='opt2' >Word<br /><span class='text-muted'>A .docx file which can be opened with Microsoft Word or Apple Pages.</span></label></div>   <div class='radio'>	  					<label><input type='radio' name='optsdownload' id='opt-3' value='opt3'>Excel<br /><span class='text-muted'>A .csv file which can be opened with MS Excel or Apple Numbers.</span></label></div>";
+
+	 var get_params_string = "?quote_id=" + quote_id + "&doc_id=" + doc_id + "&kon_id=" + kon_id; 
+	 
+	 bootbox.dialog({
+	                 title: "Download options",
+	                 className: "download_dialog",
+	                 message: txt,
+	                 buttons: {
+	                     success: {
+	                         label: "Save",
+	                         className: "btn-success",
+	                         callback: function () {
+	                             var answer = $("input[name='optsdownload']:checked").val();
+							 
+								 if (answer == "opt1") {
+									window.location.href = '{% url export_txt %}' + get_params_string;  								 } else if (answer == "opt2") {
+								 	window.location.href = '{% url export_word %}' + get_params_string;
+								 } else if (answer == "opt3") {
+								 	window.location.href = '{% url export_csv %}' + get_params_string;
+								 } 
+	                         }
+	                     },
+					     cancel: {
+					       label: "Cancel",
+					       className: "btn-default"
+					     },
+	                 }
+	             }
+	         );
+			 
+
+ }
+
+
+//  TAKEN OUT FROM RADIO OPTS
+//
+// <div class='radio'>	  					<label><input type='radio' name='optsdownload' id='opt-4' value='opt4'>JSON-LD	 					<br /><span class='text-muted'>A structured data format which is compliant with the Web of Data.</span>	 </label></div>
+
+						
+
+</script>

@@ -1,0 +1,31 @@
+--wrapper for the registration app, in order to make use of Captchas
+
+--Inspired by 
+-- http://www.marcofucci.com/tumblelog/26/jul/2009/integrating-recaptcha-with-django/#comment-262
+
+
+HOW TO:
+-----------------------------------------
+
+-- in settings.py:
+
+RECAPTCHA_PUBLIC_KEY = '6LeT8MASAAasdasdfffGclasRvWe5u9PJB2X26PgQcr9'
+RECAPTCHA_PRIVATE_KEY = '6Lasduyg235kshdfkdfdkj69nvCx2YoBHOIjrWSwxgj'
+
+
+-- add standard registration app as usual, but in /registration/backends/default.urls.py change this:
+
+from captcha_registration.forms import RecaptchaRegistrationForm
+
+-- then below..:
+
+url(r'^register/$',
+    register,
+    { 'backend': 'registration.backends.default.DefaultBackend', 
+		'form_class': RecaptchaRegistrationForm  # <== add this line!
+		},
+		
+	
+	
+-----------------------------------------	
+THAT'T IT! 

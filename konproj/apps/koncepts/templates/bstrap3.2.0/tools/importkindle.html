@@ -1,0 +1,153 @@
+{% extends "bstrap3.2.0/base.html" %}
+
+
+
+
+
+{% block belownavigation %}
+
+
+	{% with importkindle=1 %}
+		{% include "bstrap3.2.0/components/navbar_second.html" %}
+	{% endwith %}
+
+{% endblock belownavigation %}
+
+
+
+
+
+
+{% block pagecontents %}
+
+
+
+<div class="row  margin-top-50">
+
+	
+<div class="col-md-8">
+    	
+		
+	<div class="page-header" >
+		 
+	  <h2 class="koncept-title ">
+		
+		Kindle Import:
+
+	  </h2>
+
+	</div>	
+
+
+	
+	{% with importkindle=1 %}
+    	{% include "bstrap3.2.0/components/importFileForm.html" %}
+	{% endwith %}
+	
+
+	
+
+		<br />
+		<h3>Need help finding your Kindle Highlights?</h3>
+		<hr>
+
+		
+		<p class="lead">
+			Highlights are saved in a file called <code>My Clippings.txt</code>, which is stored in your Kindle memory. Here's how to access it:
+			
+			<br /><br />
+			1) Connect your Kindle to a computer using the cable provided.
+			<br /><br />
+			2) Double click on the Kindle icon appearing on your desktop and browse into the <code>documents</code> sub-folder.
+			<br /><br />
+			3) In this folder you should find the <code>My Clippings.txt</code> file. Copy it to your desktop and use the form above to upload it! 
+		</p>
+
+
+
+
+		<p class="lead">
+			<br /><b>That's it!</b></p>
+			
+		 <p class="lead">After uploading your highlights you will be able to edit them and choose which ones to save. 
+		</p>
+
+		{% if 0 %}
+			{# 2015-03-17: hidden as not useful #}
+			<p class="lead">
+				In case you wonder, the section below is an example of how your Kindle highlights normally look like: 
+			</p>
+	
+	
+			<p>
+			<pre class="magenta">
+==========
+Thomas Kuhn: the man who changed the way the world looked at science  (guardian.co.uk)
+- Your Highlight Location 48-50 | Added on Friday, August 24, 2012 6:10:47 PM
+
+Kuhn remained at Harvard until 1956 and, having failed to get tenure, moved to the University of California at Berkeley where he wrote Structure... and was promoted to a professorship in 1961. The following year, the book was published by the University of Chicago Press. 
+==========
+Thomas Kuhn: the man who changed the way the world looked at science  (guardian.co.uk)
+- Your Highlight Location 55-57 | Added on Friday, August 24, 2012 6:11:31 PM
+
+Kuhn's central claims that a careful study of the history of science reveals that development in any scientific field happens via a series of phases. 
+==========
+			</pre>
+
+			</p>
+		
+		{% endif %}
+
+
+ </div>   {# end of col-md-8 #}
+
+
+
+
+<div class="col-md-2 col-md-offset-1 margin-top-50 margin-bottom-50">
+
+
+	
+	<div id="quicktips1"  class="margin-bottom-50">
+		<h4>Quick tips</h4>
+		<p class="text-muted">Follow the instructions on this page to extract highlights made while reading on your Kindle.</p>
+	</div>
+	
+
+	<div id="quicktips2"  class="margin-bottom-50">
+		<h5>Did you know that..</h5>
+		<p class="text-muted">Each time you upload Kindle highlights these get saved and remain available until you upload some new ones.
+		
+	  <a href="{% url getLatestKindleImport %}" title="Continue working on the kindle highlights you have previously uploaded" class="btn btn-warning btn-xs">Show Existing Kindle Data</a>
+	  
+		</p>
+
+	  
+	</div>
+
+	  
+	  
+	
+</div>
+
+
+
+
+
+	
+	
+
+</div>   {# end of row #}
+  
+
+{% endblock pagecontents %}
+
+
+
+
+
+{% block closingbody %}
+
+
+	
+{% endblock closingbody %}

@@ -1,0 +1,86 @@
+ {% load konceptstags %} 
+  
+
+{#  #}
+{# <div class="col-md-1"> #}
+{# 	&nbsp; #}
+{# </div> #}
+
+
+{% with related_koncepts|split_koncept_list as koncepts_nested_list %}
+	
+
+	
+<div class="col-md-5">
+		
+	
+	{# begin koncepts routine #}
+
+	{% for k1 in koncepts_nested_list.0  %}
+
+
+		{% if not forloop.first %}<br />{% endif %}
+		
+		
+		{% include "bstrap3.2.0/components/koncept_preview_generic.html" %}
+		
+	
+		{% if forloop.last %}<br />{% endif %}
+	
+	{% endfor %}
+
+	
+    {# ends koncepts routine #}
+
+
+</div>   {# end of 1st span #}
+
+
+
+
+
+<div class="col-md-5">
+		
+
+	
+	
+	{# begin koncepts routine #}
+
+	{% for k1 in koncepts_nested_list.1  %}
+
+
+		{% if not forloop.first %}<br />{% endif %}
+		
+		
+		{% include "bstrap3.2.0/components/koncept_preview_generic.html" %}
+		
+	
+		{% if forloop.last %}<br />{% endif %}
+	
+	{% endfor %}
+
+	
+    {# ends koncepts routine #}
+
+
+</div>   {# end of 2nd span #}
+
+
+
+{% endwith %}
+
+
+
+
+{#  #}
+{#  #}
+{# <div class="col-md-1"> #}
+{# 	&nbsp; #}
+{# </div> #}
+{#  #}
+
+
+
+	
+	
+	

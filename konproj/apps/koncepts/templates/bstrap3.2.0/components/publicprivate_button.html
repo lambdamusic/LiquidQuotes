@@ -1,0 +1,23 @@
+{% load konceptstags %}
+
+
+	{# note: if changing the icons here, must change also in include "bstrap3.2.0/components/js_favoritequote.html" #} 
+	
+	{# 2015-02-25: deprecated in favor of circle buttons #}
+
+  {% if mykoncepts %}
+
+		<span class="publicprivate">
+		{% if object.isprivate %}
+		<button class="btn btn-xs privatebutton" type="button" int="{{object.id}}" title="Click to change privacy" >
+			<span class="glyphicon glyphicon-lock"></span>&nbsp;Private</button> 
+		{% else %} 
+		<button class="btn btn-xs btn-success privatebutton" type="button" int="{{object.id}}" title="Click to change privacy">
+			<span class="glyphicon glyphicon-globe"></span>&nbsp;Public</button> 
+		{% endif %}
+		</span>
+
+  {% endif %}
+
+
+

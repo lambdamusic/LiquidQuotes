@@ -1,0 +1,31 @@
+
+
+{# started working on March 11, 2014: issue with name not matching name_url.. also, being able to go directly to koncept page bypassing search results  #}
+
+
+
+
+<script>
+	
+	$('#navbar_search').typeahead({
+		items: 12, 
+		template: '<p><strong>{{name}}</strong> – {{id}}</p>',
+	    source: function (query, process) {
+			
+	        $.get('{% url autocomplete_koncepts %}', { term: query }, function (data) {
+	            return process(data);
+	        });
+		},		
+		
+	    updater:function (item) {
+			// defines what to do after something has been selected..						
+	        //dont forget to return the item to reflect them into input
+			alert(item);
+	        return item;
+	    }
+		
+			
+	});
+		
+
+</script>

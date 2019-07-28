@@ -1,0 +1,94 @@
+
+{% load konceptstags %}
+
+{# August 17, 2015: the new tab buttons #}
+
+
+	<ul class="nav nav-pills -navbar-right">
+		
+	  <li role="presentation" class="{% ifequal page_flag 'searchquotes' %}active{% endifequal %}{% ifequal page_flag 'quote_detail' %}active{% endifequal %}"><a href="{% url search_user_quotes request.user.username %}{% if searchval %}?q={{searchval}}{% endif %}" class="quietlink2 navbar2link"><span class="glyphicon glyphicon-th-list"></span>&nbsp;{{SNIPPET_LABEL}}s</a></li>
+	  
+	  <li role="presentation" class="{% ifequal page_flag 'searchdocs' %}active{% endifequal %}{% ifequal page_flag 'document_detail' %}active{% endifequal %}"><a href="{% url search_user_documents request.user %}{% if searchval %}?q={{searchval}}{% endif %}" class="quietlink2 navbar2link"><span class="glyphicon glyphicon-book"></span>&nbsp;{{DOCUMENT_LABEL}}s</a></li>
+	  
+	  <li role="presentation" class="{% ifequal page_flag 'searchsubjects' %}active{% endifequal %}"><a href="{% url search_user_subjects request.user.username  %}{% if searchval %}?q={{searchval}}{% endif %}" class="quietlink2 navbar2link"><span class="glyphicon glyphicon-tag"></span>&nbsp;{{SUBJECT_LABEL}}s</a></li>
+
+
+	  <li role="presentation" class="{% ifequal page_flag 'favorites' %}active{% endifequal %}"><a href="{% url search_user_favorites request.user.username  %}{% if searchval %}?q={{searchval}}{% endif %}" class="quietlink2 navbar2link"><span class="glyphicon glyphicon-heart"></span>&nbsp;Favorites</a></li>
+	  
+	  
+	  <li role="presentation" class="{% ifequal page_flag 'clipboard' %}active{% endifequal %}"><a href="{% url search_user_clipboard request.user.username  %}{% if searchval %}?q={{searchval}}{% endif %}" class="quietlink2 navbar2link"><span class="glyphicon glyphicon-pushpin"></span>&nbsp;Clipboard</a></li>
+		  	  
+	  
+	   {# KINDLE MENU #}
+	  
+	  {% if previousKindleImport %}
+	  
+	  	<li role="presentation" class="{% ifequal page_flag 'kindle' %}active{% endifequal %}"><a href="{% url getLatestKindleImport %}" class="quietlink2 navbar2link"><span class="glyphicon glyphicon-phone"></span>&nbsp;Kindle</a></li>
+	  
+	  {% else %}
+	  	
+		<li role="presentation" class="{% ifequal page_flag 'kindle' %}active{% endifequal %}"><a href="{% url importkindle  %}" class="quietlink2 navbar2link"><span class="glyphicon glyphicon-phone"></span>&nbsp;Kindle</a></li>
+	  
+	  {% endif %}
+	  
+		
+      	 <li role="presentation"><a href="{% url get_random_quote  %}" class="quietlink2 navbar2link"><span class="glyphicon glyphicon-link"></span>&nbsp;Roulette</a></li>
+          
+	  
+	  {# NEW MENU #}
+	  
+	  <li role="presentation" class="dropdown {% ifequal page_flag 'new' %}active{% endifequal %}">
+	    <a class="dropdown-toggle quietlink2 navbar2link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+	      <span class="glyphicon glyphicon-plus"></span>&nbsp;New <span class="caret"></span>
+	    </a>
+
+	    <ul class="dropdown-menu pull-right">
+	      <li><a href="{% url create_quote %}">New {{SNIPPET_LABEL}} <span class="glyphicon glyphicon-plus"></span>
+		  	</a></li>
+	      
+		  {% if 0 %}
+			  <li class="divider"></li>		  
+   	  	  	  <li>
+   					<a href="{% url importtext  %}" rel="tooltip">Import Text/PDF <span class="glyphicon glyphicon-align-left"></span>
+   					</a>
+   			  </li>
+		  {% endif %}
+		  
+		  {% if d1 and mykoncepts %}
+		   <li>
+			  <a href="{% url create_quote %}?source={{d1.id}}">New {{SNIPPET_LABEL}} from this {{DOCUMENT_LABEL}} <span class="glyphicon glyphicon-plus"></span>
+		  	 </a>
+		  </li>	  
+
+		  {% endif %}			  			  
+
+		  {% if 0 and  k1 and mykoncepts %}
+		  	{# February 14, 2015: removed #}
+		   <li>
+			 <a href="{% url create_quote %}?kon={{k1.id}}">Add {{SNIPPET_LABEL}} to this {{KONCEPT_LABEL}} <span class="glyphicon glyphicon-plus" >
+		  </li>	  
+
+		  {% endif %}
+		  
+		  {% if q1 and mykoncepts %}
+			  	{% if q1.source %}
+			   <li>
+				 <a href="{% url create_quote %}?source={{q1.source.id}}">New {{SNIPPET_LABEL}} from same {{DOCUMENT_LABEL}} <span class="glyphicon glyphicon-plus" >
+			  </li>
+			  {% endif %}
+		  {% endif %}
+	  
+		  <li class="divider"></li>			  
+          <li>
+			<a href="{% url bookmarklet  %}" rel="tooltip">Install Bookmarklet <span class="glyphicon glyphicon-globe"></span>
+			</a>
+		  </li>
+	    </ul>
+		
+	  </li>
+	  
+
+
+	</ul>
+	
+	

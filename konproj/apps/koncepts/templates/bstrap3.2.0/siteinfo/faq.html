@@ -1,0 +1,85 @@
+
+
+{% extends "bstrap3.2.0/base.html" %}
+{% load konceptstags %}
+
+
+
+{% block pagecontents %}
+
+
+		{% block content %}
+		
+  
+		<div class="row-fluid" style="margin-top: 50px;">
+	
+			<div class="col-md-8 col-md-offset-2">
+	
+	
+
+				<h1>FAQs</h1>
+				
+				<br /><br />
+							
+
+                <div class="panel-group" id="accordion">
+
+
+					{% for faq in faqs  %}
+						
+						
+						{% ifchanged faq.category %}
+							<br /><br />
+								<h5 style="text-transform: uppercase;">&gt; {{faq.get_category_display}}</h4>
+							<br />
+						{% endifchanged %}
+						
+	                      <div class="panel panel-default">
+	                          <div class="panel-heading">
+	                              <h4 class="panel-title">
+	                                  <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapse{{forloop.counter}}">{{faq.name}}</a>
+	                              </h4>
+	                          </div>
+	                          <div id="collapse{{forloop.counter}}" class="panel-collapse collapse">
+	                              <div class="panel-body ">
+	                                  {{faq.description|safe}}
+									  <br /><br />
+	                              </div>
+	                          </div>
+	                      </div>
+						  
+					{% endfor %}
+					
+					
+            </div>
+
+
+
+
+
+
+
+	
+			</div>   {# end of outer span #}
+
+	
+	    </div>
+  
+  
+
+		
+		
+		
+		
+		
+		{% endblock %}
+		
+
+
+
+
+{% endblock pagecontents %}
+
+
+
+

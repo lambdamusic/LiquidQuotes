@@ -1,0 +1,490 @@
+{# March 14, 2014 breadcrumbs : trying to have one file for all pages  #}
+ 
+ 
+ 
+ {% if people_list %}  {# PEOPLE LIST  #}
+
+
+	 <ol class="breadcrumb " id="breadcrumb">
+  
+  
+   	   <li><a href="{% url homepage %}"><span class="glyphicon glyphicon-home"></span></a>
+ 		   
+ 	   </li>
+	   
+ 	   <li class="active">People</a> 
+ 		   {# <span class="divider">/ ...</span> #}
+ 	   </li> </li>
+
+	 
+	   {% with breadcrumbs_section=1 %}
+	   	 {% include "bstrap3.2.0/components/buttons.html" %}
+	   {% endwith %}
+
+			 
+	 </ol>
+
+ 
+ {% endif %}
+ 
+ 
+ 
+ 
+ 
+ {% if person_public_page %}
+ 
+	 <ol class="breadcrumb" id="breadcrumb">
+
+  	   <li>
+		   <a href="{% url homepage %}"><span class="glyphicon glyphicon-home"></span></a>		   
+	   </li>
+	   
+	   {# <li><a href="{% url browse_people %}">People</a> </li> #}
+
+	   <li class="active">{{person.profile.pretty_name}} </li>
+
+	   
+
+	 </ol>
+ 
+ {% endif %}
+ 
+ 
+ 
+ 
+ 
+ {% if person_private_profile %}
+ 	{# note: this is the profile page #}
+ 
+	 <ol class="breadcrumb" id="breadcrumb">
+
+ 	   <li><a href="{% url homepage %}"><span class="glyphicon glyphicon-home"></span></a>
+	   
+  	 </li>
+   
+	   <li><a href="{% url person_home person.username %}">{{person.profile.pretty_name}}</a> 
+	   </li>
+	   <li class="active">Profile</li>
+
+
+	 </ol>
+ 
+ {% endif %}
+ 
+ 
+ {% if person_private_settings %}
+ 
+	 <ol class="breadcrumb" id="breadcrumb">
+
+ 	   <li><a href="{% url homepage %}"><span class="glyphicon glyphicon-home"></span></a>
+	   
+  	 </li>
+   
+	   <li><a href="{% url person_home person.username %}">{{person.profile.pretty_name}}</a> 
+	   </li>
+	   <li class="active">Settings</li>
+
+
+	 </ol>
+ 
+ {% endif %}
+ 
+ 
+ 
+
+ 
+{% if person_subjects %}  {# PERSON KONCEPTS  #}
+
+	 <ol class="breadcrumb" id="breadcrumb">
+  
+  	   <li><a href="{% url homepage %}"><span class="glyphicon glyphicon-home"></span></a>
+		   
+	   </li>
+	   
+		{# <li> #}
+		{# 	<a href="{% url browse_people %}">People</a>  #}
+		{# </li> #}
+	   <li>
+
+	   		<a href="{% url person_home person.username %}">{{person.profile.pretty_name}}</a>		   
+
+	   </li>
+	   
+		{# <li><a href="{% url person_home person.username %}">{{person.profile.pretty_name}}</a>  #}
+		{#     #}
+		{# 	   </li> #}
+	   
+	   <li>{{SUBJECT_LABEL}}s</a> </li>
+
+
+	   
+
+	 </ol>
+ 
+ 
+ 
+ {% endif %}
+  
+ 
+ 
+
+ 
+{% if person_koncepts %}  {# PERSON KONCEPTS  #}
+
+	 <ol class="breadcrumb" id="breadcrumb">
+  
+  	   <li><a href="{% url homepage %}"><span class="glyphicon glyphicon-home"></span></a>
+		   
+	   </li>
+	   
+		{# <li> #}
+		{# 	<a href="{% url browse_people %}">People</a>  #}
+		{# </li> #}
+	   <li>
+
+	   		<a href="{% url person_home person.username %}">{{person.profile.pretty_name}}</a>		   
+
+	   </li>
+	   
+		{# <li><a href="{% url person_home person.username %}">{{person.profile.pretty_name}}</a>  #}
+		{#     #}
+		{# 	   </li> #}
+	   
+	   <li>{{KONCEPT_LABEL}}s</a> </li>
+
+
+	   
+
+	 </ol>
+ 
+ 
+ 
+ {% endif %}
+ 
+ 
+ 
+ 
+ 
+ {% if person_snippets %}  {# PERSON KONCEPTS  #}
+
+	 <ol class="breadcrumb" id="breadcrumb">
+  
+  	   <li><a href="{% url homepage %}"><span class="glyphicon glyphicon-home"></span></a>
+		   
+	   </li>
+	   
+		{# <li><a href="{% url browse_people %}">People</a>  #}
+		{# </li> #}
+
+ 	   <li>
+
+ 	   		<a href="{% url person_home person.username %}">{{person.profile.pretty_name}}</a>		   
+
+ 	   </li>
+
+	   <li>{{SNIPPET_LABEL}}s</a> </li>
+
+
+
+	 </ol>
+ 
+ 
+ 
+ {% endif %}
+ 
+ 
+ 
+ {% if person_documents %}  {# PERSON DOCUMENTS  #}
+
+	 <ol class="breadcrumb" id="breadcrumb">
+  
+  	   <li><a href="{% url homepage %}"><span class="glyphicon glyphicon-home"></span></a>
+		   
+	   </li>
+	   
+	
+ 	   <li>
+
+ 	   		<a href="{% url person_home person.username %}">{{person.profile.pretty_name}}</a>		   
+
+ 	   </li>
+	   
+	   	
+		<li>{{DOCUMENT_LABEL}}s </li>
+
+	   
+	 </ol>
+ 
+ 
+ 
+ {% endif %}
+ 
+ 
+ 
+ 
+ 
+ 
+
+{% if koncept_detail %}   {# KONCEPT DETAIL #}
+
+	{# Showing {{interpretations|length}} Fragment{{interpretations|length|pluralize}} for {{KONCEPT_LABEL}}: #}
+	{# February 12, 2014: tried breadcrumbs #}
+ 
+  <ol class="breadcrumb" id="breadcrumb">
+	  
+	  <li><a href="{% url homepage %}"><span class="glyphicon glyphicon-home"></span></a>
+	   
+   	  </li>
+   	  
+ 	   <li>
+
+ 	   		<a href="{% url person_home person.username %}">{{person.profile.pretty_name}}</a>		   
+
+ 	   </li>
+    
+  	   <li>
+  		   {% if mykoncepts %}
+  	   		<a href="{% url search_user_koncepts person.username %}">{{KONCEPT_LABEL}}s</a>		   
+  	   	 	{% else %}
+  	  	  	{{KONCEPT_LABEL}}s
+  	   	 	{% endif %}
+  	   </li>
+
+	
+	  <li class="active">{{k1.name|truncatewords:5}}</li>
+	
+
+  </ol>
+  
+  
+ {% endif %}
+ 
+ 
+ 
+ 
+ 
+
+ {% if quote_detail %}   {# QUOTE DETAIL #}
+
+ 	{# Showing {{interpretations|length}} Fragment{{interpretations|length|pluralize}} for {{KONCEPT_LABEL}}: #}
+ 	{# February 12, 2014: tried breadcrumbs #}
+ 
+   <ol class="breadcrumb" id="breadcrumb">
+	  
+ 	  <li><a href="{% url homepage %}"><span class="glyphicon glyphicon-home"></span></a>
+ 	   
+    	  </li>
+   	  
+ 	   <li>
+
+ 	   		<a href="{% url person_home person.username %}">{{person.profile.pretty_name}}</a>		   
+
+ 	   </li>
+    
+
+ 	   <li>
+ 		   {% if mykoncepts %}
+ 	   		<a href="{% url search_user_quotes person.username %}">{{SNIPPET_LABEL}}s</a>		   
+ 	   	 	{% else %}
+ 	  	  	{{SNIPPET_LABEL}}s
+ 	   	 	{% endif %}
+ 	   </li>
+	   
+	
+ 	  <li class="active">...</li>
+ 	  {# <li class="active">{{q1.text|truncatewords:5}}</li> #}
+
+	
+   </ol>
+  
+  
+  {% endif %}
+  
+  
+ 
+ 
+ 
+ 
+{% if d1 %}    {# DOCUMENT DETAIL #}
+ 
+	{# Showing {{page_object.totcount}} {{KONCEPT_LABEL}}{{page_object.totcount|pluralize}} for Document: #}
+
+
+	 <ol class="breadcrumb" id="breadcrumb">
+  
+   	   <li><a href="{% url homepage %}"><span class="glyphicon glyphicon-home"></span></a>
+ 		   
+ 	   </li>
+	   
+ 	   <li>
+
+ 	   		<a href="{% url person_home person.username %}">{{person.profile.pretty_name}}</a>		   
+
+ 	   </li>
+	   
+	   <li>{% if mykoncepts %}
+		   <a href="{% url search_user_documents person.username %}">My {{DOCUMENT_LABEL}}s</a>
+		   {% else %}		   
+		   {{DOCUMENT_LABEL}}s
+		   {% endif %}		   
+	   </li>
+
+	   <li class="active">{{d1.title|truncatewords:5}}</li>
+	</li>
+
+
+	 </ol>
+ 
+ 
+ {% endif %}
+ 
+ 
+ 
+ 
+ 
+ {% if  add_edit %}  {# EDIT  #}
+
+	 <ol class="breadcrumb" id="breadcrumb">
+  
+  	   <li><a href="{% url homepage %}"><span class="glyphicon glyphicon-home"></span></a>
+		   
+	   </li>
+	   
+	   <li><a href="{% url person_home person.username %}">{{person.profile.pretty_name}}</a> 
+	   </li>
+	   
+	   {# <li><a href="{% url search_user_koncepts person.username %}">{{KONCEPT_LABEL}}s</a> </li> #}
+	   {% if editKoncept  %}
+	   		<li>Edit</a> </li>
+		{% else %}
+			<li>New</a> </li>
+		{% endif %}
+
+
+	   
+	 </ol>
+ 
+ 
+ 
+ {% endif %}
+ 
+ 
+ 
+ {% if import %}
+ 
+	 <ol class="breadcrumb" id="breadcrumb">
+
+   	  <li><a href="{% url homepage %}"><span class="glyphicon glyphicon-home"></span></a>
+	   	
+  	 </li>
+	
+		<li><a href="{% url person_home person.username %}">{{person.profile.pretty_name}}</a> 
+		</li>
+		
+	   <li class="active">Import
+		   {# <a href="{% url importtext %}"></a> #}
+	   </li>
+
+	 </ol>
+ 
+ {% endif %}
+ 
+ 
+ 
+ 
+ {% if importkindle %}
+ 
+	 <ol class="breadcrumb" id="breadcrumb">
+
+   	  <li><a href="{% url homepage %}"><span class="glyphicon glyphicon-home"></span></a>
+	   	
+  	 </li>
+	
+		<li><a href="{% url person_home person.username %}">{{person.profile.pretty_name}}</a> 
+		</li>
+		
+	   <li class="active">Import Kindle
+		   {# <a href="{% url importtext %}"></a> #}
+	   </li>
+
+	 </ol>
+ 
+ {% endif %}
+ 
+ 
+ {% if importkindle_selectdoc %}
+ 
+	 <ol class="breadcrumb" id="breadcrumb">
+
+   	  <li><a href="{% url homepage %}"><span class="glyphicon glyphicon-home"></span></a>
+	   	
+  	 </li>
+	
+		<li><a href="{% url person_home person.username %}">{{person.profile.pretty_name}}</a> 
+		</li>
+		
+	   <li>
+		   <a href="{% url importkindle %}">Import Kindle</a>
+	   </li>
+	   
+	   <li class="active">Select Document
+		   {# <a href="{% url importtext %}"></a> #}
+	   </li>
+
+	 </ol>
+ 
+ {% endif %}
+ 
+ 
+ 
+ {% if import_selecthighlights %}
+ 
+	 <ol class="breadcrumb" id="breadcrumb">
+
+   	  <li><a href="{% url homepage %}"><span class="glyphicon glyphicon-home"></span></a>
+	   	
+  	 </li>
+	
+		<li><a href="{% url person_home person.username %}">{{person.profile.pretty_name}}</a> 
+		</li>
+		
+	   <li>
+		   <a href="{% url importkindle %}">Import</a>
+	   </li>
+	   
+	   <li class="active">Select {{SNIPPET_LABEL}}s
+		   {# <a href="{% url importtext %}"></a> #}
+	   </li>
+
+	 </ol>
+ 
+ {% endif %}
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ {% if tools %}
+ 
+	 <ol class="breadcrumb" id="breadcrumb">
+
+    	<li><a href="{% url homepage %}"><span class="glyphicon glyphicon-home"></span></a>
+  		   
+  	   </li>
+	   
+	   <li><a>Tools</a> 
+	   </li>
+	   
+	   <li class="active">Bookmarklet</li>
+
+
+	 </ol>
+ 
+ {% endif %}
+ 
+ 
+ 
+
+ 

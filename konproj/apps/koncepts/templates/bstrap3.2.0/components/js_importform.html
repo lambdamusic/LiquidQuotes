@@ -1,0 +1,164 @@
+
+
+<script type="text/javascript">
+
+
+	// Listen for click on toggle checkbox
+	$('#select-all').click(function(event) {   
+		// alert($('#select-all-input').checked);
+	    if(this.checked) {
+	        // Iterate each checkbox
+	        $('td.select_button input').each(function() {
+	            this.checked = true;   
+				// repeating this because of http://stackoverflow.com/questions/4869981/why-isnt-my-checkbox-change-event-triggered
+				buttonid = $(this).prev().attr("value");
+				$('a[href="' + buttonid + '"]').addClass("btn-pressed-green");
+			  
+	        });
+	    } else { 
+			// Iterate each checkbox 
+			$("td.select_button input").each(function() { 
+				this.checked = false;  
+				buttonid = $(this).prev().attr("value");
+				$('a[href="' + buttonid + '"]').removeClass("btn-pressed-green");
+			});
+		} 
+	});
+
+	$("td.select_button input").change(function() {
+		
+		// determine related button ID via an hidden input
+		buttonid = $(this).prev().attr("value");
+		
+	    if(this.checked) {
+			// 2015-03-17: class is added but css doesnt change
+			$(this).parent().addClass('checkboxSelected');		
+			$('a[href="' + buttonid + '"]').addClass("btn-pressed-green");
+			
+	    } else {
+			$(this).parent().removeClass('checkboxSelected');
+			$('a[href="' + buttonid + '"]').removeClass("btn-pressed-green");
+	    }
+	});
+
+
+
+	
+	
+	var clickstate = 0; 
+	
+	
+	
+	$("div.button_shortcuts a").on("mouseover", function (e) {
+		
+		// mouse over works only if nothing's been clicked on
+		
+		if (clickstate == 0) {
+			
+			clickid = $(this).attr("href");	
+		
+			$("div.button_shortcuts a").removeClass("active");
+			$("div.formcomponent").hide();
+		
+			$(this).addClass("active");
+			$("#"+ clickid).show();	
+			
+		}
+
+  	});
+
+
+	$("div.button_shortcuts a").on("click", function (e) {
+		clickid = $(this).attr("href");	
+		
+		// store current click state
+		
+		if (clickstate == clickid) {
+			clickstate = 0;
+			$(this).removeClass("active");
+		} else {
+			clickstate = clickid;
+			$("div.button_shortcuts a").removeClass("active");
+			$("div.formcomponent").hide();
+		
+			$(this).addClass("active");
+			$("#"+ clickid).show();
+		}
+
+		
+	
+		
+		// after a clean click, scroll down to quote
+		if (clickstate != 0) {
+			   	  	$('html, body').animate({
+			   	  	        scrollTop: $("#"+ clickid).offset().top - 100
+			   	  	    }, 600);
+		}
+   	  	
+  	  	e.preventDefault();
+  	});	
+	
+	
+	
+	// $('.booktitle').click(function() {
+	// 	$(this).next().toggle('fast', function() {
+	// 		// Animation complete.
+	// 	});
+	// });
+	// $('.booktitle').click();
+	
+	
+	
+	
+	
+
+	// AUTOCOMPLETES  :: DISABLED ON 2014-10-28
+	
+	// $('input.kon_name').typeahead({
+	// 	items: 8,
+	// 	minLength: 2,
+	// 	template: '<p><strong>{{name}}</strong> – {{id}}</p>',
+	//     source: function (query, process) {
+	// 		// clean the automatically loaded preview link first
+	// 		$("#koncept_preview_link").text("");
+	//
+	//         $.get('{% url autocomplete_koncepts %}', { term: query }, function (data) {
+	//             return process(data);
+	//         });
+	// 	},
+	//
+	//     updater:function (item) {
+	// 		// defines what to do after something has been selected..
+	//         //item = selected item
+	//
+	// 		konPreviewInfo(item);
+	//
+	//         //dont forget to return the item to reflect them into input
+	//         return item;
+	//     }
+	//
+	//
+	// });
+	//
+	//
+	//
+	// function konPreviewInfo(item) {
+	//
+	//         $.get('{% url autocomplete_koncept_details %}', { title: item }, function (data) {
+	// 		// return JSON data
+	//
+	// 		$("#koncept_preview_link").text("");
+	//
+	// 		var preview_html = "&nbsp;{{SNIPPET_LABEL}}s previously associated to this {{KONCEPT_LABEL}}: <b>" + data.fragcount + "</b>&nbsp;&nbsp;(<i class=\"icon-search\"></i><a target=\"_blank\" class=\"text-info\" title=\"Opens the selected {{KONCEPT_LABEL}} in new window\" href=\"" + data.link + "\">view</a>)<br /><br />";
+	//
+	// 		$("#koncept_preview_link").append(preview_html);
+	//
+	//         });
+	//
+	// }
+	//
+	
+
+	
+</script>
+

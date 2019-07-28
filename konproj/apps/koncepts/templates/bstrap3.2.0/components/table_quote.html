@@ -1,0 +1,67 @@
+{% load konceptstags %}
+
+{# not really a table.. but whatever (used in search quotes page) #}
+
+{% if not forloop.first %}
+<hr>
+{% endif %}
+
+
+
+
+
+
+{# MAIN CONTENT #}
+	
+<div class="col-md-9 -col-md-offset-1 ">
+
+    {% with snippet_search_page=1 %}
+	    {% include "bstrap3.2.0/components/snippet_preview.html" %} 
+    {% endwith %}
+
+</div>
+	
+
+
+{# SIDEBAR #}
+
+<div class="col-md-3 -col-md-offset-1" style="margin-bottom: 40px; ">
+
+	 {# ==SUBJECTS=== #}
+
+	 {% if snippet.subjects.all %}
+{# 	 <hr>#}
+
+		 <p class="text-{{ALIGNMENT|default:'left'}} margin-top-50" >
+		
+				{# tags <br /> #}
+				{% for c in snippet.subjects.all  %}
+					<a href="{{c.get_absolute_url}}" title="Subject: {{c.name_url}}" class="btn btn-xs  btn-warning" style="white-space: normal;">
+						<span class="glyphicon glyphicon-tag icon-xs" aria-hidden="true"></span>&nbsp;{{c.name}}
+					</a>&nbsp;<br />											
+				{% endfor %}
+				
+
+				
+		</p>
+	
+	{% else %}
+		
+		<br />
+		<small class="text-muted">No {{SUBJECT_LABEL}}s.</small>
+		<br />
+
+	{% endif %}
+	
+	{% if mykoncepts %}
+
+	<span style="font-size: 55%;" class="-btn -btn-default">
+		<span class="glyphicon glyphicon-pencil" ></span>
+		&nbsp;<a href="javascript:_changeKonceptReference({{snippet.id}})" title="Change" class="quietlink">Add {{ SUBJECT_LABEL }}?</a>
+	</span>
+	{% endif %}
+	
+
+	
+</div>
+

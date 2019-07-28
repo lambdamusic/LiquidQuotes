@@ -1,0 +1,32 @@
+
+
+{# reveal some buttons etx.. only on mouse over #}
+
+	
+<script type="text/javascript" charset="utf-8">
+	
+
+        $("#user_badge_stripe").hover(  function () {
+             $(".user-links-hidden").fadeIn();
+            },
+            function () {
+             $(".user-links-hidden").fadeOut();
+             });
+
+        $("#doc_edit_trigger").hover(  function () {
+             $(".doc-edit-hidden").fadeIn();
+            },
+            function () {
+             $(".doc-edit-hidden").fadeOut();
+             });
+
+
+        $(".quote_sidebar_trigger").hover(  function () {
+             $(this).find(".quote-edit-hidden").fadeIn();
+            },
+            function () {
+             $(this).find(".quote-edit-hidden").fadeOut();
+             });
+
+
+</script>

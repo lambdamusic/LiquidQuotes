@@ -1,0 +1,388 @@
+{% load konceptstags %}
+
+
+
+
+
+{% if snippet_detail_edit and mykoncepts %}
+
+	<div id="quote_buttons" class="text-{{ALIGNMENT|default:'left'}}">
+
+		
+		<a href="{% url create_quote %}?fragment={{snippet.id}}" title="Edit">
+					<button type="button" class="btn btn-default btn-circle -btn-lg"><i class="glyphicon glyphicon-pencil"></i></button>
+		</a>
+
+		{% if snippet.isprivate %}
+			{# <a href="" title=""> #}
+				<button type="button" class="privatebutton-circle btn btn-private btn-circle -btn-lg" int="{{snippet.id}}" title="This {{SNIPPET_LABEL}} is private. Click to make it public."><i class="glyphicon glyphicon-lock"></i></button>
+			{# </a> #}
+		{% else %}
+			{# <a href="" title=""> #}
+				<button type="button" class="privatebutton-circle btn btn-default btn-circle -btn-lg" int="{{snippet.id}}" title="This {{SNIPPET_LABEL}} is public. Click to make it private."><i class="glyphicon glyphicon-lock"></i></button>
+			{# </a> #}
+		{% endif %}	
+
+		<a href="javascript:confirmDeleteFragment({{snippet.id}}, '{{snippet.text|escapejs|truncatewords:10}}');" title="Delete">
+			<button type="button" class="btn btn-danger btn-circle -btn-lg"><i class="glyphicon glyphicon-remove"></i></button>
+		</a>
+
+
+
+
+		
+		
+	
+	</div>
+
+{% endif %}
+
+
+
+
+
+{% if snippet_detail_actions and mykoncepts %}
+
+	<div id="quote_buttons" class="text-{{ALIGNMENT|default:'left'}}">
+
+	
+		{% if snippet.favorite %}
+			{# <a href="" title=""> #}
+				<button type="button" class="favoritebutton-circle btn btn-primary btn-circle -btn-lg" int="{{snippet.id}}" title="Currently in favorites. Click to remove it."><i class="glyphicon glyphicon-heart"></i></button>
+			{# </a> #}
+		{% else %}
+			{# <a href="" title=""> #}
+				<button type="button" class="favoritebutton-circle btn btn-default btn-circle -btn-lg" int="{{snippet.id}}" title="Make it favorite."><i class="glyphicon glyphicon-heart"></i></button>
+			{# </a> #}
+		{% endif %}
+		
+
+		{% if snippet.clipboard %}
+			{# <a href="" title=""> #}
+				<button type="button" class="btn clipboardbutton-circle -btn-lg btn-info btn-circle" int="{{snippet.id}}" title="Currently in clipboard. Click to remove it."><i class="glyphicon glyphicon-pushpin"></i></button>
+			{# </a> #}
+		{% else %}
+			{# <a href="" title=""> #}
+				<button type="button" class="btn clipboardbutton-circle -btn-lg btn-default btn-circle" int="{{snippet.id}}" title="Pin to clipboard"><i class="glyphicon glyphicon-pushpin"></i></button>
+			{# </a> #}
+		{% endif %}
+
+
+		<a href="javascript:confirmDownload({{snippet.id}});" title="Download">
+			<button type="button" class="btn btn-success btn-circle -btn-lg"><i class="glyphicon glyphicon-save"></i></button>
+		</a>
+	
+		
+	
+	</div>
+
+{% endif %}
+
+
+
+
+
+
+
+
+
+{% if search_quotes and mykoncepts %}
+
+	<div id="quote_buttons" class="text-right">
+
+		&nbsp;&nbsp;
+		<a href="{% url create_quote %}?fragment={{snippet.id}}" title="Edit">
+					<button type="button" class="btn btn-default btn-circle btn-sm"><i class="glyphicon glyphicon-pencil"></i></button>
+		</a>
+		
+		{% if snippet.isprivate %}
+			{# <a href="" title=""> #}
+				<button type="button" class="privatebutton-circle btn btn-warning btn-circle btn-sm" int="{{snippet.id}}" title="This {{SNIPPET_LABEL}} is private. Click to make it public."><i class="glyphicon glyphicon-lock"></i></button>
+			{# </a> #}
+		{% else %}
+			{# <a href="" title=""> #}
+				<button type="button" class="privatebutton-circle btn btn-success btn-circle btn-sm" int="{{snippet.id}}" title="This {{SNIPPET_LABEL}} is public. Click to make it private."><i class="glyphicon glyphicon-lock"></i></button>
+			{# </a> #}
+		{% endif %}
+		
+		<a href="javascript:confirmDownload({{snippet.id}});" title="Download">
+			<button type="button" class="btn btn-primary btn-circle btn btn-sm"><i class="glyphicon glyphicon-save"></i></button>
+		</a>
+		
+		<a href="javascript:confirmDeleteFragment({{snippet.id}}, '{{snippet.text|escapejs|truncatewords:10}}');" title="Delete">
+			<button type="button" class="btn btn-danger btn-circle btn-sm"><i class="glyphicon glyphicon-remove"></i></button>
+		</a>
+	
+	</div>
+
+{% endif %}
+
+
+
+
+
+
+
+{% if snippet_buttons_above %}
+
+	
+	{% if mykoncepts %}
+
+
+		{% if snippet.favorite %}
+			{# <a href="" title=""> #}
+				<button type="button" class="favoritebutton-circle btn btn-primary -btn-circle btn-sm" int="{{snippet.id}}" title="Currently in favorites. Click to remove it."><i class="glyphicon glyphicon-heart"></i></button>
+			{# </a> #}
+		{% else %}
+			{# <a href="" title=""> #}
+				<button type="button" class="favoritebutton-circle btn btn-default -btn-circle btn-sm" int="{{snippet.id}}" title="Make it favorite."><i class="glyphicon glyphicon-heart"></i></button>
+			{# </a> #}
+		{% endif %}
+		
+		
+		{% if snippet.clipboard %}
+			{# <a href="" title=""> #}
+				<button type="button" class="clipboardbutton-circle btn btn-success -btn-circle btn-sm" int="{{snippet.id}}" title="Currently in clipboard. Click to remove it."><i class="glyphicon glyphicon-pushpin"></i></button>
+			{# </a> #}
+		{% else %}
+			{# <a href="" title=""> #}
+				<button type="button" class="clipboardbutton-circle btn btn-default -btn-circle btn-sm" int="{{snippet.id}}" title="Pin to clipboard"><i class="glyphicon glyphicon-pushpin"></i></button>
+			{# </a> #}
+		{% endif %}
+		
+		
+		<a href="javascript:confirmDeleteFragment({{snippet.id}}, '{{snippet.text|escapejs|truncatewords:10}}');" title="Delete this {{SNIPPET_LABEL}} permanently.">
+		<button type="button" class="favoritebutton-circle btn btn-default -btn-circle btn-sm"><i class="glyphicon glyphicon-remove"></i></button>
+	
+		{% if 0 %}		
+		<a href="{% url create_quote %}?fragment={{snippet.id}}" title="Edit"><button type="button" class="btn btn-default -btn-circle btn-sm"><i class="glyphicon glyphicon-pencil icon-xs"></i>&nbsp;Edit</button>
+		</a>
+		{% endif %}
+
+	</a>
+
+	{% endif %}
+	
+
+	{% if not document_detail_page %}
+		<a href="{% url get_quote snippet.created_by snippet.id %}" title="Open {{SNIPPET_LABEL}} page">
+		<button type="button" class="btn btn-default -btn-circle btn-sm"><i class="glyphicon glyphicon-new-window icon-xs"></i>&nbsp;Open</button>
+		</a>
+	{% endif %}
+
+
+
+{% endif %}
+
+
+
+
+
+{% if snippet_buttons_sidebar %}
+
+	
+	{% if mykoncepts %}
+
+
+		{% if snippet.favorite %}
+			{# <a href="" title=""> #}
+				<button type="button" class="favoritebutton-circle btn btn-primary -btn-circle btn-xs" int="{{snippet.id}}" title="Currently in favorites. Click to remove it."><i class="glyphicon glyphicon-heart"></i></button>
+			{# </a> #}
+		{% else %}
+			{# <a href="" title=""> #}
+				<button type="button" class="favoritebutton-circle btn btn-default -btn-circle btn-xs" int="{{snippet.id}}" title="Make it favorite."><i class="glyphicon glyphicon-heart"></i></button>
+			{# </a> #}
+		{% endif %}
+		
+
+        {% if 0 %}
+		{% if snippet.clipboard %}
+			{# <a href="" title=""> #}
+				<button type="button" class="clipboardbutton-circle btn btn-success -btn-circle btn-xs" int="{{snippet.id}}" title="Currently in clipboard. Click to remove it."><i class="glyphicon glyphicon-pushpin"></i></button>
+			{# </a> #}
+		{% else %}
+			{# <a href="" title=""> #}
+				<button type="button" class="clipboardbutton-circle btn btn-default -btn-circle btn-xs" int="{{snippet.id}}" title="Pin to clipboard"><i class="glyphicon glyphicon-pushpin"></i></button>
+			{# </a> #}
+		{% endif %}
+		{% endif %}
+
+        {% if 1 %}
+		<a href="{% url create_quote %}?fragment={{snippet.id}}" title="Edit"><button type="button" class="btn btn-default -btn-circle btn-xs"><i class="glyphicon glyphicon-pencil icon-xs"></i></button>
+		</a>
+		{% endif %}
+
+		<a href="javascript:confirmDeleteFragment({{snippet.id}}, '{{snippet.text|escapejs|truncatewords:10}}');" title="Delete this {{SNIPPET_LABEL}} permanently.">
+		<button type="button" class="favoritebutton-circle btn btn-default -btn-circle btn-xs"><i class="glyphicon glyphicon-remove"></i></button>
+	
+
+
+	</a>
+
+	{% endif %}
+	
+
+	{% if not document_detail_page %}
+		<a href="{% url get_quote snippet.created_by snippet.id %}" title="Open {{SNIPPET_LABEL}} page">
+		<button type="button" class="btn btn-default -btn-circle btn-xs"><i class="glyphicon glyphicon-new-window icon-xs"></i>&nbsp;Open</button>
+		</a>
+	{% endif %}
+
+
+
+{% endif %}
+
+
+
+
+
+
+
+
+
+
+{% if snippet_default and mykoncepts %}
+
+	<div id="quote_buttons_inside" class="text-right">
+
+		&nbsp;&nbsp;
+		
+		{% if 0 %}
+		{% if snippet.favorite %}  {# IT'S ABOVE #}
+			{# <a href="" title=""> #}
+				<button type="button" class="favoritebutton-circle btn btn-favorite btn-circle btn-sm" int="{{snippet.id}}" title="Currently in favorites. Click to remove it."><i class="glyphicon glyphicon-heart"></i></button>
+			{# </a> #}
+		{% else %}
+			{# <a href="" title=""> #}
+				<button type="button" class="favoritebutton-circle btn btn-default btn-circle btn-sm" int="{{snippet.id}}" title="Make it favorite."><i class="glyphicon glyphicon-heart"></i></button>
+			{# </a> #}
+		{% endif %}
+		{% endif %}
+		
+				
+		{% if snippet.isprivate %}
+			{# <a href="" title=""> #}
+				<button type="button" class="privatebutton-circle btn btn-private btn-circle btn-sm" int="{{snippet.id}}" title="This {{SNIPPET_LABEL}} is private. Click to make it public."><i class="glyphicon glyphicon-lock"></i></button>
+			{# </a> #}
+		{% else %}
+			{# <a href="" title=""> #}
+				<button type="button" class="privatebutton-circle btn btn-default btn-circle btn-sm" int="{{snippet.id}}" title="This {{SNIPPET_LABEL}} is public. Click to make it private."><i class="glyphicon glyphicon-lock"></i></button>
+			{# </a> #}
+		{% endif %}
+		
+		<a href="{% url create_quote %}?fragment={{snippet.id}}" title="Edit">
+			<button type="button" class="btn btn-default btn-circle btn-sm"><i class="glyphicon glyphicon-pencil"></i></button>
+		</a>
+		
+		<a href="javascript:confirmDeleteFragment({{snippet.id}}, '{{snippet.text|escapejs|truncatewords:10}}');" title="Delete">
+			<button type="button" class="btn btn-danger btn-circle btn-sm"><i class="glyphicon glyphicon-remove"></i></button>
+		</a>
+		
+		{% if 0 %}
+		<a href="javascript:confirmDownload({{snippet.id}});" title="Download">
+			<button type="button" class="btn btn-default btn-circle btn btn-sm"><i class="glyphicon glyphicon-save"></i></button>
+		</a>
+		{% endif %}
+		
+		{% if 0 %}
+		<a href="{% url get_quote snippet.created_by snippet.id %}" title="Open {{SNIPPET_LABEL}} page">
+			<button type="button" class="btn btn-default btn-circle btn-sm"><i class="glyphicon glyphicon-new-window"></i></button>
+		</a>
+		{% endif %}
+
+	
+	</div>
+
+{% endif %}
+
+
+
+
+
+
+
+
+
+
+
+
+{# DOCUMENT PAGE #}
+
+<!-- 2016-05-09: DEPRECATED in favor of smaller links at top -->
+{% if document_detail and mykoncepts %}
+
+	
+
+	<div id="document_buttons" class="text-{{ALIGNMENT|default:'left'}}">
+
+		{% if 0 %}
+		<a data-target="#editDocModal" title="Edit {{DOCUMENT_LABEL}} details" style="text-decoration: none;" data-toggle="modal">
+			<button type="button" class="btn btn-default btn-circle btn-lg"><i class="glyphicon glyphicon-pencil"></i></button>
+		</a>
+		{% endif %}
+		
+		
+		<a href="javascript:privacyDocument()"style="text-decoration: none;">
+			<button type="button" class="privatebutton-document btn btn-default btn-circle btn-lg" int="{{d1.id}}" title="Change privacy for all {{SNIPPET_LABEL}}s."><i class="glyphicon glyphicon-lock"></i></button>
+		</a>
+
+		<a href="javascript:confirmDownload(0, {{d1.id}}, 0);" title="Download" style="text-decoration: none;">
+			<button type="button" class="btn btn-primary btn-circle btn-lg"><i class="glyphicon glyphicon-save"></i></button>
+		</a>
+				
+		<a href="javascript:confirmDeleteDocument({{d1.id}})" title="Delete">
+			<button type="button" class="btn btn-danger btn-circle btn-lg"><i class="glyphicon glyphicon-remove"></i></button>
+		</a>
+
+	
+	</div>
+
+{% endif %}
+
+
+
+
+
+{# KONCEPT PAGE #}
+
+{% if koncept_detail and mykoncepts %}
+
+	<div id="koncept_buttons" >
+
+		{% if 0 %}
+		<a href="javascript:editKonceptTitle('{{k1.name}}')" title="Edit {{KONCEPT_LABEL}} Title" style="text-decoration: none;">
+			<button type="button" class="btn btn-default btn-circle btn"><i class="glyphicon glyphicon-pencil"></i></button>
+		</a>
+		{% endif %}
+		
+		{% if k1.isprivate %}		
+			<a href="javascript:privacyKoncept()" style="text-decoration: none;">
+				<button type="button" class="privatebutton-koncept btn btn-default btn-circle" int="{{k1.id}}" title="This {{KONCEPT_LABEL}} is private. Click to make it public."><i class="glyphicon glyphicon-lock"></i></button>
+			</a>
+		{% else %}
+			<a href="javascript:privacyKoncept()"style="text-decoration: none;">
+				<button type="button" class="privatebutton-koncept btn btn-success btn-circle" int="{{k1.id}}" title="This {{KONCEPT_LABEL}} is public. Click to make it private."><i class="glyphicon glyphicon-lock"></i></button>
+			</a>
+		{% endif %}	
+
+		<a href="javascript:confirmDownload(0, 0, {{k1.id}});" title="Download" style="text-decoration: none;">
+			<button type="button" class="btn btn-primary btn-circle btn"><i class="glyphicon glyphicon-save"></i></button>
+		</a>
+				
+		<a href="javascript:confirmDeleteKoncept({{k1.id}})" title="Delete">
+			<button type="button" class="btn btn-danger btn-circle btn"><i class="glyphicon glyphicon-remove"></i></button>
+		</a>
+
+
+	
+	</div>
+
+{% endif %}
+
+
+
+
+
+
+
+

@@ -1,0 +1,162 @@
+{% extends "bstrap3.2.0/base.html" %}
+{% load konceptstags %}
+
+
+
+
+{% block extrahead %}
+
+<style type="text/css" media="screen">
+	p.glossary {
+		font-size: 12px;
+		line-height: 10px;
+	}
+	
+	.popover
+	{
+	background-color: #ffffff;
+	color: black;
+	}
+
+	.popover-title {
+	color: black;
+	border-bottom: 0;
+	}
+
+	.popover-title {
+	background-color: #f7f7f7;
+	}
+	
+	.popover.top .arrow:after {
+		border-top-color: white;
+	}
+	
+	</style>
+
+
+	<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}libs/bootstrap-gtreetable/bootstrap-gtreetable.min.css" />
+	
+	
+{% endblock extrahead %}
+
+
+{% block pagecontents %}
+
+
+	<div class="row">
+		
+		<div class="col-md-10" >
+			
+		<table class="table gtreetable" id="gtreetable"><thead><tr><th>{{KONCEPT_LABEL}}</th></tr></thead></table>
+		
+		</div>
+		
+	</div>
+
+
+
+
+{% endblock  %}
+
+
+
+
+{% block closingbody %}
+
+
+<script type="text/javascript" src="{{ STATIC_URL }}libs/jquery-browser-plugin/jquery.browser.min.js"></script>
+
+<script type="text/javascript" src="{{ STATIC_URL }}libs/bootstrap-gtreetable/bootstrap-gtreetable.js"></script>
+	
+		
+	<script>
+$(function (){
+	 
+	 	// TOOTIPS 
+	
+		$(".kon_list_item").popover({   // can be tooltip too
+		placement: 'top', 
+		trigger: 'hover', 
+		html: true,
+		delay: { show: 500, hide: 300 },
+		});
+	
+	
+		// TREE TABLE
+	
+		jQuery('#gtreetable').gtreetable({
+			'selectLimit' : 0,
+			'types': { default: 'glyphicon glyphicon-folder-open'},
+			"language":"en-US",
+			"manyroots":true,
+			"draggable":true,
+			"inputWidth":"300px",
+			
+			// "onSelect": function (oNode) {
+			//    	window.location.href=oNode.id;
+			// },
+			
+		   // url: !oNode.isSaved() ? 'ajax_konlist_create' : 'ajax_konlist_update?id=' + oNode.getId(),
+			
+			"onSave":function (oNode) {
+			        return {
+			            type: 'GET',
+			            url: !oNode.isSaved() ? 'ajax_konlist_create' : 'ajax_konlist_create?id=' + oNode.getId(),
+			            data: {
+			                parent: oNode.getParent(),
+			                name: oNode.getName(),
+			                position: oNode.getInsertPosition(),
+			                related: oNode.getRelatedNodeId()
+			            },
+			            dataType: 'json',
+			            error: function(XMLHttpRequest) {
+			                console.log(XMLHttpRequest.status+': '+XMLHttpRequest.responseText);
+			            }
+			        };        
+			    },
+				
+			'onMove': function (oSource, oDestination, position) {
+			  return {
+			    type: 'GET',  // temp for testing PARAMS
+			    url: 'ajax_konlist_move?id=' + oSource.getId(),
+			    data: {
+			      related: oDestination.getId(),
+			      position: position
+			    },
+			    dataType: 'json',
+			    error: function(XMLHttpRequest) {
+			      console.log(XMLHttpRequest.status+': '+XMLHttpRequest.responseText);
+			    }
+			  }; 
+			},   
+			
+		    'onDelete':function (oNode) {
+		      return {
+		        type: 'GET',
+		        url: 'ajax_konlist_delete?id=' + oNode.getId(),
+		        dataType: 'json',
+		        error: function(XMLHttpRequest) {
+		          console.log(XMLHttpRequest.status+': '+XMLHttpRequest.responseText);
+		        }
+		      };
+		    },     
+
+			'source': function (id) {
+			  return {
+			    type: 'GET',
+			    url: 'ajax_konlist_tree',
+			    data: { 'id': id },        
+			    dataType: 'json',
+			    error: function(XMLHttpRequest) {
+			      console.log(XMLHttpRequest.status+': '+XMLHttpRequest.responseText);
+			    }
+			  }
+			}
+		});
+		
+		
+	});
+	</script>
+
+
+{% endblock  %}

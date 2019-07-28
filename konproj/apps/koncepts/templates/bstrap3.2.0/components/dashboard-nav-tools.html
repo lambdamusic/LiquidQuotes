@@ -1,0 +1,24 @@
+
+{% load konceptstags %}
+
+
+<ul class="nav nav-pills nav-stacked well">
+	{% if 0 %}
+	<h5>Tools</h5>
+	<li role="presentation" class="{{request|dtabs_getclass:'bookmarklet'}}"> 
+		<a href="{% url bookmarklet %}"><span class="glyphicon glyphicon-flag"></span> Bookmarklet</a>
+	</li>
+	{% endif %}
+	
+	{% if bookmarklet %}
+	<h5 class="text-muted">Note:</h5>
+	<span class="text-muted">When saving a new snippet you must be <span class="alert-info">logged in</span></span>.
+
+	{% endif %}
+	
+</ul>
+
+
+
+
+<br /><br />

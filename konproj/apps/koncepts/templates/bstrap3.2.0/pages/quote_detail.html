@@ -1,0 +1,346 @@
+{% extends "bstrap3.2.0/base.html" %}
+{% load konceptstags %}
+
+
+
+{% block page_title %}{{q1.title}} - a {{SNIPPET_LABEL}} on LiquidQuotes.com{% endblock %}
+
+
+{% block extrahead %}
+
+	{# 2015-12-26: the graph stuff #}
+
+
+    <link href="{{ STATIC_URL }}libs/visjs/vis.css" rel="stylesheet" type="text/css" />
+    <script src="{{ STATIC_URL }}libs/visjs/vis.js"></script>
+
+	<style type="text/css" media="screen">
+	.canv {
+		border: 1px solid lightgray;
+		height: 400px;
+		background: white;
+	}
+	</style>
+
+{% endblock extrahead %}
+
+
+
+{% block navigation %}
+
+		{% with quote_detail_page=1 %}
+			{% include "bstrap3.2.0/components/navbar.html" %}
+		{% endwith %}
+
+{% endblock navigation %}
+
+
+{% block belownavigation %}
+
+
+		{% with quote_detail_page=1 %}
+            {% include "bstrap3.2.0/components/navbar_second.html" %}
+        {% endwith %}
+
+
+
+
+
+{#{% if 0 %}#}
+    {# 2016-04-25: second stripe hidden #}
+{#    {% include "bstrap3.2.0/components/quote_title_stripe2.html" %}#}
+{#{% endif %}#}
+
+
+{% if 1 %}
+	{% with quote_detail_page=1 %}
+	{% with q1 as snippet %}
+		{% include "bstrap3.2.0/components/user_badge_stripe.html" %}
+	{% endwith %}
+	{% endwith %}
+{% endif %}
+
+
+<!-- 2016-05-23: the actions row below the user badge stripe-->
+{#    2016-07-02: removed #}
+{#{% if 0 %}#}
+{#    {% with quote_detail_page=1 %}#}
+{#    {% with q1 as snippet %}#}
+{#        {% include "bstrap3.2.0/components/actions_stripe.html" %}#}
+{#    {% endwith %}#}
+{#    {% endwith %}#}
+{#{% endif %}#}
+
+
+{% endblock belownavigation %}
+
+
+
+
+
+
+
+{% block pagecontents %}
+
+
+
+
+
+
+{# QUOTE TEXT #}
+
+
+<div class="row" style="margin-top: 60px;">
+
+	{# MAIN QUOTE COLUMN #}
+
+
+	<div class="col-md-8 -col-md-offset-1 margin-bottom-50" id="konceptpage_snippets" >
+
+		 <a name="fragment{{q1.id}}"></a> {# so make internal anchors work #}
+
+
+		 <div id="quote_detail_page" class="col-md-" style="min-height: 50px;">
+
+
+		  {% with quote_detail_page=1 %}
+		  {% with q1 as snippet %}
+		  		{% include "bstrap3.2.0/components/snippet_preview.html" %}
+		  {% endwith %}
+		  {% endwith %}
+
+
+			   <br />&nbsp;<br /> {# trick to push down the buttons #}
+
+
+		  </div>
+
+
+
+	</div>
+	{# END MAIN COLUMN #}
+
+
+
+	{# SIDEBAR #}
+	<div class="col-md-2  col-md-offset-1 --margin-top-50 sidebar_side_position" style="margin-top: 110px;">
+
+	{% include "bstrap3.2.0/components/sidebar_side_position.html" %}
+
+	</div>
+
+	{# END SIDEBAR #}
+
+
+
+
+
+</div>
+
+
+
+
+{% if 0 %}
+
+	{% include "bstrap3.2.0/components/sidebar_bottom_position.html" %}
+
+{% endif %}
+
+
+
+{% endblock pagecontents %}
+
+
+
+
+
+
+{% block beforefooter %}
+
+
+	{# <div id="push"></div> #}
+
+
+	{# Related COLLECTION - 2015-03-23: only for mykoncepts #}
+	{# TODO : here we assume there is only one collection.. but there could be many! #}
+
+	{% if 0 and mykoncepts and totQuotesKoncept > 1 %}
+		{% with q1 as snippet %}
+		{% with thread_navigation=1 %}
+			{% include "bstrap3.2.0/components/stripe_quote_navigation.html" %}
+		{% endwith %}
+		{% endwith %}
+
+		<div id="push"></div>
+	{% endif %}
+
+
+
+
+	{# New Related quotes bar #}
+
+	{% if quotesSameSource or similarQuotesTags %}
+
+		{% with quote_detail_page=1 %}
+		{% with q1 as snippet %}
+			{% include "bstrap3.2.0/components/bottom_related_quotes2.html" %}
+		{% endwith %}
+		{% endwith %}
+		<div id="push"></div>
+	{% endif %}
+
+
+
+    {# Quotes with same tag #}
+
+	{% if 0 and similarQuotesTags %}
+		{% with quote_detail_page=1 %}
+			{% include "bstrap3.2.0/components/bottom_tagrelated.html" %}
+		{% endwith %}
+		{# <div id="push"></div> #}
+	{% endif %}
+
+
+
+
+	{# Related quotes bar #}
+
+	{% if 0 and totQuotesDocument > 1 %}
+
+		{% with quote_detail_page=1 %}
+		{% with q1 as snippet %}
+			{% include "bstrap3.2.0/components/bottom_related_quotes.html" %}
+		{% endwith %}
+		{% endwith %}
+		<div id="push"></div>
+	{% endif %}
+
+
+
+
+
+
+	{# Chronological bar #}
+
+	{% if 0 %}
+		{% with quote_detail_page=1 %}
+			{% include "bstrap3.2.0/components/bottom_chronobar.html" %}
+		{% endwith %}
+		{# <div id="push"></div> #}
+	{% endif %}
+
+
+
+
+
+	{# Graph #}
+
+	{% if 1 %}
+		{% with quote_detail_page=1 %}
+			{% include "bstrap3.2.0/components/bottom_graph.html" %}
+		{% endwith %}
+		<div id="push"></div>
+	{% endif %}
+
+
+
+
+
+
+{% endblock beforefooter %}
+
+
+
+
+
+{% block closingbody %}
+
+
+
+{% if mykoncepts %}
+
+	{% include "bstrap3.2.0/components/js_publicprivate.html" %}
+
+	{% include "bstrap3.2.0/components/js_pinquote.html" %}
+
+	{% include "bstrap3.2.0/components/js_favoritequote.html" %}
+
+	{% include "bstrap3.2.0/components/js_confirmDelete.html" %}
+
+	{% include "bstrap3.2.0/components/js_hover_reveal.html" %}
+
+
+
+
+	<script type="text/javascript" charset="utf-8">
+
+		// March 20, 2014: add modal preview for text
+
+		$("a.launchModalReader").click(function() {
+
+			$("#modalKonceptTitle").text($("#konceptTitle").text());
+			$("#modalKonceptFragment").text($(this).parent().prev().text());
+			// ==> eg $("a.launchModalReader").first().parent().prev().text()
+
+			$('#fragmentModal').modal();
+
+			return false;
+		});
+
+
+
+		// April 9, 2014: hacking the internal anchor scrolling
+		// November 17, 2015: no need on this page
+
+		{% if 0 %}
+			$(function(){
+			  var hash = window.location.hash;
+			  hash = hash.replace("#", "");
+			  if (hash) {
+			  	scrollToAnchor(hash);
+			  }
+			});
+
+
+
+			function scrollToAnchor(name) {
+			  	$('html, body').animate({
+			  	        scrollTop: $('a[name="' + name + '"]').offset().top - 180
+			  	    }, 2000);
+			};
+		{% endif %}
+
+
+         $('[data-toggle="popover"]').popover();
+
+
+
+</script>
+
+
+	</script>
+
+	{# {% include "bstrap3.2.0/components/js_addKoncept_toQuote.html"	%} #}
+
+	{% include "bstrap3.2.0/components/js_editQuoteTitle.html"	%}
+
+
+	{% include "bstrap3.2.0/components/js_editQuoteSubjects.html"	%}
+
+
+
+
+
+{% endif %}
+
+
+{% include "bstrap3.2.0/components/js_confirmDownload.html"	%}
+{% include "bstrap3.2.0/components/js_show_moretext.html"	%}
+
+
+
+<!-- Go to www.addthis.com/dashboard to customize your tools -->
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-4ff6b8ef6c166b00" async="async"></script>
+
+
+{% endblock closingbody %}

@@ -1,0 +1,205 @@
+
+
+{# March 11, 2014: the js for making snippets private or public #}
+
+
+
+<script type="text/javascript">
+
+
+// ===========
+// FUNCTIONS which are GENERIC: used just to update state on buttons 
+// ===========
+
+
+function makePublic(button) {
+  	button.removeClass('btn-private');
+  	button.addClass('btn-default');
+	button.html('<span class="glyphicon glyphicon-lock"></span>');
+	button.attr('title', "Currently public. Click to make it private.");
+}
+function makePrivate(button) {
+  	button.removeClass('btn-default');
+  	button.addClass('btn-private');
+	button.html('<span class="glyphicon glyphicon-lock"></span>');
+	button.attr('title', "Currently private. Click to make it public.");
+}
+
+
+
+
+
+// ===========
+// // QUOTE  privacy buttons
+// ===========
+
+
+	
+$(".privatebutton-circle").click(function() {
+	var int_id = $(this).attr('int');
+	var button = $(this);
+    // alert( "Handler for .click() called. " + int_id );
+	
+    $.get('{% url make_fragment_private %}', { frag_id: int_id }, function (data) {
+		// check JSON data 
+        if (data.private == 'true') {
+        	makePrivate(button);
+        } else {
+			makePublic(button);
+        }
+		
+	});
+
+});
+
+
+
+
+
+// LEGACY VERSION for button at bottom of quote
+
+//
+// function makePublic(button) {
+//   	// button.removeClass('btn-warning');
+//   	button.addClass('btn-success');
+// 	button.html('<span class="glyphicon glyphicon-lock"></span>&nbsp;Public');
+// }
+// function makePrivate(button) {
+//   	button.removeClass('btn-success');
+//   	// $(".privatebutton").addClass('btn-warning');
+// 	button.html('<span class="glyphicon glyphicon-lock"></span>&nbsp;Private');
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+// ===========
+// // BUTTON FOR KONCEPT PAGE
+// ===========
+
+
+
+
+
+function privacyKoncept() {
+	
+	bootbox.dialog({
+	  message: "By choosing one of the options below you can change the privacy for this {{KONCEPT_LABEL}} and all of its {{SNIPPET_LABEL}}s.<br /><br />Note: private {{KONCEPT_LABEL|lower}}s can be seen only by you.",
+	  title: "Change privacy",
+	  buttons: {
+	    success: {
+	      label: "Make Public",
+	      className: "btn-success",
+	      callback: function() {
+			  _ajaxPrivacyKoncept(1);
+	      }
+	    },
+	    danger: {
+	      label: "Make Private",
+	      className: "btn",
+	      callback: function() {
+	          _ajaxPrivacyKoncept(0);
+	      }
+	    },
+	    cancel: {
+	      label: "Cancel",
+	      className: "btn-default",
+	      callback: function() {
+	        // nothing happens here
+	      }
+	    }
+	  }
+	});
+
+}	
+	
+
+function _ajaxPrivacyKoncept(p) {
+    $.get('{% url make_fragment_private %}', { kon_id: "{{k1.id}}",  privacy: p }, function (data) {
+  	var button = $(".privatebutton-koncept");
+  	// check JSON data
+        if (data.private == 'True') {
+        	makePrivate(button);
+        } else {
+        	makePublic(button);
+        }
+
+  	});
+}
+
+
+
+
+
+
+
+
+// ===========
+// // GLOBAL BUTTON FOR DOCUMENT PAGE
+// ===========
+
+
+
+
+
+function privacyDocument() {
+	
+	bootbox.dialog({
+	  message: "By choosing one of the options below you can change the privacy setting of all the {{SNIPPET_LABEL|lower}}s associated to this {{DOCUMENT_LABEL}}. <br /><br />Note: private {{SNIPPET_LABEL|lower}}s can be seen only by you.",
+	  title: "Change privacy",
+	  buttons: {
+	    success: {
+	      label: "Make Public",
+	      className: "btn-success",
+	      callback: function() {
+			  _ajaxPrivacyDocument(1);
+	      }
+	    },
+	    danger: {
+	      label: "Make Private",
+	      className: "btn-danger",
+	      callback: function() {
+	          _ajaxPrivacyDocument(0);
+	      }
+	    },
+	    cancel: {
+	      label: "Cancel",
+	      className: "btn-default",
+	      callback: function() {
+	        // alert("uh oh, look out!");
+	      }
+	    }
+	  }
+	});
+
+}	
+	
+
+function _ajaxPrivacyDocument(p) {
+    $.get('{% url make_fragment_private %}', { doc_id: "{{d1.id}}",  privacy: p }, function (data) {
+		// update UI
+		$('.privatebutton-circle').each(function() {
+		   // Iterate through all buttons
+	        if (data.private == 'True') {
+	        	makePrivate($(this));
+	        } else {
+	        	makePublic($(this));
+	        }
+		});
+
+  	});
+}
+
+
+
+
+</script>

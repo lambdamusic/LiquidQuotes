@@ -1,0 +1,116 @@
+{% extends "bstrap3.2.0/base.html" %}
+
+
+
+
+
+{% block belownavigation %}
+
+
+	{% with person_private_settings=1 %}
+		{% include "bstrap3.2.0/components/navbar_second.html" %}
+	{% endwith %}
+
+{% endblock belownavigation %}
+
+
+
+
+
+
+{% block pagecontents %}
+
+
+ <div class="row">
+
+
+	{# MAIN CONTENT #}
+    <div class="col-md-8 col-md-push-3">
+    	
+		<div class="page-header">
+		<h2>Settings</h2>
+		</div>
+		
+		
+		<div class="well" style="padding: 50px;">
+			
+
+			<form action="" method="post" id="tab" role="form">{% csrf_token %}
+		
+				{% if success %}
+				<div class="alert alert-success">
+					<button type="button" class="close" data-dismiss="alert">×</button>
+				 	 Your settings have been updated.
+				</div>
+				{% endif %}
+		
+						
+				{% if 0 %}		 {# 2015-03-10: hidden #}	
+					 {% if form.privateUser.errors %}
+					     <div class="alert alert-danger">
+					         <button type="button" class="close" data-dismiss="alert">×</button>
+					         {{ form.privateUser.errors.as_text|cut:"* " }}
+					     </div>
+					 {% endif %}
+ 
+		 			<div class="form-group">
+						<label class="checkbox" for="id_privateUser">
+					 {# <input type="checkbox" name="isprivate" id="id_isprivate" class="input-xlarge" value="{{form.isprivate.value}}"/> #}
+						{{ form.privateUser}}
+			
+						<b>Private profile</b>: I do not want my profile to appear in the users list</i>
+						</label>
+					</div>
+
+					<span class="text-muted" id="">
+						Note: your public content will still be viewable by anyone who has the correct url.
+					</span>
+	
+					<br /><br />
+				{% endif %}
+
+				 {% if form.privateKonceptDefault.errors %}
+				     <div class="alert alert-danger">
+				         <button type="button" class="close" data-dismiss="alert">×</button>
+				         {{ form.privateKonceptDefault.errors.as_text|cut:"* " }}
+				     </div>
+				 {% endif %}
+ 
+				<label class="checkbox" for="id_privateKonceptDefault">
+				     {# <input type="checkbox" name="isprivate" id="id_isprivate" class="input-xlarge" value="{{form.isprivate.value}}"/> #}
+				{{ form.privateKonceptDefault}}
+				<b>Default Private</b>: when a new {{SNIPPET_LABEL}} or {{KONCEPT_LABEL}} is created, it should always default to private.</i>
+				</label>
+				<span class="text-muted" id="">
+					Note: you can still update privacy settings for individual items later on.
+				</span>	
+			
+				<br /><br /><br />
+		
+				<div>
+		    	    <button type="submit" class="btn btn-primary">Update</button>
+		    	</div>
+		    </form>
+	
+		</div>  
+
+		
+    </div>
+	{# END OF MAIN CONTENT #}
+	
+	
+	
+	{# SIDEBAR #}
+    <div class="col-md-3 col-md-pull-8">
+
+		{% include "bstrap3.2.0/components/dashboard-nav.html" %}
+		
+    </div>
+	{# END OF SIDEBAR #}
+	
+	
+	
+  </div>
+  
+
+{% endblock pagecontents %}

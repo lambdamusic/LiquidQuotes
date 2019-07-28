@@ -1,0 +1,33 @@
+
+
+
+
+<br />
+
+{% if ideas_search %}
+	
+	
+	<small class="text-muted" style="margin-left: 0px; font-size: 50%;">
+		(or search '{{searchval}}' in your: <a href="{% url search_user_quotes person.username %}{% if searchval %}?q={{searchval}}{% endif %}" class="bluelink underline">{{SNIPPET_LABEL}}s</a> or <a href="{% url search_user_documents person.username %}{% if searchval %}?q={{searchval}}{% endif %}" class="bluelink underline">{{DOCUMENT_LABEL}}s</a>)
+	</small>
+	
+{% endif %}
+
+{% if documents_search %}
+
+	<small class="text-muted" style="margin-left: 0px; font-size: 50%;">
+		(or search '{{searchval}}' in your: <a href="{% url search_user_quotes person.username %}{% if searchval %}?q={{searchval}}{% endif %}" class="bluelink underline">{{SNIPPET_LABEL}}s</a> or <a href="{% url search_user_koncepts person.username %}{% if searchval %}?q={{searchval}}{% endif %}" class="bluelink underline">{{KONCEPT_LABEL}}s</a>)
+	</small>
+	
+{% endif %}
+
+{% if snippets_search %}
+
+
+	<small class="text-muted" style="margin-left: 0px; font-size: 50%;">
+		
+		View <a href="#searchfilters" class="underline">more filters</a> or 
+		or search '{{searchval}}' in your <a href="{% url search_user_koncepts person.username %}{% if searchval %}?q={{searchval}}{% endif %}" class="-bluelink underline">{{KONCEPT_LABEL}}s</a> or <a href="{% url search_user_documents person.username %}{% if searchval %}?q={{searchval}}{% endif %}" class="-bluelink underline">{{DOCUMENT_LABEL}}s</a>
+	</small>
+
+{% endif %}

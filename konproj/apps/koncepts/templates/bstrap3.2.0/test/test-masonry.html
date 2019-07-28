@@ -1,0 +1,153 @@
+{% extends "bstrap3.2.0/base.html" %}
+{% load konceptstags %}
+
+
+
+
+{% block extrahead %}
+
+
+<style type="text/css" media="screen">
+*, *:before, *:after {box-sizing:  border-box !important;}
+
+
+.row {
+ -moz-column-width: 27em;
+ -webkit-column-width: 27em;
+ -moz-column-gap: 1em;
+ -webkit-column-gap:1em; 
+  
+}
+
+.item {
+ display: inline-block;
+ padding:  .25rem;
+ width:  100%; 
+}
+
+.innerwell {
+ position:relative;
+ display: block;
+ margin-bottom: 30px;
+}
+
+.well {
+ position:relative;
+ display: block;
+}
+
+</style>
+
+	
+{% endblock extrahead %}
+
+
+{% block pagecontents %}
+
+
+	
+
+	<div class="container">
+	  <h1>Masonry CSS with Bootstrap</h1>
+	  
+	  
+	  	{% if 0 %}
+		{# default #}
+		<div class="row">
+			
+			
+			{% for d1 in data  %}
+			    <div class="item">
+			      <div class="well"> 
+			        {{d1.text}}
+			      </div>
+			    </div>
+
+			{% endfor %}
+			
+			
+		</div>
+		{% endif %}
+	  
+	  
+		<div class="row">
+		
+			{% with data as snippets%}
+			
+			{% for snippet in snippets  %} 
+			
+			<div class="item">
+				<div class="innerwell">
+					
+				
+			
+					{# ROW ABOVE QUOTE #}
+					<div id="above_snippet" class="row">
+				
+						<div class="text-left col-md-4 -col-md-offset-1">
+
+						<small class="text-muted -badge" style="margin-left: 10px;">{{forloop.counter}} / {{snippets|length}}</small>
+						 <a name="fragment{{snippet.orderno}}"></a> {# so make internal anchors work #}	
+						 </div>
+				 
+						 <div class="text-right col-md-8">
+							  {% with snippet_buttons_above=1 %}	
+							  		{% include "bstrap3.2.0/components/buttons.html" %}
+							  {% endwith %}
+
+					 	 </div>
+			 
+					 </div>
+					  <a name="fragment{{snippet.orderno}}"></a> {# so make internal anchors work #}	
+			 
+
+					{# QUOTE #}
+					 <div style="margin-top: -10px;">
+
+
+					  {% with test_masonry_page=1 %}	
+					  		{% include "bstrap3.2.0/components/snippet_preview.html" %}
+					  {% endwith %}
+
+
+
+					  <hr>
+					</div>
+					
+				</div> {# end of innerwell #}
+
+			
+			</div>  {# end of item #}
+
+			
+			{% endfor  %} 
+			{% endwith %}
+			
+		
+
+		</div>
+	</div>
+	
+
+
+{% endblock  %}
+
+
+
+
+{% block closingbody %}
+
+	{# 	 #}
+	{# <script> #}
+	{# $(function () #}
+	{# 	{ $(".doc_list_item").popover({   // can be tooltip too #}
+	{# 		placement: 'top',  #}
+	{# 		trigger: 'click',  #}
+	{# 		html: true, #}
+	{# 		delay: { show: 500, hide: 300 }, #}
+	{# 	}); #}
+	{# }); #}
+	{# </script> #}
+
+
+{% endblock  %}

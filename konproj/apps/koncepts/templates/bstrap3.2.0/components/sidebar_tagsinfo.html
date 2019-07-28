@@ -1,0 +1,139 @@
+{# note this is the doc info, but no in sidebar anymore #}
+
+
+
+ {% load konceptstags %} 
+
+
+
+ {# ==TAGS=== #}
+ 
+ {% if not document_detail_page and not search_quotes_page %}
+
+	<h5 class="text-{{ALIGNMENT|default:'right'}}"	>{{SUBJECT_LABEL|upper}}S
+
+	{% if quote_detail_page_side and mykoncepts %}
+				
+		<a href="javascript:editQuoteSubjects('{{snippet.id}}', '{{snippet.subjects.all|printmany:"name"|escapejs}}')" title="Edit {{ SUBJECT_LABEL }}s" class="quietlink" style="text-decoration: none;">
+			&nbsp;<i class="glyphicon glyphicon-edit quietlink5"></i>
+		</a>
+
+	{% endif %}
+	</h5>
+
+ 	
+{% endif %}
+
+
+{% if not search_quotes_page %}
+    <hr>
+{% endif %}
+
+
+
+<div id="tags2_{{snippet.id}}">
+{% block snippet_tags_snippet %}
+
+	
+	 <p class="text-{{ALIGNMENT|default:'right'}} {% if document_detail_page or search_quotes_page %}docpage_snippet_tags{% endif %}">
+		
+		{% if snippet.subjects.all %}
+		
+			
+			{% for c in snippet.subjects.all  %}
+															
+				<a href="{{c.get_absolute_url}}" title="{{SUBJECT_LABEL}}: {{c.name}}" class="btn btn-xs btn-warning">
+					<span class="glyphicon glyphicon-tag icon-xs" aria-hidden="true"></span>&nbsp;{{c.name|capfirst}}
+				</a>
+
+                {% if forloop.last %}
+
+                    {% if 1 and mykoncepts and search_quotes_page %}
+{#   2016-07-24: works but after saving it's badly aligned - @todo       #}
+                         <a href="javascript:editQuoteSubjects('{{snippet.id}}', '{{snippet.subjects.all|printmany:"name"|escapejs}}')" title="Edit {{ SUBJECT_LABEL }}s" class="quietlink" style="text-decoration: none; font-size: 90%;">
+				&nbsp;<i class="glyphicon glyphicon-edit quietlink5"></i>
+			            </a>
+
+
+                    {% endif %}
+
+                {% else %}
+                    <br />
+                {% endif %}
+
+				
+				
+			{% endfor %}
+
+
+
+
+
+
+		{% else %}
+
+{#		if not subject available	            #}
+			
+			{% if mykoncepts and not quote_detail_page_side  and not document_detail_page %}
+
+			{# == EDIT COMMANDS=== #}
+			{# 2016-05-08: document_detail_page cannot be edited, more work needed  #}
+
+
+				<a href="javascript:editQuoteSubjects('{{snippet.id}}', '{{snippet.subjects.all|printmany:"name"|escapejs}}')" title="Edit {{ SUBJECT_LABEL }}s" class="text-muted" style="text-decoration: none; font-size: 80%;">
+					No {{SUBJECT_LABEL}}s.&nbsp;<i class="glyphicon glyphicon-edit quietlink5"></i>
+				</a>
+
+		
+			{% else %}
+			
+				<span class="text-muted notags">No {{SUBJECT_LABEL}}s.</span>
+				
+			{% endif %}
+			
+
+		
+		{% endif %}
+		
+		</p>
+		
+		
+		
+		
+		{# == MODIFY COMMANDS IF THERE ARE TAGS === #}
+			
+		{% if snippet.subjects.all and mykoncepts and not quote_detail_page_side and not document_detail_page and not search_quotes_page %}
+
+
+		<p class="text-{{ALIGNMENT|default:'right'}}" style="">
+				
+			
+			<a href="javascript:editQuoteSubjects('{{snippet.id}}', '{{snippet.subjects.all|printmany:"name"|escapejs}}')" title="Edit {{ SUBJECT_LABEL }}s" class="quietlink" style="text-decoration: none; font-size: 100%;">
+				&nbsp;Change&nbsp;<i class="glyphicon glyphicon-edit quietlink5"></i>
+			</a>
+
+
+		</p>
+		
+		{% endif %}
+
+
+</div>
+
+{% endblock %}
+
+
+
+
+	
+
+	
+	
+
+
+	 
+
+	
+		
+	
+	

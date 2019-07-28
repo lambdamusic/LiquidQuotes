@@ -1,0 +1,99 @@
+{% extends "bstrap3.2.0/base.html" %}
+{% load konceptstags %}
+
+
+
+
+
+{% block belownavigation %}
+
+
+	{% with people_list=1 %}
+		{% include "bstrap3.2.0/components/navbar_second.html" %}
+	{% endwith %}
+
+{% endblock belownavigation %}
+
+
+
+
+
+
+{% block pagecontents %}
+
+
+<div class="container" >
+	
+{% for person in page_object.object_list  %}
+	
+	
+	
+<div class="row" style="margin-top: 40px;">
+
+
+	
+  	<div class="col-md-2 well text-center">
+		
+		<a class="" href="{% url person_public_page person.username %}">
+			<span class="glyphicon glyphicon-user bigicon" aria-hidden="true" ></span>
+		</a>	
+		<br /><br />
+		<h1 class="lead">				
+			<a class="" href="{% url person_public_page person.username %}">{{person.profile.pretty_name|capfirst}}</a>	
+			
+			{% ifequal person.id request.user.id %}(you!){% endifequal %}
+		</h1>
+		
+	</div>
+	
+  	<div class="col-md-2 col-md-offset-1">
+		<h5 class="text-muted">{{SNIPPET_LABEL}}s: </h5>
+		<span style="font-size: 32px;">
+		{% ifequal person.id request.user.id %}
+			{{person.profile.get_fragments_private|length}}
+		{% else %}
+			{{person.profile.get_fragments|length}}
+		{% endifequal %}
+		</span>
+		
+	</div>
+	
+	
+  	<div class="col-md-5 ">
+		
+		{% if person.profile.get_koncepts_public_recent %}
+			<h5 class="text-muted">Recent {{KONCEPT_LABEL}}s:</h5>
+			{% for k1 in person.profile.get_koncepts_public_recent  %}
+				<p class="lead">
+					&gt;&nbsp;<a href="{{k1.get_absolute_url}}" title="{{k1.name|truncatewords:5}}" class=" konceptcolor">
+						{{k1.name}}
+					</a>
+				</p>
+			{% endfor %}
+		{% endif %}
+		
+	</div>
+	
+	
+	
+</div> {# ends row #}
+
+<hr >
+{% endfor %}
+</div>
+
+
+
+		
+		{% include "bstrap3.2.0/components/paginator.html" %}
+
+ 
+
+	{# ends routine #}
+
+
+
+{% endblock pagecontents %}
+
+
+

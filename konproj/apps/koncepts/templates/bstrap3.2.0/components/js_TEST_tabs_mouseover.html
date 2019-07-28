@@ -1,0 +1,21 @@
+
+	
+	<script type="text/javascript" charset="utf-8">
+			
+	// make tabs open via mouse over
+	// http://stackoverflow.com/questions/9815247/how-to-make-with-twitter-bootstrap-tabs-on-hover-instead-of-clicking
+
+	    $('.nav-tabs > li ').hover( function(){
+	     if($(this).hasClass('hoverblock'))
+	         return;
+	     else
+	     $(this).find('a').tab('show');
+		});
+	
+	
+	$('.nav-tabs > li').find('a').click( function(){
+	 	   $(this).parent()
+	     .siblings().addClass('hoverblock');
+		});
+	
+	</script>

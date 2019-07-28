@@ -1,0 +1,25 @@
+
+{% load konceptstags %}
+
+
+<ul class="nav nav-pills nav-stacked well">
+
+	<li role="presentation" class="{{request|dtabs_getclass:'profile'}}"> 
+		<a href="{% url profile request.user %}"><span class="glyphicon glyphicon-user"></span> Profile</a>
+	</li>
+	<li role="presentation" class="{{request|dtabs_getclass:'settings'}}"> 
+		<a href="{% url settings request.user %}"><span class="glyphicon glyphicon-adjust"></span> Settings</a>
+	</li>
+	
+	
+		 
+	{% if 0 and TESTING_FEATURE_FLAG %}		
+	  <li class="{{request|dtabs_getclass:'inbox'}}">
+		<a href="{% url inbox request.user %}"><span class="glyphicon glyphicon-inbox"></span> Inbox <span class="badge badge-info">4</span></a></li>
+	  <li class="{{request|dtabs_getclass:'comments'}}">
+		<a href="{% url comments request.user %}"><span class="glyphicon glyphicon-comment"></span> Comments <span class="badge badge-info">10</span></a></li>
+	{% endif %}	
+	
+	
+	
+</ul>

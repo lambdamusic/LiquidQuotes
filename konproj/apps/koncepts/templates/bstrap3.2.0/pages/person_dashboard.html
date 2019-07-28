@@ -1,0 +1,418 @@
+{% extends "bstrap3.2.0/base.html" %}
+{% load konceptstags %}
+
+
+
+
+{% block extrahead %}
+
+	<!-- Load c3.css -->
+    <link href="{{ STATIC_URL }}libs/c3-0.4.9/c3.css" rel="stylesheet">
+	
+{% endblock extrahead %}
+
+
+
+
+
+
+{% block belownavigation %}
+
+
+	{% with person_public_page=1 %}
+		{% include "bstrap3.2.0/components/navbar_second.html" %}
+	{% endwith %}
+
+{% endblock belownavigation %}
+
+
+
+
+{% block pagecontents %}
+
+
+
+{# =========== #}
+{# FIRST row #}
+{# =========== #}
+
+<div class="row" style="margin-top: 60px;">
+	
+	{# FIRST COLUMN #}
+	
+  <div class="col-md-3 margin-bottom-50">
+	  
+       <h2 class="text-info">
+  		 <span class="glyphicon glyphicon-user" aria-hidden="true" style="font-size: 60px;"></span>
+  		 <br /><br />
+    		{{person.profile.pretty_name|capfirst}}</a>			
+    	 </h2>
+	 
+
+
+  	<p class="text-muted">Member since: {{person.date_joined|date}}
+  		<br />
+  		<small>
+  			<a href="{% url profile request.user %}">
+  				<span class="glyphicon glyphicon-pencil icon-xm"></span>&nbsp;Edit profile
+  			</a>
+  		</small>
+  	</p>
+	
+  	<br />
+	{% if 0 %}
+	  	<h5 class="">{{SNIPPET_LABEL}}s: 
+	  		&nbsp;<a href="{% url search_user_quotes request.user.username %}" class="btn btn-info btn-xs">{{totFrags}}</a></h5>
+	  	<h5 class="">{{DOCUMENT_LABEL}}s:
+	  		&nbsp;<a href="{% url search_user_documents request.user %}" class="btn btn-info btn-xs">{{totDocuments}}</a></h5>
+	  	<h5 class="">{{KONCEPT_LABEL}}s:
+	  		&nbsp;<a href="{% url search_user_koncepts request.user.username  %}" class="btn btn-info btn-xs">{{totKoncepts}}</a></h5>
+	{% endif %}
+		
+		
+  </div> 
+
+
+
+  <div class="col-md-9 ">
+	  
+	  <div class="well margin-bottom-50">
+	  	
+	  	  <div id="custom-search-input">
+	  	      <div class="input-group col-md-12">
+				  <form role="search" method="get" id="search_form" action="{% if ideas_search or k1 %}{% url search_user_koncepts request.user.username %}{% else %}{% url search_user_quotes request.user.username %}{% endif %}">
+	  	          <input type="text" class="search-query form-control" placeholder="Search" name="q" />
+				  </form>
+	  	          <span class="input-group-btn">
+	  	              <button class="btn btn-info" type="button">
+	  	                  <span class=" glyphicon glyphicon-search"></span>
+	  	              </button>
+	  	          </span>
+				  
+	  	      </div>
+	  	  </div>
+	  
+	  </div>
+			  
+					  
+	  <div style="margin-top: 100px;">
+		  <h4 class="text-muted">Activity</h4>
+		  <hr>
+	  
+		  <div id="chart">	  	
+		  </div>
+	  </div>
+  </div> 
+  
+  
+</div>
+
+
+{# =========== #}
+{# SECOND row #}
+{# =========== #}
+
+
+<div class="row" style="margin-top: 60px;">
+	
+	
+
+
+    <div class="col-md-3 margin-bottom-50">
+	  	  
+
+	  	<h4 class="text-muted">Recent:
+			&nbsp;<span class="glyphicon glyphicon-info-sign jstooltip icon-xs"  title="Use these tabs to review what you have been working on recenlty."></span>
+		</h4>
+		<hr>
+
+	
+  	</div>
+	
+	
+	
+	
+	<div class="col-md-9 margin-bottom-50">
+		
+
+					<div role="tabpanel">
+
+					  <!-- Nav tabs -->
+					  <ul class="nav nav-tabs" role="tablist">
+					    <li role="presentation" class="active"><a href="#tab1" aria-controls="home" role="tab" data-toggle="tab" class="quietlink4">{{SNIPPET_LABEL}}s</a></li>
+					    <li role="presentation"><a href="#tab2" aria-controls="profile" role="tab" data-toggle="tab" class="quietlink4">{{DOCUMENT_LABEL}}s</a></li>
+					    <li role="presentation"><a href="#tab3" aria-controls="messages" role="tab" data-toggle="tab" class="quietlink4">{{KONCEPT_LABEL}}s</a></li>
+					    <li role="presentation"><a href="#tab4" aria-controls="settings" role="tab" data-toggle="tab" class="quietlink4">More..</a></li>
+					  </ul>
+
+					  <!-- Tab panes -->
+					  <div class="tab-content">
+					    <div role="tabpanel" class="tab-pane active" id="tab1">
+					    	
+				  			{% if recentSnippets %}
+		
+				  				{% for snippet in recentSnippets  %}
+		
+		
+				  					<div class="row tab-content" style="margin-top: 20px;">
+			
+				  						<div class="col-md-2" style="margin-bottom: 20px;">
+				  							<hr>
+				  							{# <a class="konceptcolor" href="{{ snippet.get_absolute_url }}">{{snippet.title}}</a> #}
+							
+				  							<span id="{{snippet.id}}_title" class="snippetTitle">{{snippet.title}}</span>
+							
+				  						</div>
+						
+						
+						
+						
+				  						<div class="col-md-8 col-md-offset-1">
+				
+				  						    {% with person_public_page=1 %}
+				  							    		{% include "bstrap3.2.0/components/snippet_preview.html" %} 
+				  						    {% endwith %}
+				
+				  						</div>
+			
+
+			
+				  					</div>   
+				  					{# END OF SNIPPET ROW #}
+		
+		
+		
+				  				{% endfor %}
+		
+	  
+				  		  {% else %}
+		  
+				  			<br /><br />
+				  			<div class="alert alert-info" role="alert">
+				
+				  				Heads up! <br />You haven't created any content yet.
+				
+				  			</div>
+			
+				  		  {% endif %}
+							
+					    </div>
+						
+						{# end of tab1 #}
+						
+					    <div role="tabpanel" class="tab-pane" id="tab2">
+					    	
+							{% if recentDocuments %}
+				  			{% for d1 in recentDocuments  %}
+							
+								{% include "bstrap3.2.0/components/table_document.html" %}
+
+				  			{% endfor %}
+							
+							
+							
+				  			&nbsp;&nbsp;<a href="{% url search_user_documents request.user %}" style="font-size: 100%; margin-top:15px;" class="btn btn-lg btn-info text-right">View all</a>
+	
+							{% else %}
+								<small class="text-muted">You haven't added any {{DOCUMENT_LABEL}}s yet</small>
+							{% endif %}
+							
+					    </div>
+						
+						{# end of tab2 #}
+						
+					    <div role="tabpanel" class="tab-pane" id="tab3">
+					    	
+							{% if recentKoncepts %}
+					  			{% for k1 in recentKoncepts  %}
+								
+								{% include "bstrap3.2.0/components/table_koncepts2.html" %}
+								
+					  			{% endfor %}
+			
+				  			&nbsp;&nbsp;<a href="{% url search_user_koncepts request.user.username  %}" style="font-size: 100%; margin-top:15px;" class="btn btn-lg btn-info text-right">...view all</a>
+							{% else %}
+								<small class="text-muted">You haven't created any {{KONCEPT_LABEL}}s yet</small>
+							{% endif %}
+							
+					    </div>
+						{# end of tab3 #}
+						
+					    <div role="tabpanel" class="tab-pane" id="tab4">
+					    	
+					    		<h5 class="margin-top-50">Your Kindle</h5>
+					    		<hr>
+					    	  {% if previousKindleImport %}
+
+					    			<a class="btn btn-info" href="{% url getLatestKindleImport %}" style="font-size: 100%;" rel="tooltip">Open latest highlights 
+					    			</a>
+
+					    	  {% else %}
+	  
+					  			<a class="btn btn-info" href="{% url importkindle %}" style="font-size: 100%;" rel="tooltip">Import highlights 
+					  			</a>
+
+					    	  {% endif %}
+	  
+	  
+	  
+					    		<h5 class="margin-top-50">Your Tags</h5>
+					    		<hr>
+	
+					      		<p class="" style=" margin-top: 20px;">
+					      		{% if tagCloud %}
+					  				{% for tag in tagCloud  %}
+					  	    			<a href="{% url search_user_quotes person %}?tag={{tag.name}}" class='text-info' title="tag: #{{tag.name}}" style="font-size: {{tag.count|tagcloud_sizing:8}}pt;">
+					  	    				<span>{{tag.name}}</span>
+					  	    			</a>
+					  	    		{% endfor %}
+					  			{% else %}
+					  				<small class="text-muted">You haven't added any tags yet</small>
+					  			{% endif %}
+					      		</p>
+							
+							
+					    </div>
+						{# end of tab4 #}
+						
+					  </div>
+
+					</div>
+		
+		
+		
+
+	</div>
+	
+
+
+	
+	
+	
+	
+	
+</div>  {# ROW ENDS #}
+
+
+
+
+
+<br /><br />
+
+{% endblock pagecontents %}
+
+
+
+
+
+{% block beforefooter %}
+
+	{% with person_dashboard=1 %}
+		{% include "bstrap3.2.0/components/bottom_chronobar.html" %}
+	{% endwith %}  
+
+
+	<br /><br /><br /><br /><br />
+	
+{% endblock beforefooter %}
+
+
+
+
+
+
+{% block closingbody %}
+
+
+	<!-- Load d3.js and c3.js -->
+	<script src="{{ STATIC_URL }}libs/d3-v3/d3.min.js" charset="utf-8"></script>
+	<script src="{{ STATIC_URL }}libs/c3-0.4.9/c3.min.js"></script>
+	
+	
+	<script type="text/javascript">
+				
+    // ['data1', 30, 20, 50, 40, 60, 50],
+    // ['data2', 200, 130, 90, 240, 130, 220],
+    // ['data3', 300, 200, 160, 400, 250, 250]
+	
+	
+	var chart = c3.generate({
+	    data: {
+	        columns: [
+				
+				{% for k,v in creationStats.data.items  %}
+					['{{k}}', {% for val in v %}{{val}},{% endfor %}],						
+				{% endfor %}
+
+	        ], 
+			types: {
+				{% for k,v in creationStats.data.items  %}
+					{{k}} : 'area-spline',					
+				{% endfor %}
+           	 // 'line', 'spline', 'step', 'area', 'area-step' are also available to stack
+       	 		},
+       		 groups: [[{% for k,v in creationStats.data.items  %}'{{k}}',{% endfor %}]]
+	    	},
+	    axis: {
+	        x: {
+	            type: 'category',
+	            categories: [{% for val in creationStats.categories %}'{{val}}',{% endfor %}]
+	        }
+	    }		
+		
+	});
+
+	
+	
+	
+	//
+	// var chart = c3.generate({
+	//     data: {
+	// 		x: 'x',
+	// 		//  xFormat: '%Y%m', // 'xFormat' can be used as custom format of 'x'
+	//         columns: [
+	//
+	// 			{% for k,v in creationStats.items  %}
+	// 				{% ifequal k "x"  %}
+	// 				['{{k}}', {% for val in v %}'{{val}}',{% endfor %}],
+	// 				{% else %}
+	// 				['{{k}}', {% for val in v %}{{val}},{% endfor %}],
+	// 				{% endifequal %}
+	//
+	// 			{% endfor %}
+	//
+	//         ]
+	//     },
+	//     axis: {
+	//         x: {
+	//             type: 'timeseries',
+	//             tick: {
+	//                 format: '%Y-%m-%d'
+	//             }
+	//         }
+	//     }
+	//
+	//
+	// });
+	//
+	//
+	
+	
+	
+	
+	
+	</script>
+
+	{% include "bstrap3.2.0/components/js_confirmDelete.html" %}
+	
+	{% include "bstrap3.2.0/components/js_publicprivate.html" %}
+	{% include "bstrap3.2.0/components/js_pinquote.html" %}	
+	{% include "bstrap3.2.0/components/js_favoritequote.html" %}	
+	{% include "bstrap3.2.0/components/js_show_moretext.html"	%}
+	
+	{% include "bstrap3.2.0/components/js_addKoncept_toQuote.html"	%}
+	
+	
+{% endblock closingbody %}
+
+

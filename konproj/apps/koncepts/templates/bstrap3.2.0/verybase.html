@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>{% block page_title %}LiquidQuotes.com{% endblock %}</title>
+
+
+		<link rel='shortcut icon' href='{{ STATIC_URL }}custom/img/favicon.ico?v=4' type='image/x-icon'/ >
+		
+
+		{% block global_head %}
+			
+			{# 2014-12-09: trying using AGENCY CSS everywhere #}
+			
+			
+				{% if splashpage %}
+			   	 	<!-- Bootstrap Core CSS -->
+			   	 	<link href="{{ STATIC_URL }}libs/agency/css/bootstrap.min.css" rel="stylesheet">
+				{% else %}
+					 <link href="{{ STATIC_URL }}libs/bootswatch3.2/default/bootstrap.min.css" rel="stylesheet">
+				{% endif %}
+				
+			    <!-- Custom CSS -->
+			    <link href="{{ STATIC_URL }}libs/agency/css/agency.css" rel="stylesheet">
+
+			    <!-- Custom Fonts -->
+			    <link href="{{ STATIC_URL }}libs/agency/font-awesome-4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+				{# August 17, 2014: added a local version of all fonts #}
+			    {% include "bstrap3.2.0/components/agency_font_extra.html" %}
+
+
+			    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+			    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+			    <!--[if lt IE 9]>
+			        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+			        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+			    <![endif]-->
+			
+
+				<style type="text/css" media="screen">
+	
+					{% include "bstrap3.2.0/css.html" %}
+		
+				</style>
+				
+				{# needed to make previous autocomplete work  @todo: WILL IT WORK? #}
+				<link href="{{ STATIC_URL }}libs/bootstrap2.3.2/css/jqueryautocompletefix.css" rel="stylesheet">	
+				<link href="{{ STATIC_URL }}libs/bootstrap2.3.2/css/bootstrap-responsive.css" rel="stylesheet">
+				
+				
+				
+				<link rel='shortcut icon' href='{{ STATIC_URL }}custom/img/favicon.ico?v=4' type='image/x-icon'/ >
+				
+		{% endblock global_head %}
+		
+		
+
+
+
+		{% block extrahead %}
+			{# block to let pages add more stuff to the head element, eg js or css #}
+		{% endblock extrahead %}
+		
+		
+</head>
+
+<body id="page-top" class="index">
+
+	<div id="wrap">
+
+		{% block navigation %}
+	
+		{% endblock navigation %}
+
+
+		{% block messages %}
+	
+		{% endblock messages %}
+
+
+		{% block belownavigation %}
+	
+		{% endblock belownavigation %}
+		
+		
+
+		{% block contents %}
+	
+		{% endblock contents %}
+	
+	</div>	
+	
+	
+
+    {% block beforefooter %}
+		
+    {% endblock beforefooter %}
+	
+	
+	
+	{% block footer %}
+	
+	{% endblock footer %}
+
+
+
+
+	{% block global_js %}
+
+	
+	{% endblock global_js %}
+	
+	
+	
+	
+	{% block closingbody %}
+	
+		{# block to let pages add more stuff right before closing the body elemnt, eg js #}		
+		
+	{% endblock closingbody %}
+	
+	
+	{% include "bstrap3.2.0/components/analytics.html" %}
+	
+	
+</body>
+
+</html>

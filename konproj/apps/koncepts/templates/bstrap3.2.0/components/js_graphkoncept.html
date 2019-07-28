@@ -1,0 +1,134 @@
+
+
+<script type="text/javascript">
+  // var nodes = null;
+  // var edges = null;
+  var network = null;
+
+  var data_graph1 = {
+    nodes: {{mynodes_relatedSources|safe}},
+    edges: {{myedges_relatedSources|safe}}
+  };
+  
+  {% if 0 %}
+	  var data_graph2 = {
+	    nodes: {{mynodes_similarKoncepts|safe}},
+	    edges: {{myedges_similarKoncepts|safe}}
+	  };
+  {% endif %}  
+  
+  function draw_graph(data, element) {
+
+    // create a network
+    var container = document.getElementById(element);
+
+    var options = {
+	  navigation: true,
+	  // keyboard: true,
+      stabilize: true, 
+   	   physics: {
+   	       barnesHut: {
+   	           enabled: false,
+   	           gravitationalConstant: -12000,
+   	           centralGravity: 0.001,
+   	           springLength: 100,
+   	           springConstant: 0.04,
+   	           damping: 0.1
+   	       }
+	   },
+	  groups: {
+	    group_koncept: {
+	      shape: 'box',
+	      color: {
+		      background: 'white',
+		      border: 'red',
+		      highlight: {
+		        background: 'pink',
+		        border: 'red'
+		      }
+	      }
+	    },
+	    group_source: {
+	      shape: 'box',
+	      color: {
+		      background: "#97C2FC",
+		      border: "#2B7CE9",
+		      highlight: {
+		        background: "#D2E5FF",
+		        border: 'blue'
+		      }
+	      }
+	    },
+	    group_root: {
+	      shape: 'box',
+          fontSize: 18,
+	      color: {
+		      background: 'yellow',
+		      border: 'red',
+		      highlight: {
+		        background: 'yellow',
+		        border: 'red'
+		      }
+	      }
+	    }
+	    // add more groups here
+	  },
+	  
+      edges: {
+		style:'arrow'
+	   }
+    };
+    network = new vis.Network(container, data, options);
+	
+
+	function onSelect (properties) {
+		if (properties.nodes) {
+			// var temp = properties.nodes[0];
+			// $("#graphnode_info").text("Please double click on a node to open its homepage.");
+		} else {
+			// $("#graphnode_info").text("");
+		}
+	}
+
+
+	function onDbClick (properties) {
+		if (properties.nodes) {
+			if (properties.nodes[0].substring(0, 2) == "k_") {
+				var temp = properties.nodes[0].substring(2);
+				var usr = "{{person.username}}";
+				var path = "{{KONCEPT_LABEL|lower}}s";
+				window.location.href="/" + usr + "/" + path + "/" + temp;
+			}
+			
+			if (properties.nodes[0].substring(0, 2) == "s_") {
+				var temp = properties.nodes[0].substring(2);
+				var usr = "{{person.username}}";
+				var path = "{{DOCUMENT_LABEL|lower}}s";
+				window.location.href="/" + usr + "/" + path + "/" + temp;
+			} 
+			
+		}
+	}
+		
+	network.on('select', onSelect);
+	network.on('doubleClick', onDbClick);
+	
+  }  // end of draw_graph function
+
+	 
+  	draw_graph(data_graph1, 'graph-div-1');
+
+	// draw_graph(data_graph2, 'graph-div-2');
+	
+	// OLD WAY: NEED TO DRAW ONLY WHEN TAB IS ACTIVATED - WONT WORK OTHERWISE
+
+	// $('.nav-tabs a[href="#tab3"]').on('shown.bs.tab', function (e) {
+	// 	draw_graph(data_graph1, 'graph-div-1');
+	// });
+	
+	// $('.nav-tabs a[href="#tab4"]').on('shown.bs.tab', function (e) {
+	// 	draw_graph(data_graph2, 'graph-div-2');
+	// });
+
+	
+</script>

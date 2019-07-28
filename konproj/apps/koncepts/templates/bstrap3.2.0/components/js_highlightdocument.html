@@ -1,0 +1,67 @@
+
+
+{# August 26, 2014: slideDown only the snippets related to a specific topic  #}
+
+
+
+<script>
+
+
+$("a.kon_list_click").click(function() {
+	
+	$("#selection_info").hide();
+	
+	if ($(this).hasClass("topicHighlighted")) {
+		$(this).removeClass("topicHighlighted");
+		
+	} else {
+		$("a.kon_list_click").removeClass("topicHighlighted");
+		$(this).addClass("topicHighlighted");
+	}
+	
+	var temp = $("a.kon_list_click.topicHighlighted");
+	
+	// always activate the quotes tab [tab1]
+	$('.nav-tabs a[href="#tab1"]').tab('show');
+	
+	if (temp.length > 0) {
+		
+		topicId = temp.attr('id');
+	    
+		$( "div.snippetdiv" ).each(function( i ) {
+	      if ( $(this).hasClass(topicId)) {
+	        $(this).parent().parent().slideDown( "slow");
+	      } else {
+	        $(this).parent().parent().slideUp( "slow");
+	      }
+	    });
+		
+		// show the extra info
+		// removed on August 30, 2014
+		// var t = temp.next().next().(".kon_list_badge").html();
+		var t = $("#"+topicId+"_badgeinfo").html();
+		$("#selection_info").html(t);
+		$("#selection_info").show();
+		
+			
+		
+	} else {
+		
+		$( "div.snippetdiv" ).each(function( i ) {
+	        $(this).parent().parent().slideDown( "slow");
+		 });
+		
+	}
+	
+	//scroll to the top 
+	
+  	$('html, body').animate({		
+  	        scrollTop: $('#document_detail_page').offset().top - 120
+  	    }, 1000);
+		
+		
+	return false;
+});
+
+
+</script>

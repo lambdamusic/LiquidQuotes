@@ -1,0 +1,209 @@
+{% extends "bstrap3.2.0/base.html" %}
+{% load konceptstags %}
+
+
+
+
+
+
+
+{% block belownavigation %}
+
+
+	{% with person_snippets=1 %}
+		{% include "bstrap3.2.0/components/navbar_second.html" %}
+	{% endwith %}
+
+{% endblock belownavigation %}
+
+
+
+
+
+{% block pagecontents %}
+
+
+<div class="container">
+	
+	<div class="row  margin-top-50">
+		
+	<div class="col-md-8">
+		{% with snippets_search=1 %}
+			{% include "bstrap3.2.0/components/search_results_top.html" %}
+		{% endwith %}
+	</div>
+	
+	{% with snippets_search=1 %}
+	{% include "bstrap3.2.0/components/search_box.html" %}
+	{% endwith %}
+	
+	
+	
+	</div>
+	
+	<div class="row ">
+		<hr>
+	</div>	
+</div>	
+
+				
+<div class="row -margin-top-50" style="margin-top: 30px;">
+	
+	<div class="container">
+
+			
+		{% if not page_object.object_list %}
+	
+			{% include "bstrap3.2.0/components/firstlogin.html" %}
+
+		{% else %}
+
+			{% for snippet in page_object.object_list  %} 
+
+				{% ifchanged snippet.source %} 
+						
+					<div class="col-md-12 -well" {% if not forloop.first %}style="margin-top: 60px; margin-bottom: 20px;"{% endif %}>
+						
+						<h4 class="-text-info" style="line-height: 28px;">
+							<!-- <span class="label label-info">Source:</span>&nbsp; -->
+							<a href="{{snippet.source.get_absolute_url}}" class="quietlink8 text-info" title="View {{DOCUMENT_LABEL}} homepage">
+							<span class="glyphicon glyphicon-book"></span>
+							{{snippet.source.title|default:"(No title)"}}
+							</a>
+							
+						
+						{% if  snippet.source.url%}
+							<small>
+							&nbsp;&nbsp;
+							<a href="{{snippet.source.url}}" class="quietlink3" target="_blank">{{snippet.source.url}}</a>
+							</small>
+						{% endif %}
+						
+						</h4>
+
+						<hr>
+					</div>
+
+				{% endifchanged %}
+
+
+
+		<div class="col-md-11 col-md-offset-1">   
+					
+					{# ROW ABOVE QUOTE #}
+					<div id="above_snippet" class="row">
+						
+						<div class="text-left col-md-4 -col-md-offset-1">
+
+						<small class="text-muted -badge" style="margin-left: 10px;">{{forloop.counter0|snippetRelativeCount:page_object.start_index}} / {{page_object.totcount}}</small>
+						 <a name="fragment{{snippet.orderno}}"></a> {# so make internal anchors work #}	
+						 </div>
+						 
+						 <div class="text-right col-md-8">
+							  {% with snippet_buttons_above=1 %}	
+							  		{% include "bstrap3.2.0/components/buttons.html" %}
+							  {% endwith %}
+
+					 	 </div>
+					 
+					 </div>
+					 
+					{# QUOTE #}
+					<div style="margin-top: -10px;">
+	
+	
+					  {% with snippet_search_page=1 %}	
+					  {% with snippet_search_page_grouped=1 %}	
+					  		{% include "bstrap3.2.0/components/snippet_preview.html" %}
+					  {% endwith %}
+					  {% endwith %}
+		
+					  <hr>
+					</div>
+
+			
+			</div>  
+		
+
+			{% endfor %}
+			
+		{% endif %}
+		
+		
+		</div> 
+		{# CONTAINER ends #}
+</div>
+{# ROW ends #}
+
+
+
+<div class="container">
+    <div class="row">
+
+    {% include "bstrap3.2.0/components/paginator.html" %}
+
+    </div>
+</div>
+
+
+{# SIDEBAR AT BOTTOM - ALWAYS 2015-08-03 #}
+
+{% if 1 %}
+
+    <div class="container">
+        <div class="row">
+        <a name="searchfilters"></a>
+        <hr>
+
+            <div class="col-md-12 margin-bottom-50 -well">
+
+                {% with snippets_search=1 %}
+
+                {% include "bstrap3.2.0/components/search_filters_left.html" %}
+
+                {% endwith %}
+
+
+            </div>
+
+        </div>
+    </div>
+	
+{% endif %}
+{# END OF BOTTOM SIDEBAR #}
+	
+
+
+{% endblock pagecontents %}
+
+
+
+
+
+
+
+
+{% block closingbody %}
+
+
+	{% include "bstrap3.2.0/components/js_show_moretext.html"	%}
+	
+	{% include "bstrap3.2.0/components/js_editQuoteTitle.html"	%}
+	
+	{% include "bstrap3.2.0/components/js_editQuoteSubjects.html"	%}
+	
+	{% include "bstrap3.2.0/components/js_confirmDelete.html"	%}
+	
+	{% include "bstrap3.2.0/components/js_confirmDownload.html"	%}
+	
+	{% include "bstrap3.2.0/components/js_publicprivate.html" %}
+	
+	{% include "bstrap3.2.0/components/js_pinquote.html" %}
+	
+	{% include "bstrap3.2.0/components/js_favoritequote.html" %}
+	
+
+	
+{% endblock closingbody %}
+
+

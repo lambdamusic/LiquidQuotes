@@ -1,0 +1,139 @@
+ {% load konceptstags %} 
+
+
+
+
+
+
+{# =========== #}
+{# NAVIGATION FOR TOPIC-RELATED STUFF #}
+{# =========== #}
+
+{% if thread_navigation %}
+
+<div id="thread_navigation" style="background: rgb(239, 238, 255);">
+		 
+	<div class="container-fluid">
+
+
+	<div class="row" style="margin-top: 60px;margin-bottom: 40px;">
+		
+		<div class="col-md-3 col-md-offset-1" style="margin-bottom: 10px;">
+			<p>This {{SNIPPET_LABEL|lower}} appear in the {{KONCEPT_LABEL}}:</p>
+			
+			 {# <span class="glyphicon glyphicon glyphicon-map-marker"></span> #}
+			 
+			 <a href="{{snippet.get_interpretation.koncept.get_absolute_url}}" title="{{KONCEPT_LABEL}}: {{snippet.get_interpretation.koncept.name}}" 
+			 	class="kon_list_item undeline konceptcolor text-uppercase">{{snippet.get_interpretation.koncept.name}}</a>
+
+		</div>			
+		
+		
+		<div class="col-md-6">			
+				{% for fragment in snippet.get_interpretation.koncept.get_fragments %}
+						
+					
+					{% ifequal snippet.id fragment.id %}
+						<button type="button" class="btn btn-danger  btn-circle btn-llg disabled btn-collection"><i class="glyphicon glyphicon-ok icon-sm"></i>&nbsp;{{forloop.counter}}&nbsp;</button>
+					{% else %}
+						<a href="{{fragment.get_absolute_url}}" title="{{SNIPPET_LABEL}} Title: '{{fragment.title}}'" class="jstooltip">
+							<button type="button" class="btn btn-danger btn-circle btn-llg btn-collection">&nbsp;{{forloop.counter}}&nbsp;</button>
+						</a>
+					{% endifequal %}
+
+					
+				{% endfor %}	
+					
+				{# <button type="button" class="btn btn-default btn-circle btn-lg"><i class="glyphicon glyphicon-ok"></i></button> #}
+				{# <button type="button" class="btn btn-primary btn-circle btn-lg"><i class="glyphicon glyphicon-list"></i></button> #}
+				{# <button type="button" class="btn btn-success btn-circle btn-lg"><i class="glyphicon glyphicon-link"></i></button> #}
+				{# <button type="button" class="btn btn-info btn-circle btn-lg"><i class="glyphicon glyphicon-ok"></i></button> #}
+				{# <button type="button" class="btn btn-warning btn-circle btn-lg"><i class="glyphicon glyphicon-remove"></i></button> #}
+				{# <button type="button" class="btn btn-danger btn-circle btn-lg"><i class="glyphicon glyphicon-heart"></i></button>	 #}
+					
+	 
+		</div>
+		
+		
+
+	</div>
+	</div>
+</div>
+
+{% endif %}  
+
+
+
+
+
+
+
+{# =========== #}
+{# NAVIGATION FOR SOURCE-RELATED STUFF #}
+{# =========== #}
+
+{% if source_navigation %}
+
+<div id="quote_navigation" style="background: rgb(239, 250, 238);">
+		 
+	<div class="container-fluid">
+
+	 
+	 
+	<div class="row" style="margin-top: 60px;margin-bottom: 40px;">
+		
+		<div class="col-md-3 col-md-offset-1" style="margin-bottom: 10px;">
+			<p>Other {{SNIPPET_LABEL|lower}}s from the same {{DOCUMENT_LABEL}}:</p>
+			
+			 {# <span class="glyphicon glyphicon-book"></span>&nbsp; #}
+			 <a href="{{snippet.source.get_absolute_url}}" class="-sourceLink -snippetsourceinfo text-info" title="Open {{DOCUMENT_LABEL|lower}}: '{{snippet.source.title}}'">{{snippet.source.title|upper}}</a>
+
+			 {% if 0 and snippet.source.url %}
+			 <br /><a href="{{snippet.source.url}}" class="sourceLinkUrl bluelink" title="Open link in new window" target="_blank">{{snippet.source.get_url_domain}}</a>
+			 {% endif %}
+		</div>			
+		
+		
+		<div class="col-md-6">			
+				{% for fragment in snippet.source.get_snippets %}
+						
+					
+					{% ifequal snippet.id fragment.id %}
+						<button type="button" class="btn btn-info  btn-circle btn-llg disabled btn-collection"><i class="glyphicon glyphicon-ok icon-sm"></i>&nbsp;{{forloop.counter}}&nbsp;</button>
+					{% else %}
+						<a href="{{fragment.get_absolute_url}}" title="{{SNIPPET_LABEL}} Title: '{{fragment.title}}'"  class="jstooltip">
+							<button type="button" class="btn btn-info btn-circle btn-llg btn-collection">&nbsp;{{forloop.counter}}&nbsp;</button>
+						</a>
+					{% endifequal %}
+
+					
+				{% endfor %}	
+					
+				{# <button type="button" class="btn btn-default btn-circle btn-lg"><i class="glyphicon glyphicon-ok"></i></button> #}
+				{# <button type="button" class="btn btn-primary btn-circle btn-lg"><i class="glyphicon glyphicon-list"></i></button> #}
+				{# <button type="button" class="btn btn-success btn-circle btn-lg"><i class="glyphicon glyphicon-link"></i></button> #}
+				{# <button type="button" class="btn btn-info btn-circle btn-lg"><i class="glyphicon glyphicon-ok"></i></button> #}
+				{# <button type="button" class="btn btn-warning btn-circle btn-lg"><i class="glyphicon glyphicon-remove"></i></button> #}
+				{# <button type="button" class="btn btn-danger btn-circle btn-lg"><i class="glyphicon glyphicon-heart"></i></button>	 #}
+					
+	 
+		</div>
+		
+		
+
+	</div>
+	</div>
+</div>
+
+{% endif %}  
+
+
+
+
+
+
+
+
+
+	
+	

@@ -1,0 +1,76 @@
+
+
+{# October 21, 2014: js to show the popup to add a koncept to a quote #}
+
+
+
+<script type="text/javascript">
+
+
+	//  http://jsfiddle.net/U7SgK/1/
+
+	function changeKonceptReference(quoteid) {
+		
+		bootbox.prompt("Please enter a new value", function(result) {    
+
+		  if (result != null) {                                                
+			 
+	        $.get('{% url changeQuoteKoncept %}', { name: result, quoteid: quoteid }, function (data) {
+	            if (data.saved_name) {
+					$("#" + quoteid + "_relatedKoncept").text(result);
+					$("#" + quoteid + "_label").text("{{KONCEPT_LABEL}}:");
+					$("#" + quoteid + "_relatedKoncept").attr("href", data.new_url);
+					$("#" + quoteid + "_relatedKoncept").show();
+	            } else {
+					alert("Sorry the operation is not allowed.");
+				}
+	        });              
+		  }
+		});
+	}
+
+
+
+	// typeahead code wrapped into a function so to be used with changeKonceptName()
+	
+	function modalTypeahead() {
+
+		$(".bootbox.modal.fade.in input").typeahead({
+			items: 4, 
+			minLength: 2,
+			template: '<p><strong></strong> – </p>',
+		    source: function (query, process) {	
+
+		        $.get('{% url autocomplete_koncepts %}', { term: query }, function (data) {
+		            return process(data);
+		        });
+			},		
+
+		    updater:function (item) {
+		        return item;
+		    }	
+		});
+	}
+
+
+	// March 8, 2014: hack to add the event-typeahead to the modal input after it gets loaded
+	
+
+	$("body").on("show", ".bootbox", function () {
+		// wait a second for the modal to load properly - then set the value
+		setTimeout(function(){
+			$(".bootbox.modal.fade.in input").val("{{k1.name}}");
+			$(".bootbox.modal.fade.in input").parent().append("<br /><br /><p class='text-muted'>Tip: use autocomplete to reuse an already existing {{KONCEPT_LABEL}}.</p>");
+		}, 1000);
+	});
+
+	$("body").on("keyup", ".bootbox.modal.fade.in input", function () {			
+		modalTypeahead();
+	});	
+
+
+
+
+
+
+</script>

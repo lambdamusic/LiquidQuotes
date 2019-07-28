@@ -1,0 +1,62 @@
+{% extends "bstrap3.2.0/base.html" %}
+{% load konceptstags %}
+
+
+
+{% block extrahead %}
+
+
+<!-- include libraries(jQuery, bootstrap, fontawesome) -->
+{# <script type="text/javascript" src="//code.jquery.com/jquery-1.9.1.min.js"></script>  #}
+{# <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" /> #}
+{# <script type="text/javascript" src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script> #}
+{# <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" /> #}
+
+
+
+{% endblock extrahead %}
+
+
+
+
+{% block pagecontents %}
+
+	<h3>Showing a random <a href="{{data.get_absolute_url}}">quote</a></h3>
+	<div id="summernote" class="col-md-5">{{data.text}}</div>
+	
+
+	<hr>
+	<button id="clickme" class="btn btn-warning">Extract code</button>
+	<br /><br />
+	<div id="reveal" class="well">
+		
+	</div>
+
+{% endblock  %}
+
+
+
+
+{% block closingbody %}
+
+	<!-- include summernote css/js-->
+	<link href="{{ STATIC_URL }}libs/summernote/summernote.css" rel="stylesheet">
+	<script src="{{ STATIC_URL }}libs/summernote/summernote.min.js"></script>
+	
+	
+	<script type="text/javascript">
+	$(document).ready(function() {
+	  $('#summernote').summernote();
+	});
+	
+	$("#clickme").click(function() {
+		$("#reveal").text($('#summernote').code());
+		
+	});
+	
+	
+	
+	
+	</script>
+	
+{% endblock closingbody %}

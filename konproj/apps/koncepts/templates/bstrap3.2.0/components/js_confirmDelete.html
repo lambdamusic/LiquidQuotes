@@ -1,0 +1,155 @@
+<script>
+	
+
+
+// ---------------------------------
+
+// DOCUMENT page
+
+// ---------------------------------
+
+	
+	
+ // confirm delete for everything linked to a DOCUMENT
+
+ function confirmDeleteDocument(id) {
+
+ 	var txt = "<h3 class='line-height-5'>Delete {{DOCUMENT_LABEL}}?</h3> <hr>This {{DOCUMENT_LABEL}} will be permanently removed. <br />(None of the related {{SNIPPET_LABEL}}s will be deleted.)<br /><br /><b>Note: this operation is irreversible.</b>"
+ 	bootbox.confirm(txt, function(result) {    
+
+ 	  if (result) {                                                
+	 
+         location.href = "{% url delete_document %}?document_id=" + id ;
+	             
+ 	  }
+ 	});
+ }
+
+
+
+
+// ---------------------------------
+
+// FRAGMENT
+
+// ---------------------------------
+
+
+
+// confirm delete for a fragment
+
+ function confirmDeleteFragment(id, fragment_snippet) {
+	
+ 	var txt = "<h3 class='line-height-5'>Delete {{SNIPPET_LABEL}}?</h3> <hr>The {{SNIPPET_LABEL}} &laquo;<i>" + fragment_snippet + "</i>&raquo; will be removed permanently.<br /><br /><b>Note: this operation is irreversible.</b>"
+ 	bootbox.confirm(txt, function(result) {    
+
+ 	  if (result) {                                                
+		 
+         location.href = "{% url delete_fragment %}?fid=" + id ;
+		             
+ 	  }
+ 	});
+ }
+
+
+
+
+
+function confirmUnlinkFragment(intfrag_id, kon_name) {
+
+	var txt = "<h3 class='line-height-5'>Are you sure?</h3> <hr>The {{SNIPPET_LABEL}} will be unlinked from the {{KONCEPT_LABEL}} &laquo;<i>" + kon_name + "</i>&raquo;.<br /><br /><b>Note: nothing will be deleted.</b>"
+	bootbox.confirm(txt, function(result) {    
+
+	  if (result) {                                                
+ 
+        location.href = "{% url unlink_fragment %}?intfrag_id=" + intfrag_id;
+		// location.reload();
+
+	  }
+	});
+}
+
+
+
+
+
+
+// ---------------------------------
+
+// SUBJECT
+
+// ---------------------------------
+
+
+
+
+
+
+// confirm delete for koncept and all its interpretations
+
+ function confirmDeleteSubject(id, active_letter_page) {
+
+ 	var txt = "<h3 class='line-height-5'>Delete {{SUBJECT_LABEL}}?</h3> <hr>This {{SUBJECT_LABEL}} and all of its descendants will be deleted. <br /><br /><b>Note: All of the related {{SNIPPET_LABEL}}s will not be deleted.</b>"
+ 	bootbox.confirm(txt, function(result) {
+
+ 	  if (result) {
+
+          $.ajax({
+                    type: 'GET',
+		            url: '{% url ajax_subjects_delete request.user.username %}?id=' + id,
+		            dataType: 'json',
+                    error: function(XMLHttpRequest) {
+		                 console.log(XMLHttpRequest.status+': '+XMLHttpRequest.responseText);
+		            },
+                    success : function(data) {
+                        console.log(data);
+                        location.href = "{% url search_user_subjects request.user.username %}?start=" + data.first_letter ;
+                    },
+                });
+ 	  }
+ 	});
+ }
+
+
+
+
+
+
+
+
+// ---------------------------------
+
+// KONCEPT - COLLECTION
+
+// ---------------------------------
+
+
+
+
+
+
+// confirm delete for koncept and all its interpretations  
+ 
+ function confirmDeleteKoncept(id) {
+	
+ 	var txt = "<h3 class='line-height-5'>Delete {{KONCEPT_LABEL}}?</h3> <hr>This {{KONCEPT_LABEL}} will be deleted. All of the {{SNIPPET_LABEL}}s it contains will remain available.<br /><br /><b>Note: this operation is irreversible.</b>"
+ 	bootbox.confirm(txt, function(result) {    
+
+ 	  if (result) {                                                
+		 
+         location.href = "{% url delete_koncept %}?kon_id=" + id ;
+		             
+ 	  }
+ 	});
+ }
+
+
+
+
+
+
+
+
+						
+
+</script>

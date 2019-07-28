@@ -1,0 +1,193 @@
+{% extends "bstrap3.2.0/base.html" %}
+{% load konceptstags %}
+
+
+
+
+{% block extrahead %}
+
+	 {% if 0 and TESTING_FEATURE_FLAG %}
+		{% include "bstrap3.2.0/components/timeline_koncepts.html" %}
+	{% endif %}
+	
+{% endblock extrahead %}
+
+
+
+
+{% block belownavigation %}
+
+
+	{% with person_public_page=1 %}
+		{% include "bstrap3.2.0/components/navbar_second.html" %}
+	{% endwith %}
+
+{% endblock belownavigation %}
+
+
+
+
+
+
+{% block pagecontents %}
+
+
+
+<div class="row" style="margin-top: 60px;">
+	
+	{# FIRST COLUMN #}
+	
+  <div class="col-md-3 ">
+	  
+	  {# {% include "bstrap3.2.0/components/person_icon.html" %} #}
+	  
+	  {% if 0 %}<ul class="thumbnails">
+	    <li class="col-md-2">
+	      <a href="{% url person_home person.username %}">
+	        <img src="{{ STATIC_URL }}custom/img/Avatar-512-icon2.png" alt="person" style="width: 55px;">  {# style="height: 140px;" #}
+	      </a>
+	    </li>
+	  </ul>{% endif %}
+	  
+	
+     <h3 class="text-info">		 	 
+		 <span class="glyphicon glyphicon-user" aria-hidden="true" style="font-size: 60px;"></span>
+		 <br /><br />
+  		{{person.profile.pretty_name|capfirst}}		
+  	 </h3>
+
+	<p class="text-muted">Member since: {{person.date_joined|date}}</p>
+
+
+	<br /><br /><br /><br />
+	
+	
+	
+	{% if 0 and recentDocuments %}
+	<div class="margin-bottom-50">
+	<h5 >Public {{DOCUMENT_LABEL}}s</h5>
+	<hr>
+
+		{% for d1 in recentDocuments  %}
+			<li style="font-size: 80%;">
+				<a href="{{d1.get_absolute_url}}" class="documentcolor" title="Go to this document's homepage">{{d1.title}}</a>
+			</li>
+		{% endfor %}
+	</div>	
+	{% endif %}
+	
+	
+	
+	{% if 0 and recentKoncepts %}
+	<div class="margin-bottom-50">
+	<h5>Public {{KONCEPT_LABEL}}s</h5>
+	<hr>		
+		{% for k1 in recentKoncepts  %}
+			<li style="font-size: 80%;">
+				<i class="icon"></i><a href="{{k1.get_absolute_url}}" title="View {{KONCEPT_LABEL}}" 
+			class="kon_list_item konceptcolor">{{k1.name|capfirst}}</a>
+			</li>
+		{% endfor %}
+	</div>
+	{% endif %}
+
+
+
+	
+	
+	</div>  {# end of first column #}
+	
+
+	
+	<div class="col-md-9">
+		
+		<ul class="nav nav-tabs">
+		  <li role="presentation" class="active"><a href="#">Recent {{SNIPPET_LABEL|lower}}s</a></li>	  
+		</ul>
+		
+		
+		<div class="tab-pane active"  id="person_public_profile">
+
+			{% if recentSnippets %}
+
+		
+				{% for snippet in recentSnippets  %}
+		
+		
+					<div class="row tab-content" style="margin-top: 50px;">
+			
+						<div class="col-md-9 col-md-offset-1">
+				
+						    {% with person_public_page=1 %}
+							    		{% include "bstrap3.2.0/components/snippet_preview.html" %} 
+						    {% endwith %}
+				
+						</div>
+			
+			
+					</div>   {# END OF SNIPPET ROW #}
+		
+		
+		
+				{% endfor %}
+		
+				<br /><br /><br /><br />
+	
+	  
+		  {% else %}
+		  
+			<br /><br />
+			<div class="alert alert-warning col-md-7" role="alert">
+				
+				Oh My! <br />This user hasn't created any content yet.
+				
+			</div>
+			
+		  {% endif %}
+
+
+		</div>	 {# END OF TAB_CONTENT #}
+	</div>
+	
+
+
+	
+	
+	
+	
+</div>  {# ROW ENDS #}
+
+
+
+
+
+<br /><br />
+
+{% endblock pagecontents %}
+
+
+
+
+
+{% block beforefooter %}
+
+	{# {% with person_public_page=1 %} #}
+	{# 	{% include "bstrap3.2.0/components/bottom_chronobar.html" %} #}
+	{# {% endwith %}  #} 
+
+	
+{% endblock beforefooter %}
+
+
+
+
+
+{% block closingbody %}
+
+
+	{% include "bstrap3.2.0/components/js_show_moretext.html"	%}
+	
+
+{% endblock closingbody %}
+
+

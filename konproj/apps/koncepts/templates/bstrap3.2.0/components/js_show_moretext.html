@@ -1,0 +1,32 @@
+
+	
+<script type="text/javascript" charset="utf-8">
+	
+// eight: 100%;
+
+	$( ".more-text" ).click(function() {
+	   
+	   if ($(this).text() == "show more") {
+		   
+		   $(this).text("show less");
+		   $(this).siblings(".dots-text").hide();
+		   $(this).siblings(".complete-text").show(1000).css("display", "inline");
+		   $(this).parents("div.col-md-6").css( "height", "100%" );
+		  
+	   } else {
+		   
+	   	   $(this).text("show more");
+ 		   $(this).siblings(".dots-text").show(100).css("display", "inline");
+ 		   $(this).siblings(".complete-text").slideUp(100);
+			
+	   }
+	   
+  	  	$('html, body').animate({
+  	  	        scrollTop: $(this).parent().offset().top - 120
+  	  	    }, 600);
+			
+	});
+	
+	
+	
+</script>

@@ -1,0 +1,259 @@
+{% extends "bstrap3.2.0/base.html" %}
+{% load konceptstags %}
+
+
+
+
+{% block extrahead %}
+
+	<style type="text/css" media="screen">
+	p {
+		font-size: 12px;
+		line-height: 10px;
+	}
+	
+	.row_tiles > div {border:10px solid white}
+
+	.tilebox {background:lightgrey; font-size: 100%;}
+	.tilebox:hover {
+		border: 0.5px grey;
+	}
+	
+	</style>
+	
+	
+	{# funky search box #}
+
+
+	<style type="text/css" media="screen">
+	.search-form .form-group {
+	  float: right !important;
+	  transition: all 0.35s, border-radius 0s;
+	  width: 32px;
+	  height: 32px;
+	  background-color: #fff;
+	  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+	  border-radius: 25px;
+	  border: 1px solid #ccc;
+	}
+	.search-form .form-group input.form-control {
+	  padding-right: 20px;
+	  border: 0 none;
+	  background: transparent;
+	  box-shadow: none;
+	  display:block;
+	}
+	.search-form .form-group input.form-control::-webkit-input-placeholder {
+	  display: none;
+	}
+	.search-form .form-group input.form-control:-moz-placeholder {
+	  /* Firefox 18- */
+	  display: none;
+	}
+	.search-form .form-group input.form-control::-moz-placeholder {
+	  /* Firefox 19+ */
+	  display: none;
+	}
+	.search-form .form-group input.form-control:-ms-input-placeholder {
+	  display: none;
+	}
+	.search-form .form-group:hover,
+	.search-form .form-group.hover {
+	  width: 100%;
+	  border-radius: 4px 25px 25px 4px;
+	}
+	.search-form .form-group span.form-control-feedback {
+	  position: absolute;
+	  top: -1px;
+	  right: -2px;
+	  z-index: 2;
+	  display: block;
+	  width: 34px;
+	  height: 34px;
+	  line-height: 34px;
+	  text-align: center;
+	  color: #3596e0;
+	  left: initial;
+	  font-size: 14px;
+	}
+	</style>
+	
+	
+{% endblock extrahead %}
+
+
+
+
+{% block belownavigation %}
+
+
+	{% with person_documents=1 %}
+		{% include "bstrap3.2.0/components/navbar_second.html" %}
+	{% endwith %}
+
+{% endblock belownavigation %}
+
+
+
+
+
+{% block pagecontents %}
+
+
+<div class="container">
+	
+	<div class="row  margin-top-50">
+	
+		<div class="col-md-8">
+		{% with documents_search=1 %}
+			{% include "bstrap3.2.0/components/search_results_top.html" %}
+		{% endwith %}
+		</div>
+
+		
+		{% with documents_search=1 %}
+		{% include "bstrap3.2.0/components/search_box.html" %}
+		{% endwith %}
+		
+
+	</div>
+	
+	<div class="row ">
+		<hr>
+	</div>
+	
+	
+</div>
+
+	
+	
+<div class="container">
+	<div class="row row_tiles">
+		
+	{% if page_object.object_list %}
+
+				
+		{% for d1 in page_object.object_list  %}
+					
+			{# <div class="col-md-{{d1|get_tile_width}} X" style="height: auto;"> #}
+			<div {{d1|get_tile_style|safe}} onclick="window.location.href='{{d1.get_absolute_url}}';">
+				
+				<h5 {{d1|get_h5_style|safe}}>
+					{# <small> #}
+						<a href="{{d1.get_absolute_url}}" class="quietlink6" {{d1|get_a_style|safe}} title="View all {{SNIPPET_LABEL}}s from this {{DOCUMENT_LABEL}}"><span class="glyphicon glyphicon-book"></span>&nbsp;&nbsp;{{d1.title|truncatewords:15|highlightText:searchval|safe}}
+						</a>
+					{# </small> #}
+				
+				
+			   		 {% if  d1.url %}
+					 {# <h5> #}
+			   		 <br />
+					 
+					 <small>
+						 <a href="{{d1.url}}" class="sourceLinkUrl bluelink" title="View original" target="_blank" style="font-size: 100%;">
+							 <span class="glyphicon glyphicon-globe"></span>
+							 {{d1.get_url_domain}}
+						 </a>
+					 </small>
+					 {# </h5> #}
+			   		 {% endif %}
+				</h5>
+				
+				
+				
+				{# {{d1.title|truncatewords:10}} #}
+				<br>
+				<h3 class="text-muted">{{d1.fragment_set.all|length}} {{SNIPPET_LABEL}}{{ d1.fragment_set.all|pluralize }}</h3>
+			</div>
+			
+		{% endfor %}
+		
+		
+
+		
+		
+		
+		{% else %}
+		
+		
+			{% include "bstrap3.2.0/components/firstlogin.html" %}
+
+
+
+		{% endif %}
+		
+
+  	</div>
+</div>
+
+
+
+
+<div class="container">
+    <div class="row">
+
+    {% include "bstrap3.2.0/components/paginator.html" %}
+
+    </div>
+</div>
+
+
+
+
+
+<br /><br />
+
+{% endblock pagecontents %}
+
+
+
+
+
+
+
+
+{% block closingbody %}
+
+
+<script type="text/javascript">
+
+
+
+$("a.collection-count-button").click(function() {
+	
+	if ($(this).hasClass("showon")) {
+		$(this).removeClass("showon");
+		$(this).parent().next("div.sample_koncept").slideUp();
+		
+	} else {
+		$(this).parent().next("div.sample_koncept").slideDown();
+		$(this).addClass("showon");
+	}
+	
+	return false;
+	
+});
+
+$("a.quote-count-button").click(function() {
+	
+	if ($(this).hasClass("showon")) {
+		$(this).removeClass("showon");
+		$(this).parent().next().next("div.sample_fragment").slideUp();
+		
+	} else {
+		$(this).parent().next().next("div.sample_fragment").slideDown();
+		$(this).addClass("showon");
+	}
+	
+	return false;
+	
+});
+
+
+
+</script>
+
+	
+{% endblock closingbody %}
+
+

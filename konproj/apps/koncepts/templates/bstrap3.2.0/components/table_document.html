@@ -1,0 +1,47 @@
+{% load konceptstags %}
+
+{# not really a table.. but whatever (used when listing documents) #}
+
+
+<div class="row">
+	
+	{% if forloop.first %}<br /><br />{% endif %}
+	
+	
+	{# SIDEBAR #}
+
+	<div class="col-md-2" style="margin-bottom: 40px;">
+	
+		<a href="{{d1.get_absolute_url}}" class="quietlink3" title="Go to this document's homepage">
+			<span class="glyphicon glyphicon-book" aria-hidden="true" style="font-size: 90px;"></span>
+		</a>
+		
+	
+		
+	</div>
+
+
+	{# MAIN CONTENT #}
+	<div class="col-md-9 ">
+	
+	
+		<li style="font-size: 100%;">
+			<a href="{{d1.get_absolute_url}}" class="lead documentcolor" title="Go to this document's homepage">{{d1.title}}</a>
+			{% if d1.url %}
+			<br />
+			<small>
+				<a class="docdefinition  sourceLinkUrlDocPage" style="text-decoration: underline; font-size: 100%;" href="{{d1.url}}" target="_blank" title="{{d1.url}}">{{d1.get_url_domain}}</a>
+			</small>
+			{% endif %}
+		</li>
+	
+		<hr>
+	
+	</div>
+
+	
+</div>
+
+
+
+

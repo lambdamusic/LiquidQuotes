@@ -1,0 +1,2 @@
+-- Documents table
+-- make the 'url' varchar field accept up to 300 chars

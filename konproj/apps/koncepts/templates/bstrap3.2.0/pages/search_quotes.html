@@ -1,0 +1,301 @@
+{% extends "bstrap3.2.0/base.html" %}
+{% load konceptstags %}
+
+
+
+
+
+
+
+{% block belownavigation %}
+
+
+	{% with person_snippets=1 %}
+		{% include "bstrap3.2.0/components/navbar_second.html" %}
+	{% endwith %}
+
+{% endblock belownavigation %}
+
+
+
+
+
+{% block pagecontents %}
+
+
+<div class="container">
+	
+	<div class="row  margin-top-50">
+		
+	<div class="col-md-8">
+		{% with snippets_search=1 %}
+			{% include "bstrap3.2.0/components/search_results_top.html" %}
+		{% endwith %}
+	</div>
+	
+	{% with snippets_search=1 %}
+	{% include "bstrap3.2.0/components/search_box.html" %}
+	{% endwith %}
+	
+	
+	
+	</div>
+	
+	<div class="row ">
+		<hr>
+	</div>	
+</div>	
+
+
+{#    test for sources dropdown #}
+{% if 0 %}
+
+    <div>
+
+	    <div class="dropdown">
+	      <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">
+	        Dropdown
+	        <span class="caret"></span>
+	      </button>
+	      <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+	        <li role="presentation" class="dropdown-header">Dropdown header</li>
+
+	          {% for foo in sourcesfacet %}
+
+	              <li role="presentation"><a role="menuitem" tabindex="-1" href="#">{{ foo.0 }}</a></li>
+	            {% endfor %}
+	      </ul>
+	    </div>
+
+    </div>
+
+	
+{% endif %}
+
+{#	end test			#}
+
+{#<div class="form-group">#}
+{#  <label for="sel1">Select list:</label>#}
+{#  <select class="form-control" id="sel1">#}
+{#          {% for foo in sourcesfacet %}#}
+{#             <option>{{ foo.0 }}</option>#}
+{#          {% endfor %}#}
+{#  </select>#}
+{#</div>#}
+
+
+
+<div class="row -margin-top-50" style="margin-top: 30px;">
+	
+	<div class="container">
+
+			
+		{% if not page_object.object_list %}
+	
+			{% include "bstrap3.2.0/components/firstlogin.html" %}
+
+		{% else %}
+
+			{% for snippet in page_object.object_list  %}
+
+            <div class="quote_sidebar_trigger">
+
+			<div class="col-md-4 ">
+
+
+				<div class="text-left" style="margin-bottom: 10px;">
+
+						<small class="text-muted -badge" >{{forloop.counter0|snippetRelativeCount:page_object.start_index}} / {{page_object.totcount}}</small>
+						 <a name="fragment{{snippet.orderno}}"></a> 
+						 {# so make internal anchors work #}	
+				</div>
+
+				{% if snippet.source %}		
+				<h5>
+					<small class="text-lowercase quietlink6" style="-line-height: 35px;
+		">a {{SNIPPET_LABEL|lower}} from:&nbsp;</small>
+					<br />
+					<span>
+						<a {% if mykoncepts %}href="{{snippet.source.get_absolute_url}}"{% endif %} class="{% if mykoncepts %}quietlink4{% else %}quietlink12{% endif %}" title="View all {{SNIPPET_LABEL}}s from this {{DOCUMENT_LABEL}}"><span class="glyphicon glyphicon-book"></span>&nbsp;&nbsp;{{snippet.source.title|truncatewords:12}}
+						</a>
+					</span>
+					
+			   		 {% if snippet.source.url %}
+					 &nbsp;&nbsp;&nbsp;
+					 <small  style="">
+						 <a href="{{snippet.source.url}}" class="sourceLinkUrl bluelink" title="View original" target="_blank" style="font-size: 100%;">
+							 <span class="glyphicon glyphicon-globe"></span>
+							 {{snippet.source.get_url_domain}}
+						 </a>
+					 </small>
+			   		 {% endif %}
+				</h5>
+
+				{% else %}
+					<h5>No {{DOCUMENT_LABEL}}</h5>
+				{% endif %}
+
+				<hr>
+
+                {# TAGS #}
+
+                <div class="quote-edit-hidden" style="margin-top: 20px;">
+
+                {% if mykoncepts %}
+
+                    {% with snippet_detail_actions=1 %}
+                    {% with search_quotes_page=1 %}
+                    {% with ALIGNMENT='left' %}
+                        {% with snippet as snippet %}
+                        {% include "bstrap3.2.0/components/sidebar_tagsinfo.html" %}
+                        {% endwith %}
+                    {% endwith %}
+                    {% endwith %}
+                    {% endwith %}
+                    {# <br /> #}
+                 {% endif %}
+
+                    <hr>
+
+					  {% with snippet_buttons_sidebar=1 %}	
+					  		{% include "bstrap3.2.0/components/buttons.html" %}
+					  {% endwith %}
+
+			 	 </div>
+
+			</div>
+
+
+				<div class="col-md-8">
+
+
+					  {% with snippet_search_page=1 %}	
+					  		{% include "bstrap3.2.0/components/snippet_preview.html" %}
+					  {% endwith %}
+
+				</div>
+
+
+            </div>
+{#                outer div#}
+
+			{% endfor %}
+			
+		{% endif %}
+		
+		
+		</div> 
+		{# CONTAINER ends #}
+</div>
+{# ROW ends #}
+
+
+
+<div class="container">
+    <div class="row">
+
+    {% include "bstrap3.2.0/components/paginator.html" %}
+
+    </div>
+</div>
+
+
+
+{% if related_subjects %}
+	
+<div class="container">
+	<a name="related_subjects"></a>
+       <hr>
+       <h4>Related Tags</h4>
+
+	<div id="tags_cloud" class="row" style="margin-top: 40px; margin-bottom: 50px;">
+	
+		
+		{% for each in related_subjects  %}
+
+
+			<div style="display: inline;">
+
+				<a href="{{each.get_absolute_url}}" title="{{each.fragment_set.all|length}} {{ SNIPPET_LABEL|lower }}s" class="btn btn-warning" style="font-size: {{each.fragment_set.all|length|tagcloud_sizing:11}}px; margin:2px; opacity: {{each.fragment_set.all|length|tagcloud_opacity}};">{{each.name}}</a>
+
+			</div>
+
+
+		{% endfor %}
+
+		
+	</div>	
+</div>  
+
+{% endif %}
+
+
+
+
+{# SIDEBAR AT BOTTOM - ALWAYS 2015-08-03 #}
+
+{% if 1 %}
+
+    <div class="container">
+        <div class="row">
+        <a name="searchfilters"></a>
+        <hr>
+
+            <div class="col-md-12 margin-bottom-50 -well">
+
+                {% with snippets_search=1 %}
+
+                {% include "bstrap3.2.0/components/search_filters_left.html" %}
+
+                {% endwith %}
+
+
+            </div>
+
+        </div>
+    </div>
+	
+{% endif %}
+{# END OF BOTTOM SIDEBAR #}
+	
+
+
+{% endblock pagecontents %}
+
+
+
+
+
+
+
+
+{% block closingbody %}
+
+
+	{% include "bstrap3.2.0/components/js_show_moretext.html"	%}
+	
+	{% include "bstrap3.2.0/components/js_editQuoteTitle.html"	%}
+
+    {% with page="search_quotes"  %}
+        {% include "bstrap3.2.0/components/js_editQuoteSubjects.html"	%}
+    {% endwith %}
+
+	
+	{% include "bstrap3.2.0/components/js_confirmDelete.html"	%}
+	
+	{% include "bstrap3.2.0/components/js_confirmDownload.html"	%}
+	
+	{% include "bstrap3.2.0/components/js_publicprivate.html" %}
+	
+	{% include "bstrap3.2.0/components/js_pinquote.html" %}
+	
+	{% include "bstrap3.2.0/components/js_favoritequote.html" %}
+
+    {% include "bstrap3.2.0/components/js_hover_reveal.html" %}
+
+	
+
+	
+{% endblock closingbody %}
+
+

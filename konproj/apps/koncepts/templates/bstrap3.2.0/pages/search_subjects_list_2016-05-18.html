@@ -1,0 +1,163 @@
+{% extends "bstrap3.2.0/base.html" %}
+{% load konceptstags %}
+
+
+
+{% block extrahead %}
+
+<style type="text/css" media="screen">
+	p.glossary {
+		font-size: 12px;
+		line-height: 10px;
+	}
+	
+	.popover
+	{
+	background-color: #ffffff;
+	color: black;
+	}
+
+	.popover-title {
+	color: black;
+	border-bottom: 0;
+	}
+
+	.popover-title {
+	background-color: #f7f7f7;
+	}
+	
+	.popover.top .arrow:after {
+		border-top-color: white;
+	}
+
+    .gtreetable .node-name {
+        color: darkred;
+    }
+
+	
+	</style>
+
+
+	<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}libs/bootstrap-gtreetable/bootstrap-gtreetable.min.css" />
+	
+	
+{% endblock extrahead %}
+
+
+
+
+
+{% block belownavigation %}
+
+
+	{% with person_subjects=1 %}
+		{% include "bstrap3.2.0/components/navbar_second.html" %}
+	{% endwith %}
+
+{% endblock belownavigation %}
+
+
+
+
+
+{% block pagecontents %}
+
+
+<div class="container">
+	
+	<div class="row  margin-top-50" id="koncept_search_page"> {# style="margin-top: 40px;" #}
+		
+			<div class="col-md-8">			
+			{% with subjects_tree=1 %}
+				{% include "bstrap3.2.0/components/search_results_top.html" %}
+			{% endwith %}
+			</div>
+			
+			{% with subjects_search=1 %}
+				{% include "bstrap3.2.0/components/search_box.html" %}
+			{% endwith %}
+			
+						
+	</div>
+		
+
+	
+</div>
+
+
+
+<div class="row margin-top-50" > {# style="margin-top: 40px;" #}
+
+	{# MAIN CONTENT #}	
+	<div class="col-md-11 margin-bottom-50" id="koncept_search_page" >
+		
+	
+		<ul class="nav nav-tabs margin-bottom-50">
+		   <li role="presentation" class="active"><a href="{% url subject_list request.user.username %}" class="quietlink2">List View</a></li>
+		   <li role="presentation" ><a href="{% url subject_detail request.user.username %}" class="quietlink2">Details View</a></li>
+		  <li role="presentation"><a href="{% url subjects_tree request.user.username %}" class="quietlink2">Tree View</a></li>
+		</ul>
+
+	</div>
+	
+</div>
+
+
+<div class="container">
+<div class="row" style="margin-top: -40px;">
+	
+		{% if totcount %}  {# todo #}
+		
+			{% for each in data  %}
+				{% ifchanged each.name.0  %}
+				
+				    {% if not forloop.first %}
+						</div>{% endif %}					
+					<div class="col-md-3" style="-height: 400px; -overflow: auto;">
+					<h4>{{each.name.0}}</h4>
+				{% endifchanged %}	
+				<p><a href="{{each.get_absolute_url}}" title="View {{ SNIPPET_LABEL|lower }}s" class=" konceptcolor -underline -lead">{{each.name}}</a></p>
+
+			{% endfor %}
+		
+
+		{% else %}
+		
+			<div class="col-md-12">
+			{% include "bstrap3.2.0/components/firstlogin.html" %}
+			{# note: if searchval, this returns the no results box too #}
+			</div>
+		
+		{% endif %}
+		
+</div>
+	
+</div>  
+
+{# end of outer container for MAIN-CONTENT#}
+
+
+		
+</div> {# end of row #}
+
+</div> {# end of container #}
+
+
+
+
+<br /><br />
+
+{% endblock pagecontents %}
+
+
+
+
+
+
+
+
+{% block closingbody %}
+
+
+{% endblock  %}
+

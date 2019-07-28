@@ -1,0 +1,79 @@
+{% extends "bstrap3.2.0/base.html" %}
+
+
+{% block pagecontents %}
+
+
+<div class="page-header" >
+	
+	{# TEMP #}
+	{% with person_private_profile=1 %}
+		{% include "bstrap3.2.0/components/breadcrumbs.html"	%}
+  	{% endwith %}
+	
+</div>
+
+
+  <div class="row">
+    <div class="col-md-3">
+
+		{% include "bstrap3.2.0/components/dashboard-nav.html" %}
+		
+    </div>
+    <div class="col-md-8">
+    	
+		<div class="page-header">
+		<h2>Inbox</h2>
+		</div>
+		
+		
+		<p class="lead">Bootstrap</p>
+		
+		<table class="table table-condensed table-hover">
+		  <thead>
+		    <tr>
+		      <th class="col-md-1"><input type="checkbox"></th>
+		      <th class="col-md-2"></th>
+		      <th class="col-md-2"></th>
+		      <th class="col-md-9"></th>
+		      <th class="col-md-2"></th>
+		    </tr>
+		  </thead>
+		  <tbody>
+		    <tr>
+		      <td><input type="checkbox"> <a href="#"><span class="glyphicon glyphicon-star-empty"></span></a></td>
+		      <td><strong>John Doe</strong></td>
+		      <td><span class="label pull-right">Notifications</span></td>
+		      <td><strong>Message body goes here</strong></td>
+		      <td><strong>11:23 PM</strong></td>
+		    </tr>
+		    <tr>
+		      <td><input type="checkbox"> <a href="#"><span class="glyphicon glyphicon-star-empty"></span></a></td>
+		      <td>John Doe</td>
+		      <td><span class="label pull-right">Notifications</span></td>
+		      <td>Message body goes here</td>
+		      <td>Sept4</td>
+		    </tr>
+		    <tr>
+		      <td><input type="checkbox"> <a href="#"><span class="glyphicon glyphicon-star"></span></a></td>
+		      <td><strong>John Doe</strong></td>
+		      <td><span class="label pull-right">Notifications</span></td>
+		      <td><strong>Message body goes here</strong></td>
+		      <td><strong>Sept3</strong></td>
+		    </tr>
+		    <tr>
+		      <td><input type="checkbox"> <a href="#"><span class="glyphicon glyphicon-star"></span></a></td>
+		      <td><strong>John Doe</strong></td>
+		      <td><span class="label pull-right">Notifications</span></td>
+		      <td><strong>Message body goes here</strong></td>
+		      <td><strong>Sept3</strong></td>
+		    </tr>
+		  </tbody>
+		</table>
+
+
+    </div>
+  </div>
+  
+
+{% endblock pagecontents %}

@@ -1,0 +1,145 @@
+{% load konceptstags %}
+
+
+{#  QUOTE DETAIL PAGE - December 27, 2015 - testing  #}
+
+
+
+
+<div class="container">
+
+	{% if not person_dashboard and not document_detail_page %}
+	<h5 class="text-muted">&nbsp;&nbsp;&nbsp;&nbsp;Similarity Network&nbsp;&nbsp;
+        <small>Tip: double click on a node to open its page</small>
+    </h5>
+
+	{% endif %}
+
+<div class="row" style="margin-top: 40px; margin-bottom: 40px;">
+
+
+
+
+
+
+{# =========== #}
+{# QUOTE #}
+{# =========== #}
+
+
+		<div class="col-md-10 col-md-offset-1 text-left" style="margin-bottom: 30px;">
+
+
+			<div id="mygraph-1" class="canv" style="height: 600px;"></div>
+
+
+		</div>
+
+
+
+
+
+
+	    <script type="text/javascript">
+	      var nodes = null;
+	      var edges = null;
+	      var network = null;
+
+	      function draw() {
+
+	        // create a network
+	        var container = document.getElementById('mygraph-1');
+
+	        var data = {
+	          nodes: {{nodes|safe}},
+	          edges: {{edges|safe}}
+	        };
+	        var options = {
+	          stabilize: true,
+		   	   physics: {
+		   	       barnesHut: {
+		   	           enabled: false,
+		   	           gravitationalConstant: -12000,
+		   	           centralGravity: 0.001,
+		   	           springLength: 100,
+		   	           springConstant: 0.04,
+		   	           damping: 0.1
+		   	       }
+			   },
+			  groups: {
+  			    group_source: {
+  			      shape: 'triangle',
+  			      color: {
+  				      background: "#3C5874",
+  				      border: "#3C5874",
+  				      highlight: {
+  				        background: "#D2E5FF",
+  				        border: 'blue'
+  				      }
+  			      }
+  			    },
+			    group_quote: {
+			      shape: 'box',
+			      color: {
+				      background: 'white',
+				      border: 'lightgreen',
+				      highlight: {
+				        background: 'white',
+				        border: 'red'
+				      }
+			      }
+			    },
+
+			    group_root: {
+			      shape: 'box',
+                    font: {color: 'red'},
+			      color: {
+				      background: 'white',
+				      border: 'green',
+				      highlight: {
+				        background: 'yellow',
+				        border: 'red'
+				      }
+			      }
+			    }
+			    // add more groups here
+			  },
+
+	          edges: {
+				style:'arrow'
+			   }
+	        };
+	        network = new vis.Network(container, data, options);
+
+		  	function onDbClick (properties) {
+		  		if (properties) {
+            console.log(properties);
+		  			// if (properties.nodes[0].substring(0, 2) == "q_") {
+		  			// 	var temp = properties.nodes[0].substring(2);
+		  			// 	var usr = "{{person.username}}";
+		  			// 	var path = "{{SNIPPET_LABEL|lower}}s";
+		  			// 	window.location.href="/" + usr + "/" + path + "/" + temp + '#title';
+		  			// }
+		  		}
+		  	}
+
+			network.on('doubleClick', onDbClick);
+
+	      }
+
+
+		draw();
+
+	    </script>
+
+
+
+
+
+
+
+{#  FINALLY #}
+
+
+		</div>
+	</div>

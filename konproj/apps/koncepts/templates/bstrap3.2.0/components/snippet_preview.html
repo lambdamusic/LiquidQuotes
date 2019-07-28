@@ -1,0 +1,351 @@
+{# NOTE: there is a copy of this file including links: "snippet_preview_with_links.html" #}
+
+
+{% load konceptstags %}
+
+
+	<br />
+
+	{# top div: full width - hence determined by its container #}
+
+	<div class="col-md-12 quotecornice snippetdiv {% if koncept_detail_page %}{{snippet.get_interpretation.fragment.source.id}}{% else %}{{snippet.get_interpretation.koncept.id}}{% endif %}">
+
+
+
+		<div id="q">
+
+        {% if quote_detail_page %}
+
+
+        <div id="snippet_header" >
+
+					{# TITLE #}
+					{% if 0 %}
+					<h5 class="col-md-offset-1">
+						<small>
+							Title:&nbsp;
+		         </small>
+						<small style="font-weight: bold; text-transform: capitalize;">
+		                    {% if mykoncepts %}
+							<a class="quietlink6" id="{{snippet.id}}_title_href" href="javascript:editQuoteTitle('{{snippet.id}}', '{{snippet.title|escapejs}}')" title="Change this Title" style="text-decoration: none;">
+		                        <span id="{{snippet.id}}_title">{{snippet.title}}</span>
+								&nbsp;<i class="glyphicon glyphicon-edit quietlink5"></i>
+							</a>
+							{% else %}
+		                        {{snippet.title}}
+							{% endif %}
+
+						</small>
+						</h5>
+				{% endif %}
+
+				{# SOURCE #}
+					<h5 class="col-md-offset-1">
+						<small class="text-lowercase">from:&nbsp;</small>
+						<small>
+							<a href="{{snippet.source.get_absolute_url}}" class="underline text-info">{{snippet.source.title|truncatewords:15}}
+
+							</a>&nbsp;{{snippet.source.get_url_domain}}</small>
+					</h5>
+
+
+
+
+        </div>
+        <hr class="-hrblack">
+
+        {% else %}
+
+			<div id="snippet_header" >
+
+
+				{# SOURCE #}
+				{% if snippet.source and not document_search_page and not document_detail_page and not quote_detail_page and not active_source and not snippet_search_page_grouped and not snippet_search_page %}
+				<h5>
+					<small class="text-lowercase">from:&nbsp;</small>
+					<small>
+						<a {% if mykoncepts %}href="{{snippet.source.get_absolute_url}}"{% endif %} class="underline text-info">{{snippet.source.title|truncatewords:15}}
+
+						</a>&nbsp;{{snippet.source.get_url_domain}}</small>
+				</h5>
+				{% endif %}
+
+				{# TITLE #}
+				<h5>
+				<small class="-text-info">
+					Title:&nbsp;
+					</small>
+				<small class="quote_title_smallsize">
+					<a id="{{snippet.id}}_title"  href="{% url get_quote snippet.created_by snippet.id %}" title="Open this {{SNIPPET_LABEL}}'s homepage" class="quietlink9">
+						{{snippet.title}}
+					</a>
+				</small>
+					{% if mykoncepts %}
+					<a id="{{snippet.id}}_title_href" href="javascript:editQuoteTitle('{{snippet.id}}', '{{snippet.title|escapejs}}')" title="Change this Title" style="text-decoration: none;">
+						&nbsp;<i class="glyphicon glyphicon-edit quietlink5"></i>
+					</a>
+					{% endif %}
+
+			   </h5>
+
+
+				{# TAGS #}
+				{% if 0 and mykoncepts %}
+				<h5>
+					<small class="text-lowercase">{{SUBJECT_LABEL}}s:&nbsp;</small>
+					<div id="tags_{{snippet.id}}" style="line-height: 25px; display: inline;">
+						{% include "bstrap3.2.0/components/tags_snippet.html" %}
+
+					</div>
+				</h5>
+				{% endif %}
+
+
+				<hr class="hrblack">
+
+
+			</div>  {# end of header div #}
+			{% endif %}
+
+
+
+			<blockquote>
+				<q {% if quote_detail_page %}class="lead big-lead"{% else %}class="small-lead"{% endif %}>
+
+
+				{# 2015-11-09: no expansion for vertical stacked layout to work #}
+				{% if document_detail_page %}
+
+					{% if snippet.text|length > 400 %}
+	  	  		  	<span>{{snippet.text|slice:":400"|linebreaksbr}}</span><span class="dots-text" >...&nbsp;</span>
+					{% else %}
+					<span>{{snippet.text|linebreaksbr}}</span>
+					{% endif %}
+	  				<a href="{{snippet.get_absolute_url}}" class="-more-text btn btn-default btn-xs">open {{SNIPPET_LABEL|lower}}</a>
+
+				{% endif %}
+
+
+				{% if test_masonry_page %}
+
+					<span>{{snippet.text|linebreaksbr}}</span>
+	  				<a href="{{snippet.get_absolute_url}}" class="-more-text btn btn-default btn-xs">open {{SNIPPET_LABEL|lower}}</a>
+
+
+				{% endif %}
+
+				{% if snippet_search_page and searchval %}
+
+		  	  		  {% if snippet.text|length > 300 %}
+		  	  		  	<span>{{snippet.text|slice:":300"|linebreaksbr|highlightText:searchval|safe}}</span><span class="dots-text">...&nbsp;</span><span class="complete-text" style="display: none;">{{snippet.text|slice:"300:"|linebreaksbr|highlightText:searchval|safe}}</span>
+
+						<button class="more-text btn btn-default btn-xs" name="fragment{{i.orderno}}">show more</button>
+
+					  {% else %}
+		  	  		  	<span>{{snippet.text|linebreaksbr|highlightText:searchval|safe}}</span>
+		  	  		  {% endif %}
+
+
+						{# {{snippet.text|linebreaksbr|highlightText:searchval|safe}} #}
+
+				{% else %}
+
+					{% if quote_detail_page %}
+
+						{# {{snippet.text|linebreaksbr}} #}
+
+						<span class="incipit">{{snippet.text|linebreaksbr|slicewords:":10"|safe}}</span>&nbsp;<span>{{snippet.text|linebreaksbr|slicewords:"10:"|safe}}</span>
+
+
+					{% else %}
+
+						{% if person_public_page  %}
+						{# SHORT PREVIEW VERSION #}
+
+				  	  	  	{% if snippet.text|length > 200 %}
+	 		  	  	  		  	<span>{{snippet.text|slice:":200"|linebreaksbr}}</span><span class="dots-text" >...&nbsp;</span><span class="complete-text" style="display: none;">{{snippet.text|slice:"200:"|linebreaksbr}}</span>
+	 		  	  				<button class="more-text btn btn-default btn-xs" name="fragment{{i.orderno}}">show more</button>
+
+			  	  	  		  {% else %}
+
+			  	  	  		  	<span><a href="{{ snippet.get_absolute_url }}"  title="Open {{SNIPPET_LABEL}}">{{snippet.text|linebreaksbr}}</a></span>
+
+			  	  	  		  {% endif %}
+
+
+						{% else %}
+
+							{% if document_search_page %}
+
+								{# SHORT PREVIEW, MINUS MORE BUTTON #}
+								<span>{{snippet.text|linebreaksbr|slice:":300"}}</span><span class="dots-text">...&nbsp;</span>
+
+							{% else %}
+
+								{% if not document_detail_page and not test_masonry_page %}
+
+  								{# DEFAULT: A BIT LONGER #}
+	  				  	  		  {% if snippet.text|length > 300 %}
+	  				  	  		  	<span>{{snippet.text|slice:":300"|linebreaksbr}}</span><span class="dots-text">...&nbsp;</span><span class="complete-text" style="display: none;">{{snippet.text|slice:"300:"|linebreaksbr}}</span>
+
+	  								<button class="more-text btn btn-default btn-xs" name="fragment{{i.orderno}}">show more</button>
+
+	  							  {% else %}
+	  				  	  		  	<span>{{snippet.text|linebreaksbr}}</span>
+	  				  	  		  {% endif %}
+
+								 {% endif %}
+
+
+							{% endif %}
+
+
+
+
+							{% endif %}  {# ENDS person_public_page #}
+						{% endif %}  {# ENDS quote_detail_page #}
+
+					{% endif %}  {# ENDS snippet_search_page  #}
+
+
+				</a>
+				</q>
+
+
+
+
+			{% if 0 and snippet.source and not document_search_page and not document_detail_page and not quote_detail_page %}
+				<small class="snippetsourceinfo">
+
+					<a class="sourcelink" href="{{snippet.source.get_absolute_url}}" title="View other {{SNIPPET_LABEL}}s from this {{DOCUMENT_LABEL}}" rel="category tag"><span class="glyphicon glyphicon-book"></span>
+					{{snippet.source.title|truncatewords:15}}</a>
+					{# {% if snippet.location %}<br>{{snippet.location}}{% endif %} #}
+			   		 {% if  snippet.source.url %}
+			   		 <br /><a href="{{snippet.source.url}}" class="sourceLinkUrl bluelink" title="Open original webpage" target="_blank">{{snippet.source.get_url_domain}}</a>
+
+			   		 {% endif %}
+				</small>
+
+			{% endif %}
+
+
+			{% if 0 and quote_detail_page %}
+
+				<small style="margin-bottom: 20px;" class="snippetsourceinfo col-md-10 col-md-offset-2">
+
+					<a class="sourcelink" href="{{snippet.source.get_absolute_url}}" title="View other {{SNIPPET_LABEL}}s from this {{DOCUMENT_LABEL}}" rel="category tag"><span class="glyphicon glyphicon-book"></span>
+					{{snippet.source.title|truncatewords:30}}</a>
+
+		   		 {% if  snippet.source.url %}
+		   		 <br /><a href="{{snippet.source.url}}" class="sourceLinkUrl bluelink" title="Open original webpage" target="_blank">{{snippet.source.get_url_domain}}</a>
+
+		   		 {% endif %}
+
+				</small>
+
+
+			{% endif %}
+
+
+
+
+
+			{# February 25, 2015: deprecated #}
+
+				{% if 0 %}
+
+					{% with snippet as object %}
+					<div class="text-right">
+						  {% include "bstrap3.2.0/components/publicprivate_button.html" %}
+					</div>
+					{% endwith %}
+
+				{% endif %}
+
+
+
+			{# May 1, 2015: links #}
+
+				{% if not quote_detail_page %}
+
+					{# <div id="openquote_link" class="text-right"> #}
+					{# 			 #}
+					{#   	<a href="{% url get_quote snippet.created_by snippet.id %}" title="Open this {{SNIPPET_LABEL}}'s homepage" class="btn btn-xs btn-primary privatebutton"> #}
+					{# 		<span class="glyphicon glyphicon-new-window" aria-hidden="true"></span>&nbsp;Open #}
+					{# 	</a> #}
+					{# 	 #}
+					{# </div> #}
+
+					{% with snippet_default=1 %}
+						<br />
+
+						{# 2016-02-25: hidden the buttons #}
+						{# {% include "bstrap3.2.0/components/buttons.html" %} #}
+
+					{% endwith %}
+
+
+				{% endif %}
+
+
+			</blockquote>
+
+
+		</div>
+
+	</div>
+
+
+
+
+
+	{# DATE LINE #}
+
+	{% if not quote_detail_page %}
+
+		{% if not person_public_page and not document_search_page %}
+			{% with snippet as this_snippet %}
+				{% with newline_text=1 %}
+					{% include "bstrap3.2.0/components/snippet_date.html" %}
+
+				{% endwith %}
+			{% endwith %}
+		{% endif %}
+
+	{% else %}
+
+		{# on quote detail page show the source #}
+
+		<div class="text-right col-md-9 col-md-offset-3 margin-bottom-50">
+
+
+				<h5><small>{{DOCUMENT_LABEL}}:</small></h5>
+			{% if q1.source %}
+				<a href="{{q1.source.get_absolute_url}}" class="snippet-source-prev quietlink5" title="Open {{ DOCUMENT_LABEL }} homepage">&nbsp;<span class="glyphicon glyphicon-book"></span>&nbsp;{{snippet.source.title}}</a>
+				{% if  q1.source.url %}
+					<br />
+					<a href="{{q1.source.url}}" class="quietlink4" title="Open {{q1.source.url}} in a new window" target="_blank" ><small>{{q1.source.get_url_domain}}</small></a>
+				{% endif %}
+			{% else %}
+				&mdash;&nbsp;{{snippet.source.title}}
+			{% endif %}
+
+		</div>
+
+
+		{% if 1 %}
+
+
+		<!-- Go to www.addthis.com/dashboard to customize your tools -->
+		<div class="addthis_sharing_toolbox text-right col-md-8 col-md-offset-4 margin-bottom-50 ">
+			<h5><small>SHARE:</small></h5>
+		</div>
+
+
+		{# <a href="http://expando.github.io/add/?u={{a}}&t={{snippet.title}}">Share this Site</a> #}
+
+		{% endif %}
+
+
+	{% endif %}
+	{# END - DATE LINE #}

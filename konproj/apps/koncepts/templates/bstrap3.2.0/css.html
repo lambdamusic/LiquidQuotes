@@ -1,0 +1,1638 @@
+
+/* Sticky footer styles
+-------------------------------------------------- */
+
+html,
+body {
+height: 100%;
+/* The html and body elements cannot have any padding or margin. */
+}
+
+/* Wrapper for page content to push down footer */
+#wrap {
+min-height: 100%;
+height: auto !important;
+height: 100%;
+/* Negative indent footer by it's height */
+margin: 0 auto -60px;
+}
+
+/* Set the fixed height of the footer here */
+#push {
+    height: 92px;
+    margin-top: 30px;
+}
+#footer {
+    /*height: 160px;*//*92px;*/
+    height: auto;
+    margin-top: 30px;
+}
+#footer {
+    background-color: #000000 ; /*#f5f5f5*/
+}
+
+#footer a {
+    color: #D8D8D8;
+}
+#footer a:hover {
+    color: #fed136;
+}
+
+
+
+/* Lastly, apply responsive CSS fixes as necessary */
+@media (max-width: 767px) {
+#footer {
+  margin-left: -20px;
+  margin-right: -20px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+}
+
+
+
+/* Custom page CSS
+-------------------------------------------------- */
+/* Not required for template or sticky footer method. */
+
+.lead
+{font-weight:300;}   /*bootstrp hack*/
+ 
+#wrap > .container {
+
+}
+
+.page-header {
+	margin-top: 10px;
+}
+
+
+.main-container {
+   padding-top: 15px; 
+}
+.container .credit {
+margin: 20px 0;
+}
+
+code {
+font-size: 80%;
+}
+
+
+/* Koncepts CSS
+-------------------------------------------------- */
+
+
+/*November 15, 2014 : addressing issue on koncept detail when not logged in.. ??*/
+.tab-content {
+overflow: visible;
+}
+
+/* the bottom band */
+.abovefooter {
+    margin-right: -20px;
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-left: -20px; 
+    margin-bottom: -30px;
+    /*background: rgb(224, 223, 224);*/
+}
+
+
+h1.konceptTitle  {
+    line-height: 30px;
+    font-size: 30px;
+}
+
+span.konceptTitle {
+    line-height: 30px;
+    font-size: 25px;
+}
+
+h1.konceptTitle small {
+  font-size: 13px;
+}
+
+
+.snippetTitle {
+  font-size: 15px;
+  font-family: monospace;
+/*  color: rgb(168, 89, 137);*/
+  color: rgb(94, 112, 124);
+  font-style: italic;
+}
+
+
+.strongerh2 {
+    color: darkgoldenrod;
+    text-transform: uppercase;
+}
+
+.magenta {
+    color: darkmagenta;
+}
+
+
+.konceptcolor {
+    color: #930A0A; 
+/*    #e03a3a;*/
+}
+
+
+.quotetitle_side {
+    color: #e03a3a;
+    text-transform: uppercase;   
+	font-weight: 350;    
+}
+p.quotetitle_side {    
+	line-height: 20px; 
+}
+
+.konceptcolorlight {
+/*color: rgba(243, 60, 60, 0.54);*/
+    color: #e03a3a;
+    opacity: 0.5;
+}
+
+/* adjustements to sizes in docpage_snippet_tags */
+
+p.docpage_snippet_tags {
+  line-height: 1.4;
+  margin-top: -15px;
+}
+.docpage_snippet_tags .btn {
+  font-size: 9px;
+  padding: 0px 2px;
+}
+.docpage_snippet_tags .icon-xs {
+  font-size: 9px;
+}
+.docpage_snippet_tags .notags {
+  font-size: 10px;
+}
+
+
+
+.tagcolor {
+color: #F6358A;
+}	  
+
+/*
+Ratings Stars
+(with as little code as possible)
+  http://dabblet.com/gist/1722368
+*/
+.rating {
+unicode-bidi: bidi-override;
+direction: rtl;
+text-align: left;
+font-size: 20px;
+color: #EBDDE2;
+}
+.rating > span {
+display: inline-block;
+position: relative;
+width: 1.1em;
+}
+.rating > *:hover,
+.rating > *:hover ~ span,
+.rating:not(:hover) > input:checked ~ span {
+color: transparent;
+}
+.rating > *:hover:before,
+.rating > *:hover ~ span:before,
+.rating:not(:hover) > input:checked ~ span:before {
+ content: "\2605";
+ position: absolute;
+ left: 0; 
+ color: gold;
+}
+
+.rating > input {
+ margin-left:-1.1em;
+ margin-right:0;
+ top:3px;
+ width:1.1em;
+ height:1.1em;
+ position:relative;
+ z-index:2;
+ opacity:0;
+}
+
+
+
+label.radio {
+    margin-top: 10px;
+}
+
+
+/*	  February 26, 2014  */
+
+.width-90percent { width: 90% }
+.width-98percent { width: 98% }
+
+.line-height-5 {line-height: 5px;}
+
+/*	  March 14, 2014 */
+
+#breadcrumb.sticky {
+  position: fixed;
+  top: 41px;
+  width: 100%;
+  left: 0px;
+}
+
+
+.breadcrumb {
+padding: 0px;
+background-color: white;
+margin: 5px;
+font-size: 11px;
+}
+
+.breadcrumb a {
+  color: grey;
+  text-decoration: underline;
+}
+
+.breadcrumb a:hover {
+  color: lightgrey;
+  text-decoration: underline;
+}
+
+
+.searchval {
+  text-transform: italic;
+  color: red;
+  background: lemonchiffon;
+}
+
+
+
+/*	  April 9, 2014*/
+
+.complete-text{
+  display:none;
+}
+
+
+ul li.second-navbar-content a.navlinkactive {
+	color: #FEC516;
+      box-shadow: 0px 4px 0px #FEC516;
+/*      box-shadow: 5px 4px 15px black;*/
+}
+
+.quietlink {
+  color: #999;
+  text-decoration: underline;
+}
+
+
+.quietlink2 {
+    color: inherit;
+    text-decoration: inherit;
+}
+.quietlink2:hover {
+    color: inherit;
+    text-decoration: inherit;  
+}
+
+.quietlink3 {
+    color: #BEBEBE;
+    text-decoration: inherit;
+}
+.quietlink3:hover {
+    color: #A1A1A1;
+    text-decoration: underline;  
+}
+
+.quietlink4 {
+    color: #999;
+}
+/*.quietlink4:hover {
+    color: #A1A1A1;
+    text-decoration: underline;
+}*/
+
+.quietlink5 {
+  color: rgb(132, 132, 132);  
+}
+
+.quietlink5:hover {
+    color: black;
+    background: #fed136;
+    text-decoration: none; 
+}
+
+.quietlink6 {
+  color: black;  
+}
+
+
+.quietlink7 {
+    color: #BEBEBE;
+    text-decoration: none;
+}
+
+
+.quietlink8 {
+;
+    text-decoration: inherit;
+}
+.quietlink8:hover {
+    text-decoration: none;  
+}
+
+.quietlink9 {
+  color: black;  
+}
+
+.quietlink9:hover {
+    color: black;
+    background: #F9C719; /* #fed136;*/
+    text-decoration: none; 
+}
+
+
+
+
+
+.quietlink10 {
+    color: inherit;
+    text-decoration: inherit;
+}
+.quietlink10:hover {
+    color: darkslategray;
+    text-decoration: inherit;  
+/*	text-transform: uppercase;*/
+}
+
+
+.quietlink11 {
+    color: inherit;
+    text-decoration: inherit;
+}
+.quietlink11:hover {
+    color: white;
+    background: lightgrey;
+}
+
+
+.quietlink12 {
+  color: #F5BE00;  
+  text-decoration: inherit;
+}
+
+.quietlink12:hover {
+  color: #F5BE00;  
+  text-decoration: none;
+}
+
+
+.quietlink13 {  /*yellow*/
+  color: #E6B300;
+  text-decoration: inherit;
+}
+
+
+.quietlink14 {
+  background: #808080;
+  color: #fed136;
+  text-decoration: inherit;
+}
+
+.quietlink14:hover {
+  color: #F5BE00;  
+  text-decoration: none;
+}
+
+.quietlink15 {
+  color: #31708f;  
+}
+
+
+a.sourceLink {
+    font-family: sans-serif;
+    color: rgb(94, 86, 86);
+    background: rgb(243, 253, 248); /* rgb(243, 243, 253);*/
+}
+a.sourceLinkUrl {
+    font-size: 80%;
+    color: cadetblue;
+    text-transform: uppercase;
+}	  
+
+
+
+
+.konceptdate {
+color: rgba(248, 157, 157, 0.42);
+font-weight: bold;
+/*		rgba(248, 157, 157, 0.42)*/
+font-size: 22px;
+}
+
+
+.nextkonlink {
+   color: black; 
+   text-decoration: none;
+}
+.nextkonlink:hover {
+   color: #E4B000; 
+   text-decoration: underline;
+}
+
+
+/*	  May 13, 2014*/
+
+.row_beforefooter {
+background: #E4E7E7; 
+margin-top: -50px; 
+margin-bottom: -50px; 
+margin-left: -20px; 
+margin-right: -20px;
+padding-bottom: 10px;
+}
+
+
+
+.legend-smaller {
+  font-size: 80%;
+}
+
+.privatebutton {
+/*    margin: 10px -11px -6px 0px;*/
+    margin: 0px -15px -50px 0px;
+}
+
+.quotebutton {
+/*    margin: 10px -11px -6px 0px;*/
+    margin: 0px -15px -50px 0px;
+}
+
+.btn-white {
+    background-color: white;
+}
+
+.btn-favorite {
+    color: black;
+    background-color: #E2DC1D;
+    border-color: #E4D51F;
+}
+
+/*.btn-private {
+    color: white;
+    background-color: #695D4C;
+    border-color: #695D4C;
+}*/
+
+.btn-private {
+    color: #fff;
+    background-color: #d9534f;
+    border-color: #d43f3a;
+}
+
+.btn-private:hover {
+    color: #fff;
+    background-color: #c9302c;
+    border-color: #ac2925;
+}
+
+
+.badge-snippet-count {
+  background-color: #FEF6F6;
+  color: black;
+  font-weight: normal;
+
+}
+
+
+/*.badge-snippet-count:hover {
+  background-color: #FE6262;
+  color: white;
+  font-weight: normal;
+}*/
+
+.badge-koncept-count {
+  background-color: #FEF6F6;
+  color: black;
+  font-weight: normal;
+
+}
+
+
+.badge-koncept-count:hover {
+  background-color: #FE6262;
+  color: white;
+  font-weight: normal;
+
+}
+
+
+
+
+
+.badge-snippet-count-2 {
+  background: white;
+  color: black;
+  font-weight: normal;
+
+}
+
+
+/*	  July 22, 2014: changes for COSMO bug with labels size  */
+
+.label {
+  min-width: 0px;
+  min-height: 0px;
+}
+
+
+.snippet-date {
+font-size: 70%;
+color: lightgrey;
+}
+
+.snippet-source-prev {
+    font-size: 90%;
+    background: #efefef;
+    color: #6f6262;
+/*{#    color: black;#}*/
+/*{#    text-transform: uppercase;#}*/
+    font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+
+
+
+/*.snippet_preexists a {
+  padding: 2px;
+    color: white;
+  line-height: 40px;
+  background: rgb(89, 85, 85);
+}
+*/
+
+#sidebar-right li {
+  line-height: 30px;
+}
+
+
+.right-sidebar-div {
+    margin-bottom: 40px;
+}
+
+
+.margin-bottom-50 {
+    margin-bottom: 50px;
+}
+
+.margin-top-50 {
+    margin-top: 50px;
+}
+
+.margin-top-20 {
+    margin-top: 20px;
+}
+
+.word-wrap {
+	word-wrap: break-word;
+}
+
+.second-navbar {
+    background: #3C5874; margin-top: -20px; border-radius: 0px;
+}
+
+/* USEFUL? */
+.second-navbar-content a {
+    text-transform: normal;
+}
+
+.navbar-inverse li.second-navbar-content>a {
+    text-transform: capitalize;
+    font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-weight: 300;
+    color: #E8E8E8; /*#fed136;*/
+}
+
+.navbar-inverse li.second-navbar-content>a:hover {
+    color: #fed136;
+}
+
+
+
+/*.navbar-inverse .navbar-nav>li>a*/
+
+.wordwrap {
+   word-wrap: break-word;   
+}
+
+
+/*	  August 26, 2014*/
+
+
+
+.documentcolor {
+color: #5E5A80;
+}
+
+
+.docbackground {
+    background: rgb(221, 247, 244);
+}
+
+
+.docmetadata {
+/*  color: white;*/
+  color: #5E5C5C;
+  margin-top: 5px;
+  margin-bottom: 10px;
+  border-radius: 7px;
+/*  background: rgb(178, 178, 178);*/
+  background: rgb(229, 227, 227);
+  box-shadow: 8px 7px 7px #888888;
+}
+
+.doctitle {
+/*    text-transform: uppercase;*/
+/*    background: rgb(252, 252, 207);*/
+    font-size: 260%;
+}
+
+.docdefinition {
+    font-size: 18px;
+    line-height: 30px;
+}
+.docfield {
+  text-transform: uppercase;
+  color: grey;
+}
+
+span.docdefinition .muted {
+    color: black;
+}
+
+.topicHighlighted {
+    background: rgb(255, 255, 71);
+    text-transform: uppercase;
+/*    font-size: 110%;*/
+/*    line-height: 40px;*/
+}
+
+
+.canv {
+    border: 1px solid lightgray;
+    height: 600px; /* added inline as well*/
+    background: white;
+  }
+  
+  .bar {
+      display: inline-block;
+      width: 20px;
+      height: 10px;   /* We'll override this later */
+      background-color: #B3C2FB;
+    margin-right: 2px;
+  }
+
+
+/*2015-04-07: was called searchHighlighted but was failing when searching for 'search'*/
+/* as it matched the dynamic substitution */
+
+._s_h {
+    background: rgb(255, 255, 150);
+    font-size: 110%;
+}
+
+
+.quote_arrows_navigation i {
+    margin-top: 5px;
+    margin: 0 1px;
+}
+
+/*
+.sidebar_left_global {
+    margin-top: 20px;
+    margin-bottom: 60px;
+}
+.sidebar_left_global ol {
+    margin-left: 30px;
+}
+*/
+
+
+.kon_list_item:hover {
+    color: #e03a3a;
+} 
+
+
+.koncept_result_item {
+    margin-top: 30px;
+    margin-bottom: 50px;
+}
+
+
+.user-links-hidden {
+    display: none;
+}
+
+.doc-edit-hidden {
+    display: none;
+}
+
+.quote-edit-hidden {
+    display: none;
+}
+/*      */
+/* 2014-09-02: Stuff extracted from koncept_detail.html @todo remove whats not used */
+/*      */
+ 
+ .mypills .nav-pills >li >a {
+    background-color: linen;
+	color: black;
+ }
+ .mypills .nav-pills > li > a:hover {
+   background-color: lightcoral;
+   color: white;
+ }
+ .mypills .nav-pills .active > a {
+    background-color:red;
+    color:white;
+}
+
+ .mypills .nav-pills >li a.fake_pill  {
+	background: white;
+}
+ .mypills .nav-pills >li a.fake_pill:hover  {
+	color: black;
+}
+
+
+
+.bootbox .modal-body { 	height: 160px; }
+
+
+
+/*March 14, 2014: testing smaller tabs*/
+.tabs-left>.nav-tabs>li>a {
+	min-width: 30px;
+}
+.tab-pane {
+	margin-top: 20px;
+	margin-left: 20px;
+}
+
+
+#koncept_edit_icons i {
+	margin-top: 20px;
+}
+
+
+/*TODO: this should happen everywhere*/
+ /* candidates: #e03a3a lightcoral lightgray */
+/*#person_public_profile .fragment:hover, .fragment p:hover {
+    border-left-color: black ;
+    background: rgb(239, 235, 235);
+}
+#document_detail_page .fragment:hover, .fragment p:hover {
+    border-left-color: lightgray ;
+    background: rgb(239, 235, 235);
+}
+*/
+
+
+
+/* March 21, 2014 */
+
+p.fragmentModalText {
+	font-size: 21px;
+	font-weight: 200;
+	line-height: 35px;
+}
+
+
+/*March 24, 2014*/
+
+
+.doc-well  {
+    position: relative;
+}
+.doc-well span.corner  {
+    position: absolute;
+	bottom: 3px;
+	right: 3px;
+}
+
+.doc-well span.corner-blockquote  {
+    position: absolute;
+	bottom: 0px;
+	right: 3px;
+}
+
+
+.koncept_subtext {
+	opacity: 0.4;
+	font-size: 60%;
+}
+
+
+.underline {
+    text-decoration: underline;
+}
+
+.bold {
+	color: black;
+    font-weight: bold;
+}
+
+/*.docdates {
+   margin-top: 20px;
+}*/
+
+
+
+/*blockquote.fragment:before {
+  color: #ccc;
+  content: open-quote;
+  font-size: 4em;
+  line-height: 0.1em;
+  margin-right: 0.25em;
+  vertical-align: -0.4em;
+  quotes: "\201C""\201D";
+}
+*/
+
+.shadow {
+  -moz-box-shadow:    3px 3px 5px 6px #ccc;
+  -webkit-box-shadow: 3px 3px 5px 6px #ccc;
+  box-shadow:         3px 3px 5px 6px #ccc;
+}
+
+
+.darker-btn.btn-primary {
+    background-image: linear-gradient(to bottom,#1F4C77, #125293);
+}
+.darker-btn.btn-danger {
+    background-image: linear-gradient(to bottom,#A00A2D, #B60F34);
+    /*    background-image: linear-gradient(to bottom, rgba(34, 28, 29, 0.2), rgba(98, 7, 28, 0));*/    
+}
+.darker-btn.btn-info {
+    background-image: linear-gradient(to bottom,#480D6F,#590283);
+}
+
+
+div.alert-yellow {
+    color: #c09853;
+    background-color: #fcf8e3;
+    border: 1px solid #fbeed5; 
+}
+
+
+
+/* new search koncepts */
+
+div.glossary {
+	font-size: 15px;
+	line-height: 12px;
+}
+
+div.glossary a {
+	line-height: 22px;
+}
+
+div.glossary a:hover {
+    background: #fed136;
+}
+
+div.glossary_index {
+/*    background: rgb(249, 249, 249);*/
+    padding: 10px; 
+}
+
+.glossary_info_preview {
+    margin-top: 4px;
+    background: rgb(245, 243, 243);
+    padding: 25px;
+}
+
+
+
+.popover
+{
+background-color: #ffffff;
+color: black;
+}
+
+.popover-title {
+color: black;
+border-bottom: 0;
+}
+
+.popover-title {
+background-color: #f7f7f7;
+}
+
+.popover.top .arrow:after {
+	border-top-color: white;
+}
+
+
+/* NEW BOOTSTRAP*/
+
+
+.bigicon {
+  font-size: 60px; 
+}
+
+a span.bigicon {
+      color: black;  
+}
+a span.bigicon:hover {
+      color: #fed136;  
+}
+
+
+/* make navbar dropdown work on hover */
+.dropdown:hover .dropdown-menu {
+    display: block;
+ }
+
+
+.text-muted {
+color: #999;
+}
+
+
+.bluelink {
+    color: #428bca;
+}
+
+.yellowlink {
+    color: #fed136;
+}
+
+.label-sm {
+    font-size: 13px;
+}
+
+
+.icon-bg {
+   font-size: 20px; 
+}
+.icon-md {
+   font-size: 17px; 
+}
+
+.icon-sm {
+   font-size: 15px; 
+}
+.icon-xs {
+   font-size: 12px; 
+}
+
+.icon-black {
+   color: black; 
+}
+
+
+
+legend {
+    border-bottom: 0px;  /*so to remove it*/
+}
+
+.sources_info p {
+    margin-top: 5px;
+    margin-left: 10px;
+    line-height: 20px;   
+}
+
+.popover{
+    max-width: 100%;  /*// Max Width of the popover (depending on the container!)*/
+}
+
+.btn-danger.konceptlink:hover {
+    background: #B60F34;
+}
+
+.prevnextbutton {
+    font-size: 10px;
+}
+
+
+/* buttons for import review page */
+
+td.select_button {  
+    background: rgb(241, 240, 239);
+}
+ 
+/*td.select_button.checkboxSelected {
+    background: rgb(174, 247, 159);
+}
+*/
+
+
+.btn-pressed-green {
+    background: rgb(168, 245, 172);
+}
+.btn-pressed-green:hover {
+    background: rgb(144, 213, 147);
+}
+.btn-pressed-green.active {
+    background: rgb(144, 213, 147);
+}
+
+.btn-pressed-warning {
+    background: rgb(244, 181, 181);
+}
+.btn-pressed-warning:hover {
+    background: rgb(218, 159, 159);
+}
+.btn-pressed-warning.active {
+    background: rgb(218, 159, 159);
+}
+
+
+
+/*===========
+December 24, 2014 : new quotes styles
+===========*/
+
+
+blockquote {
+   /* font-family: serif;*/  
+    font-family: sans-serif, Helvetica;  /*2015-04-21*/
+    font-size: 1.35em;;
+    color: black;
+     font-weight: 300;
+     line-height: 1.50;
+}
+
+
+
+#q blockquote {
+	margin: .75em 0;
+	    /*background: #FDFBFB;*/ /* #fff;*/
+	padding: 1.5em 1em;
+/* so to override bootstraps style*/
+	border-left: none;
+    color: #000;
+}
+
+
+#q blockquote:before {
+	border-top: 1em solid #fff;
+	border-left: 1em solid transparent;
+	border-left: 1em solid rgba(255,255,255,0);
+	border-right: 1em solid transparent;
+	border-right: 1em solid rgba(255,255,255,0);
+}
+@media (min-width: 50em)
+#q blockquote:before {
+	font-size: 1.25em;
+}
+
+#q blockquote:before {
+	content: '';
+	display: block;
+	position: absolute;
+	border-top: 1em solid #F2F2F2; /*#F2F0F0;*/ 
+	border-left: 1em solid transparent;
+	border-left: 1em solid rgba(255,255,255,0);
+	border-right: 1em solid transparent;
+	border-right: 1em solid rgba(255,255,255,0);
+	margin-right: -1em;
+	right: 99%;
+	top: 0;
+}
+.quotecornice {
+	background: #F2F2F2;  /*has to be the same as border-top color!*/
+    margin-bottom: 10px;
+}
+
+
+/*this is the FONT you want to play with */
+
+#q blockquote p, #q blockquote q {
+	position: relative;
+	display: block;
+	padding-left: 2em;
+	color: #222;
+}
+
+/* for all quote pages except detail view */
+.small-lead
+{
+   font-size: 14px; 
+}
+ 
+
+.big-lead
+{
+   font-size: 130%;
+} 
+ 
+.incipit
+{
+   font-size: 160%;
+}    
+    
+/*#q blockquote q::first-line {
+  font-variant-caps: small-caps;
+  color: red;
+}
+*/
+
+
+#q blockquote p:before, #q blockquote q:before {
+	content: '\201C';
+	color: #d83b5b;
+	position: absolute;
+	left: 0;
+	top: -.2em;
+	font-family: Arial sans-serif;
+	font-size: 4em;
+}
+
+
+#q blockquote p:after, blockquote q:after {
+	content: '';
+}
+#q blockquote q:after {
+	content: '';
+}
+
+#q blockquote a,  blockquote a:visited  {
+    color: black;
+}
+#q blockquote a:hover  {
+    color: black;
+/*    background: rgba(252, 251, 161, 0.68);*/
+    text-decoration: none;
+}
+
+
+#q small.snippetsourceinfo {
+/*    text-transform: uppercase;*/
+    font-size: 70%;
+    margin-top: 30px;  
+    text-align: right;
+}
+
+/* note: this is overridden below based on snippet-page */
+#q small.snippetsourceinfo a.sourcelink {
+    font-family: sans-serif;
+/*    color: rgb(94, 86, 86);*/
+    color: rgb(153, 153, 153);
+    background: rgb(243, 243, 253);    
+/*  eg backgrounds rgb(221, 247, 244) / rgb(243, 253, 248) / rgb(243, 243, 253) */
+}
+
+#q blockquote a.sourcelink:hover {
+    text-decoration: underline;
+}
+
+#q blockquote a.sourceLinkUrl {
+    color: cadetblue;
+}
+
+#q blockquote small:before {
+    content: none;
+}
+
+.sourceLinkUrlDocPage {
+    color: cadetblue;
+}
+
+blockquote small {
+    font-size: 65%;
+}
+/*#q blockquote:hover {
+    font-size: 200%;
+}*/
+
+/* MORE SPECIFIC STYLES FOR THE QUOTES */
+
+
+
+
+/*fragment for snippet search */
+#snippet_search_page blockquote q {
+    font-size: 16.5px;
+	font-weight: 300;
+	line-height: 1.30;
+}
+
+/*fragment for koncept search*/
+#koncept_search_page blockquote q {
+	font-size: 13px;
+	font-weight: 300;
+	line-height: 1.30;
+}
+
+/*fragment for document search*/
+#document_search_page blockquote q {
+	font-size: 16.5px;
+	font-weight: 300;
+	line-height: 1.30;
+}
+
+/*DETAIL PAGES: allow 'lead' class to take over so that it's resized on mobile */
+
+/*fragment for quote page*/
+#quote_detail_page blockquote q {
+/*    background: white;*/
+}
+
+/*2016-01-03: for white backgrund on quote detail page:*/
+/*------*/
+#quote_detail_page div.quotecornice, #quote_detail_page blockquote q {
+    background: white;
+}
+
+#quote_detail_page #q blockquote:before {
+    display: none;
+}
+/*------*/
+
+
+
+#quote_detail_page blockquote small.snippetsourceinfo {
+    font-size: 100%;
+    text-align: right;
+}
+#quote_detail_page #q blockquote a.sourceLinkUrl {
+    font-size: 60%;
+}
+
+
+/*fragment for koncept page*/
+#koncept_detail_page blockquote q {
+/*    font-size: 23px;*/
+}
+#koncept_detail_page small.snippetsourceinfo {
+    font-size: 90%;
+    text-align: right;
+}
+#koncept_detail_page #q blockquote a.sourceLinkUrl {
+    font-size: 70%;
+}
+
+/*fragment for document page*/
+
+#document_detail_page blockquote q {
+/*    font-size: 23px;*/
+}
+
+/*fragment for person homepage*/
+
+#person_public_profile blockquote q {
+/*    font-size: 18px;*/
+}
+
+
+.k_editable {   
+    color: black;
+}
+
+a.editable-empty {
+    color: grey;
+}
+
+
+
+.download-options div.radio {
+    margin-top: 15px;
+}
+
+
+
+.previewsourceframe {
+    width: 600px;
+    height: 400px;
+/*    border: none;*/
+/*    -moz-transform: scale(0.5);
+    -moz-transform-origin: 0 0;
+    -o-transform: scale(0.5);
+    -o-transform-origin: 0 0;
+    -webkit-transform: scale(0.5);
+    -webkit-transform-origin: 0 0;*/
+}
+
+
+
+.form-group label {
+    font-weight: normal;
+}
+
+
+.btn-collection {
+    margin-top: 7px;
+}
+
+
+.btn-circle {
+  width: 30px;
+  height: 30px;
+  text-align: center;
+  padding: 6px 0;
+  font-size: 12px;
+  line-height: 1.428571429;
+  border-radius: 15px;
+}
+.btn-circle.btn-xs {
+	width: 20px;
+	height: 20px;
+	padding: 2px 0px;
+	font-size: 8px;
+	line-height: 1.33;
+	border-radius: 15px;
+}
+.btn-circle.btn-sm {
+	width: 25px;
+	height: 25px;
+	padding: 2px 0px;
+	font-size: 10px;
+	line-height: 1.33;
+	border-radius: 15px;
+}
+.btn-circle.btn-lg {
+  width: 50px;
+  height: 50px;
+  /*padding: 10px 16px;*/
+  font-size: 18px;
+  line-height: 1.33;
+  border-radius: 25px;
+}
+.btn-circle.btn-llg {    /*note :naming it XL causes problems..*/
+  width: 70px;
+  height: 70px;
+  padding: 10px 16px;
+  font-size: 24px;
+  line-height: 1.33;
+  border-radius: 35px;
+}
+
+
+.btn-xxs {
+    padding: 1px 5px;
+    font-size: 10px;
+    line-height: 1.5;
+    border-radius: 3px;
+}
+
+
+/*styles for download tab - 3 options */
+
+.download_dialog .modal-content {
+	height: 335px;	
+}
+
+.download_dialog .modal-body {
+	height: 190px;	
+}
+
+.download_dialog div.radio {
+	margin-bottom: 20px;	
+}
+
+#slider12a .slider-track-high, #slider12c .slider-track-high {
+	background: lightblue;
+}
+
+
+/* styles for modal on koncept title&desc change */
+.modal_koncept_title .modal-content {
+	height: 365px;	
+}
+
+.modal_koncept_title .modal-body {
+	height: 245px;	
+}    
+
+
+
+
+.sourcesfacetOption {
+    margin-bottom: 7px;
+}
+
+
+
+.hrblack {
+	border-top: 1px solid #ADA7A7;
+}
+
+.quote_buttons_inside {
+    margin-top: 25px;
+    margin-bottom: -20px;
+}
+
+
+.quote_title_stripe {
+    /*min-height: 120px;*/  /*before removing second stripe*/
+    min-height: 93px;
+	font-size: 20px;
+	background: #3C5874;
+	color: black;
+	padding: 5px;	
+    margin-top: -20px;  /*the white space*/
+    margin-left: -20px;
+    margin-bottom: -30px;
+    margin-right: -20px;
+    padding-left: 20px;
+    padding-right: 20px;
+    border-top: 1px #00BCD4 solid;
+    border-bottom: 2px #C1D0DE solid;   /*after removing second stripe*/
+	  
+}
+
+.quote_title_stripe h3 {
+	/*font-size: 20px;*/
+  font-size: 16px;
+  margin-top: 0px;
+}
+
+/*used in quote detail banner*/
+.quote_title_bigsize {
+	font-size: 27px;
+    background: #E0D44A; /*#fed136;*/  /*the highlight*/
+}
+
+/*used in related quotes panel*/
+.quote_title_medsize {
+  font-size: 15px;
+  font-family: arial;
+  font-style: italic;
+  font-weight: bold;
+  /*background: #E0D44A;*/ /*#fed136;*/  /*the highlight*/
+  color: black;
+}
+
+/*used in sidebar quote detail title*/
+.quote_title_medsize2 {
+  font-size: 15px;
+  font-family: arial;
+  font-style: italic;
+  font-weight: bold;
+  /*background: #31708f;*/ /*#dbdbdb;*/ /*#FFE382; #fed136; = strong*/  /*the highlight*/
+  color: black;
+}
+
+
+/*used in search results etc..*/
+.quote_title_smallsize {
+    color: black;
+    font-size: 11px;
+    /*text-transform: uppercase;*/
+    text-transform: none;
+    /*font-family: arial;*/
+    font-weight: bold;
+    /*font-style: italic;*/
+    /*background: white; *//*#E0D44A; */  /*  #373A33  #428bca;  #fed136*/
+    
+}
+
+
+.quote_title_smallsize a {
+	color: black;  /*black*/
+}
+
+.quote_title_stripe2 {
+    min-height: 70px;
+    font-size: 22px;
+	  background: #31708F;  /*candidates #8F5575 #535575 #347175 #9C4442 #ADADAD*/
+	  color: black;  
+    padding: 0px;	/*25px*/
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-top: -20px;  /*the white space*/
+    margin-left: -20px;
+    margin-bottom: -30px;
+    margin-right: -20px;
+    border-top: 1px #143235 solid;
+    border-bottom: 1px #160F84 solid;
+	  
+}
+
+
+.sidebar_side_position h5 {
+  font-size: 12px;
+}
+
+
+
+.source_title_stripe {
+    min-height: 260px;
+	font-size: 30px;
+	background: #3C5874;
+	color: black;
+	padding: 5px;	
+    margin-top: -20px;  /*the white space*/
+    margin-left: -20px;
+    margin-bottom: 15px;
+    margin-right: -20px;
+    padding-left: 20px;
+    padding-right: 20px;
+    border-top: 1px #00BCD4 solid;
+	  
+}
+
+.source_title_stripe2{
+    min-height: 30px;
+    font-size: 22px;
+	background: #31708F;  /*above: #3C5874  #31708F #3B6C74*/
+	color: black;
+/*    padding: 28px;*/
+    margin-top: -20px;  /*the white space*/
+    margin-right: -20px;
+    margin-left: -20px;
+    margin-bottom: -30px;
+    padding-left: 20px;
+    padding-right: 20px;
+    border-top: 1px #143235 solid;
+    border-bottom: 1px #143235 solid;
+	  
+}
+
+.row .row-margin-left {
+    margin-left: -16px;
+}
+
+.source_metadata, .source_metadata small {
+    font-size: 85%;
+    text-transform: capitalize;
+    margin-top: 20px;
+}
+
+
+.breadcrumbs_stripe {
+    margin-bottom: 22px;
+    margin-top: -20px;
+    margin-left: -20px;
+    margin-right: -20px;
+    background-color: #ECEBEB;
+/*{#00BCD4#}*/
+}
+
+.breadcrumbs_stripe .breadcrumb {
+    background-color: #ECEBEB;
+/*{#00BCD4#}*/
+}
+
+
+
+
+
+.second_navbar {
+    font-size: 10px;
+    background-color: #31708F; 
+    padding: 0px 0px 0px 0px;
+    color: #BEBEBE;
+    text-transform: uppercase;
+    font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-weight: 400;
+    letter-spacing: 1px;
+}
+
+.second_navbar ul {
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+.second_navbar ul li a:hover {
+  border-radius: 0px;
+}
+
+
+.second_navbar.nav li a {
+  color: black;
+}
+
+.second_navbar .nav  .dropdown-menu>li>a {
+  font-size: 11px;
+}
+
+/*{# note: navbar2link class was added to avoid css extending to 2nd level dropdowns #}*/
+.second_navbar ul li.active a.navbar2link, .second_navbar ul li.active a.navbar2link:hover {
+    /* height: 38px;  hack to avoid wrapping on small devices*/
+   color: black;
+   background-color: white; /*#DBEBF7;*/
+   border-radius: 0px;
+}
+
+
+
+
+
+
+
+/*{# css only trick #}*/
+
+div.next_hover {
+    display: none;
+}
+    
+a.next_quote_link:hover + div.next_hover {
+    display: block;
+}
+
+

@@ -1,0 +1,57 @@
+
+
+{# November 27, 2015 Functions to deal with favorite/unfavorite action #}
+
+
+
+<script type="text/javascript">
+
+
+// ===========
+// FUNCTIONS which are GENERIC: used just to update state on buttons 
+// ===========
+
+
+function makeLoved(button) {
+  	button.removeClass('btn-default');
+  	button.addClass('btn-primary');
+	button.attr('title', "Currently in favorites. Click to remove it.");
+}
+function makeUnLoved(button) {
+  	button.removeClass('btn-primary');
+  	button.addClass('btn-default');
+	button.attr('title', "Make it favorite.");
+}
+
+
+
+
+
+// ===========
+// // QUOTE  Love/UnLove buttons
+// ===========
+
+
+	
+$(".favoritebutton-circle").click(function() {
+	var int_id = $(this).attr('int');
+	var button = $(this);
+    // alert( "Handler for .click() called. " + int_id );
+	
+    $.get('{% url make_fragment_favorite %}', { frag_id: int_id }, function (data) {
+		// check JSON data 
+        if (data.favorite == 'true') {
+        	makeLoved(button);
+        } else {
+			makeUnLoved(button);
+        }
+		
+	});
+
+});
+
+
+
+
+
+</script>

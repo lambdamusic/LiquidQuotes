@@ -1,0 +1,48 @@
+{# August 18, 2014: done to accommodate the new two columns layout #}
+
+ {% load konceptstags %} 
+  
+  
+  
+  
+  
+{# SIDEBAR FOR IMPORT PAGES #}
+  
+ 
+
+	
+	{% if not  doctitle %}
+	
+	<h4><b>Did you know that..</b></h4>
+	
+	<p>
+
+		The Kindle highlights you have uploaded are saved and remain available until you upload some new ones. 
+
+		{% if previousKindleImport %}
+		<br /><br />
+		  
+	  
+		{# <h4><b>Continue previous work?</b></h4> #}
+		
+	  <a href="{% url getLatestKindleImport %}" title="Continue working on the kindle highlights you have previously uploaded">
+  		  <button class="btn btn-success btn-xs" type="button" style="margin-top: 10px; margin-bottom: 10px;">
+  		  Reload previous highlights <span class="glyphicon glyphicon-bookmark icon-white"></span>
+  	  </button>
+  	  </a>
+	 
+		{% endif %}
+				
+	</p>
+	
+
+	{% else %}
+	
+	<h4><b>Important:</b></h4>
+	
+	<p>
+		The data on your Kindle may be <b>copyrighted</b> and can't be shared freely online. <br />If that's the case, please make sure that the {{SNIPPET_LABEL|lower}}s you create are marked as  <b><span class="-alert-info">private</span></b>.
+	</p>
+
+
+	{% endif %}

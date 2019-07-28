@@ -1,0 +1,136 @@
+{% load konceptstags %}
+
+
+
+	{# March 10, 2014: partial template used in both newKonceptForm and documentModalChange form   #}
+	
+  	<br />	  
+  
+  {# DOCUMENT EDIT SECTION  #}
+
+      {% if form.sourcetitle.errors %}
+        <div class="alert alert-danger">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            {{ form.sourcetitle.errors }}.errors.as_text|cut:"* " }}
+        </div>
+      {% endif %}
+	  
+	  <div class="form-group">
+   	   <label for="id_sourcetitle">Title:
+	   		&nbsp;<span class="glyphicon glyphicon-info-sign jstooltip icon-xs"  title="This is what you will use to quickly locate this {{DOCUMENT_LABEL}}s in the future"></span>
+      </label>
+		<input type="text" name="sourcetitle" id="id_sourcetitle" class="width-90percent form-control"  autocomplete="off"
+	placeholder="Start typing to see suggestions..." value="{{form.sourcetitle.value|default_if_none:""}}" 
+		{% if increaseDocument  %}readonly{% endif %}/> 
+	</div>
+
+	{% if not increaseDocument  %}	
+		<span class="text-muted" id="source_preview_link">
+			Tip: Use autocomplete to use an existing {{DOCUMENT_LABEL}}, or enter in a new one. 
+		</span>
+		<br />
+	{% endif %}
+	
+
+
+		{# <br /> #}
+		{# <span class="text-muted" id="source_preview_link"> #}
+		{#  #}
+		{# &nbsp;Total number of associated koncepts: <b>{{document.get_koncepts|length}}</b>&nbsp;&nbsp;(<span class="glyphicon glyphicon-search"></span> #}
+		{# <a target="_blank" class="text-info" title="Opens the selected document in new window" href="{{document.get_absolute_url}}">view</a>) #}
+		{# <br /><br /> #}
+		{# 				 #}
+		{# </span> #}
+
+
+
+
+
+	<br />
+
+      {% if form.sourceurl.errors %}
+        <div class="alert alert-danger">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            {{ form.sourceurl.errors.as_text|cut:"* " }}
+        </div>
+      {% endif %}
+	  <div class="form-group">
+   	   <label for="id_sourceurl">Url:</label>
+		<input type="text" name="sourceurl" id="id_sourceurl" class="width-90percent form-control" 
+	placeholder="" value="{{form.sourceurl.value|default_if_none:""}}" {% if increaseDocument  %}readonly{% endif %} /> 
+	</div>
+
+
+	<br />
+
+      {% if form.sourceauthor.errors %}
+        <div class="alert alert-danger">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            {{ form.sourceauthor.errors.as_text|cut:"* " }}
+        </div>
+      {% endif %}
+	  
+	  <div class="form-group">
+   	   <label for="id_sourceauthor">Author(s):</label>
+		<input type="text" name="sourceauthor" id="id_sourceauthor" class="width-90percent form-control" 
+	placeholder="" value="{{form.sourceauthor.value|default_if_none:""}}" {% if increaseDocument  %}readonly{% endif %} /> 
+	</div>
+
+			
+	<br />
+      {% if form.sourcepubyear.errors %}
+        <div class="alert alert-danger">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            {{ form.sourcepubyear.errors.as_text|cut:"* " }}
+        </div>
+      {% endif %}
+
+	  <div class="form-group">
+   	   <label for="id_sourcepubyear">Year:</label>
+		<input type="text" name="sourcepubyear" id="id_sourcepubyear" class="width-90percent form-control" 
+	placeholder="" value="{{form.sourcepubyear.value|default_if_none:""}}" {% if increaseDocument  %}readonly{% endif %} /> 
+	</div>
+
+
+	<br />
+
+      {% if form.sourcedesc.errors %}
+        <div class="alert alert-danger">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            {{ form.sourcedesc.errors.as_text|cut:"* " }}
+        </div>
+      {% endif %}
+	  
+	  <div class="form-group">
+    	  <label for="id_sourcedesc">Notes:
+		  	 &nbsp;<span class="glyphicon glyphicon-info-sign jstooltip icon-xs"  title="Extra metadata about this record can go in here"></span>
+		  </label>
+    	  <textarea name="sourcedesc" rows="5" cols="80" id="id_sourcedesc" class="width-90percent form-control" {% if increaseDocument  %}readonly{% endif %} >{{form.sourcedesc.value|default_if_none:""}}</textarea>
+	  </div>
+
+
+
+	  {# =========== #}
+	  {# LOCATION #}
+	  {# ===========	 #}
+
+	  <hr>
+
+	    {% if form.location.errors %}
+	      <div class="alert alert-danger">
+	          <button type="button" class="close" data-dismiss="alert">×</button>
+	          {{ form.location.errors.as_text|cut:"* " }}
+	      </div>
+	    {% endif %}
+
+
+
+	  <div class="form-group">
+	    <label for="id_location">Location:
+			&nbsp;<span class="glyphicon glyphicon-info-sign jstooltip icon-xs"  title="The location of the {{SNIPPET_LABEL|lower}} within the {{DOCUMENT_LABEL|lower}} (if known)."></span>
+		</label>
+		<input rows="5" type="text" name="location" id="id_location" class="width-90percent form-control"  autocomplete="off" 
+		placeholder="" value="{{form.location.value|default_if_none:""}}" />
+	  </div>
+
+

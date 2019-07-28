@@ -1,0 +1,133 @@
+{% extends "bstrap3.2.0/base.html" %}
+{% load konceptstags %}
+
+{# this is the private profile page #}
+
+
+
+
+{% block belownavigation %}
+
+
+	{% with person_private_profile=1 %}
+		{% include "bstrap3.2.0/components/navbar_second.html" %}
+	{% endwith %}
+
+{% endblock belownavigation %}
+
+
+
+
+
+
+{% block pagecontents %}
+
+
+
+<div class="row">
+    
+
+	{# MAIN CONTENT #}
+    <div class="col-md-8 col-md-push-3 margin-bottom-50">
+    	
+		<div class="page-header">
+		<h2>Profile</h2>
+		</div>
+		
+		
+		{# start profile well #}	
+	    <div class="well" style="padding: 50px;">
+
+            {# <form id="tab"> #}
+			<form action="" method="post" id="tab" role="form">{% csrf_token %}
+				
+				{% if success %}
+				<div class="alert alert-success">
+					<button type="button" class="close" data-dismiss="alert">×</button>
+				 	 Your details have been updated.
+				</div>
+				{% endif %}
+				
+				<div class="form-group">					
+	                <label>First Name</label>
+	                <input name="first_name" id="id_first_name"  type="text" placeholder="please fill in" class=" form-control" value="{{form.first_name.value|default_if_none:""}}">
+				</div>	
+
+				<div class="form-group">
+	                <label>Last Name</label>
+	                <input name="last_name" id="id_last_name"  type="text" placeholder="please fill in" class="input-xlarge form-control" value="{{form.last_name.value|default_if_none:""}}">
+				</div>
+
+				<div class="form-group">
+					<label>Time Zone</label>
+					
+					<select  class="form-control" name="timezone" id="id_timezone">
+					  {% for t_option in form.timezone.field.choices  %}
+					  		<option value="{{t_option.0}}" {% ifequal form.timezone.value t_option.0 %}selected="selected"{% endifequal %} >{{t_option.1}}</option>
+				
+					  {% endfor %}
+					</select>
+				</div>
+				
+				<hr>
+	
+				{# username not editable #}
+				<div class="form-group">	
+					<label>Username</label>
+					<br />			
+					<span class="input-xlarge uneditable-input" style="color: grey;">{{request.user.username|default_if_none:""}}</span>
+				</div>
+
+				<div class="form-group">
+	                <label>Email</label><br />
+	                {# <input name="email" id="id_email"   type="text" placeholder="jsmith@yourcompany.com" class="input-xlarge uneditable-input" value="{{form.email.value|default_if_none:""}}"> #}
+					<span class="input-xlarge uneditable-input" style="color: grey;">{{request.user.email|default_if_none:""}}</span>
+				</div>
+
+				<hr>
+                {# <label>Address</label> #}
+                {# <textarea name="address" id="id_address"   placeholder="NW10 New York" rows="3" class="input-xlarge"></textarea> #}
+
+
+				
+
+
+				
+				<div>
+            	    <button type="submit" class="btn btn-primary">Update</button>
+            	</div>
+				
+			</form>
+				
+			<br /><br />
+			
+			<div class="alert alert-warning">
+			  Note: to change your password please use the <a href="{% url auth_password_change %}">password change form</a>.
+			</div>
+
+			
+			
+					
+		</div>	
+	
+	
+	
+	</div>	
+	{# END MAIN CONTENT #}
+	
+	
+	
+	{# SIDEBAR #}
+	<div class="col-md-3 col-md-pull-8">
+
+		{% include "bstrap3.2.0/components/dashboard-nav.html" %}
+		
+    </div>
+	{# END SIDEBAR #}
+
+  
+</div>
+  
+
+{% endblock pagecontents %}
+

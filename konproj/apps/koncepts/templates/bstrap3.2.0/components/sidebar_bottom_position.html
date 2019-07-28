@@ -1,0 +1,86 @@
+
+ {% load konceptstags %} 
+  
+<div class="row" style="-margin-top: 60px; margin-bottom: 60px;">
+	
+	
+<div class="col-md-3  col-md-offset-1 margin-top-50" >
+	
+	{# TAGS #}
+	
+    {% if mykoncepts %}
+		
+	   	{% with snippet_detail_actions=1 %}
+		{% with ALIGNMENT='right' %}
+	   		{% with q1 as snippet %}
+	   		{% include "bstrap3.2.0/components/sidebar_tagsinfo.html" %}
+	   		{% endwith %}			
+	   	{% endwith %}
+	   	{% endwith %}
+		
+     {% endif %}
+
+		
+</div>  
+
+
+<div class="col-md-3  -col-md-offset-1 margin-top-50" >
+	
+    {% if mykoncepts %}
+   	  <p class="col-md-10 ">
+  	
+   		<h5 class="text-{{ALIGNMENT|default:'right'}}">Edit</h5>
+   		<hr>
+   	   	{# BUTTONS #}
+   	   	{% with snippet_detail_edit=1 %}
+		{% with ALIGNMENT='right' %}
+   	   		{% with q1 as snippet %}
+   	   		{% include "bstrap3.2.0/components/buttons.html" %}
+   	   		{% endwith %}			
+   	   	{% endwith %}
+   	   	{% endwith %}
+	
+	
+
+   	  </p>	
+     {% endif %}
+
+		
+</div>  
+	
+   
+
+
+<div class="col-md-3  -col-md-offset-2 margin-top-50" >
+	
+    {% if mykoncepts %}
+   	  <p class="col-md-10 -margin-top-50">
+  	
+   		<h5 class="text-{{ALIGNMENT|default:'right'}}">Actions</h5>
+   		<hr>
+   	   	{# BUTTONS #}
+   	   	{% with snippet_detail_actions=1 %}
+		{% with ALIGNMENT='right' %}
+   	   		{% with q1 as snippet %}
+   	   		{% include "bstrap3.2.0/components/buttons.html" %}
+   	   		{% endwith %}			
+   	   	{% endwith %}
+   	   	{% endwith %}
+	
+	
+
+   	  </p>	
+     {% endif %}
+
+		
+</div>  
+
+
+</div>  {# ROW ENDS #}
+
+
+
+	
+		
+	
+	

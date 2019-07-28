@@ -1,0 +1,106 @@
+
+ {% load konceptstags %} 
+  
+
+
+
+
+
+
+
+	{# SAVED BY #}
+	
+{% if 0 %}
+  
+  <h5 class="-margin-top-50 text-right -text-muted">saved by</h5>
+  <hr>
+     {% with quote_detail_page_side=1 %}
+  {% with ALIGNMENT='right' %}
+       {% with q1 as snippet %}
+       {% include "bstrap3.2.0/components/user_badge.html" %}
+       {% endwith %}      
+     {% endwith %}
+     {% endwith %}
+     <br /><br />
+
+     
+{% endif %}
+
+
+	{# TITLE #}
+	
+
+		
+	   	{% if 0%}{% with quote_detail_page=1 %}
+		{% with ALIGNMENT='right' %}
+	   		{% with q1 as snippet %}
+	   		{% include "bstrap3.2.0/components/sidebar_title.html" %}
+	   		{% endwith %}			
+	   	{% endwith %}
+	   	{% endwith %}
+		<br />{% endif %}
+
+    
+    {# TAGS #}
+	
+    {% if mykoncepts %}
+		
+	   	{% with snippet_detail_actions=1 %}
+	   	{% with quote_detail_page_side=1 %}
+		{% with ALIGNMENT='right' %}
+	   		{% with q1 as snippet %}
+	   		{% include "bstrap3.2.0/components/sidebar_tagsinfo.html" %}
+	   		{% endwith %}			
+	   	{% endwith %}
+	   	{% endwith %}
+	   	{% endwith %}
+		{# <br /> #}
+     {% endif %}
+
+
+
+   	{# EDIT #}
+
+    {% if mykoncepts %}
+   	  <p class="col-md-10 margin-top-50">
+  	
+   		<h5 class="text-{{ALIGNMENT|default:'right'}}">Edit</h5>
+   		<hr>
+   	   	{# BUTTONS #}
+   	   	{% with snippet_detail_edit=1 %}
+   	   	{% with quote_detail_page_side=1 %}
+		{% with ALIGNMENT='right' %}
+   	   		{% with q1 as snippet %}
+   	   		{% include "bstrap3.2.0/components/buttons.html" %}
+   	   		{% endwith %}			
+   	   	{% endwith %}
+   	   	{% endwith %}
+   	   	{% endwith %}
+
+   	  </p>	
+     {% endif %}
+
+
+
+     {# ACTIONS #}
+
+     {% if mykoncepts %}
+   	  <p class="col-md-10 margin-top-50">
+  	
+   		<h5 class="text-{{ALIGNMENT|default:'right'}}">Actions</h5>
+   		<hr>
+   	   	{# BUTTONS #}
+   	   	{% with snippet_detail_actions=1 %}
+		{% with ALIGNMENT='right' %}
+   	   		{% with q1 as snippet %}
+   	   		{% include "bstrap3.2.0/components/buttons.html" %}
+   	   		{% endwith %}			
+   	   	{% endwith %}
+   	   	{% endwith %}
+	
+	
+
+   	  </p>	
+     {% endif %}
+	
+	

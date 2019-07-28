@@ -1,0 +1,123 @@
+
+{% load konceptstags %}
+
+
+
+
+{# 2015-11-08 : new container test #}
+
+<div class="container-fluid quote_title_stripe2">
+		
+	
+	<div class="row" style="margin: -20px 5px 10px 5px;">  {# this css should stay inline #}
+		
+	<div class="col-md-8 col-md-offset-1" style="margin-bottom: 20px;">
+		<a name="title">&nbsp;</a>
+		
+		
+		{# title :: 2015-11-19 #}
+		<h3 style="margin-top: 5px;">
+		<small class="text-uppercase quietlink6" style="font-size: 11px; text-transform: uppercase;">{{SNIPPET_LABEL}} Title:&nbsp;</small>
+		{# {% if mykoncepts %}Your{% else %}{% endif %} #}
+		</h3>
+		{# <br /> #}
+		<span class="quote_title_bigsize" id="{{q1.id}}_title" >{{q1.title}}</span>
+		{% if mykoncepts %}   			
+		<a id="{{q1.id}}_title_href" href="javascript:editQuoteTitle('{{q1.id}}', '{{q1.title|escapejs}}')" title="Change the title" style="text-decoration: none;">
+			&nbsp;<i class="glyphicon glyphicon-edit quietlink5"></i>
+		</a>
+		{% endif %}
+		<br>
+		
+		
+		
+ 		{# tags :: 2015-11-19 :: 2016-01-08: deprecated in favor of bottom tags #}
+		{% if 0 and mykoncepts %}
+ 		<h3 style="margin-top: 10px; margin-bottom: 0px;">
+ 		<small class="text-uppercase quietlink6" style="font-size: 11px; text-transform: uppercase;">{{SUBJECT_LABEL|lower}}s:&nbsp;</small>
+ 		</h3>
+ 		<div style="margin-top: -4px;" id="tags_{{q1.id}}">	
+		
+ 	  	  {% with quote_detail_page=1 %}	
+ 	  	  {% with q1 as snippet %}
+ 	  	  		{% include "bstrap3.2.0/components/tags_snippet.html" %}
+ 	  	  {% endwith %}
+ 	  	  {% endwith %}
+		  			
+
+ 	   </div>
+	   {% endif %}
+		
+		
+		
+		
+		{# saved by :: 2015-12-26 #}
+		{% if 1  %}
+		<h3 style="margin-top: 10px; margin-bottom: 0px;">
+		<small class="text-uppercase quietlink6" style="font-size: 11px; text-transform: uppercase;">Created by:&nbsp;</small>
+		</h3>
+
+		{% with quote_detail_page_top=1 %}
+			{% with q1 as object %}
+    		{% include "bstrap3.2.0/components/user_badge.html" %} 
+			{% endwith %}
+		{% endwith %}
+				
+			
+		</h3>
+		 {% endif %}
+		
+		
+		
+		
+
+		
+	</div>
+	
+	<div class="col-md-3 -col-md-offset-1" style="margin-bottom: 10px; margin-top: 50px;">
+		
+    	 {% if nextQuoteSource %}
+
+  		<div class="text-right " >
+
+			{% if 0 %}
+			{# 2015-12-27: test to add a graph icon #}
+			<div class="" style="float:left;">
+				
+				<small class="text-uppercase" style="font-size: 11px; text-transform: uppercase;">Graph</small>
+				<br />
+
+	  			<a href="{{nextQuoteSource.get_absolute_url}}#quotes" class="quietlink6 next_quote_link" {# title="{{nextQuoteSource.title|capfirst}}" #}>
+	  				<span class="glyphicon glyphicon-picture" style="font-size: 200%;"></span>
+	  			</a>
+
+				
+			</div>
+			{% endif %}			
+			<div class="">
+				
+				<small class="text-uppercase" style="font-size: 11px; text-transform: uppercase;">Next</small>
+				<br />
+
+	  			<a href="{{nextQuoteSource.get_absolute_url}}" class="quietlink6 next_quote_link">
+	  				<span class="glyphicon glyphicon-chevron-right" style="font-size: 200%;"></span>
+	  			</a>
+				<div class="next_hover" style="font-size: 16px;">{{nextQuoteSource.title|capfirst|truncatewords:5}} {% if nextQuoteSource.source %}<br /><span class="text-muted" style="font-size: 14px;">{{nextQuoteSource.source.title|truncatewords:5}}</span>{% endif %}
+					
+				</div>
+				
+				
+			</div>
+
+  		</div>
+
+	
+    	  {% endif %} 
+		
+	</div>
+	
+	</div>
+	
+</div>	
+
+

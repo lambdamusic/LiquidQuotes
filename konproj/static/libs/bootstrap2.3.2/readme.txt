@@ -1,0 +1,1 @@
+started this folder on 2013-07-26 so to gather all bootstrap related static files for koncepts

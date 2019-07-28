@@ -1,0 +1,259 @@
+{% extends "bstrap3.2.0/base.html" %}
+{% load konceptstags %}
+
+
+
+{% block extrahead %}
+
+<style type="text/css" media="screen">
+	p.glossary {
+		font-size: 12px;
+		line-height: 10px;
+	}
+	
+	.popover
+	{
+	background-color: #ffffff;
+	color: black;
+	}
+
+	.popover-title {
+	color: black;
+	border-bottom: 0;
+	}
+
+	.popover-title {
+	background-color: #f7f7f7;
+	}
+	
+	.popover.top .arrow:after {
+		border-top-color: white;
+	}
+
+    .gtreetable .node-name {
+        color: darkred;
+    }
+
+	
+	</style>
+
+
+	<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}libs/bootstrap-gtreetable/bootstrap-gtreetable.min.css" />
+	
+	
+{% endblock extrahead %}
+
+
+
+
+
+{% block belownavigation %}
+
+
+	{% with person_subjects=1 %}
+		{% include "bstrap3.2.0/components/navbar_second.html" %}
+	{% endwith %}
+
+{% endblock belownavigation %}
+
+
+
+
+
+{% block pagecontents %}
+
+
+<div class="container">
+	
+<div class="row  margin-top-50" id="koncept_search_page"> {# style="margin-top: 40px;" #}
+		
+		<div class="col-md-8">
+			
+		{% with subjects_tree=1 %}
+			{% include "bstrap3.2.0/components/search_results_top.html" %}
+		{% endwith %}
+		</div>
+				
+		{% if 1 %}
+		<div class="col-md-4">
+	    	  <div class="-well -margin-bottom-50">
+
+	    	  	  <div id="custom-search-input">
+	    	  	      <div class="input-group -col-md-12">
+	    				  <form role="search" method="get" id="search_form" action="{% if ideas_search or k1 %}{% url search_user_koncepts request.user.username %}{% else %}{% url search_user_quotes request.user.username %}{% endif %}">
+	    	  	          <input type="text" class="search-query form-control" placeholder="Search" name="q" />
+	    				  </form>
+	    	  	          <span class="input-group-btn">
+	    	  	              <button class="btn btn-info" type="button">
+	    	  	                  <span class=" glyphicon glyphicon-search"></span>
+	    	  	              </button>
+	    	  	          </span>
+	  
+	    	  	      </div>
+	    	  	  </div>
+
+	    	  </div>
+		</div>
+		{% endif %}
+		
+	</div>
+		
+	
+</div>
+
+
+
+<div class="row margin-top-50" > {# style="margin-top: 40px;" #}
+
+	{# MAIN CONTENT #}	
+	<div class="col-md-11 margin-bottom-50" id="koncept_search_page" >
+		
+	
+		<ul class="nav nav-tabs margin-bottom-50">
+		   <li role="presentation"><a href="{% url subject_list request.user.username %}" class="quietlink2">List View</a></li>
+		   <li role="presentation" ><a href="{% url subject_detail request.user.username %}" class="quietlink2">Details View</a></li>
+		  <li role="presentation" class="active"><a href="{% url subjects_tree request.user.username %}" class="quietlink2">Tree View</a></li>
+		</ul>
+
+		
+		{% if totcount %}  {# todo #}
+		
+	
+		<table class="table gtreetable" id="gtreetable">
+			{# <thead><tr><th>{{KONCEPT_LABEL}}</th></tr></thead> #}
+		</table>
+
+		
+		{% else %}
+		
+			
+			{% include "bstrap3.2.0/components/firstlogin.html" %}
+			{# note: if searchval, this returns the no results box too #}
+		
+		{% endif %}
+		
+	
+		
+	</div>  
+	{# end of MAIN-CONTENT#}
+
+
+		
+</div> {# end of row #}
+
+</div> {# end of container #}
+
+
+
+
+<br /><br />
+
+{% endblock pagecontents %}
+
+
+
+
+
+
+
+
+{% block closingbody %}
+
+
+<script type="text/javascript" src="{{ STATIC_URL }}libs/jquery-browser-plugin/jquery.browser.min.js"></script>
+
+<script type="text/javascript" src="{{ STATIC_URL }}libs/bootstrap-gtreetable/bootstrap-gtreetable.js"></script>
+	
+		
+	<script>
+$(function (){
+	 
+	 	// TOOTIPS 
+	
+		$(".kon_list_item").popover({   // can be tooltip too
+		placement: 'top', 
+		trigger: 'hover', 
+		html: true,
+		delay: { show: 500, hide: 300 },
+		});
+	
+	
+		// TREE TABLE
+	
+		jQuery('#gtreetable').gtreetable({
+			'selectLimit' : 1,
+			'types': { default: 'glyphicon glyphicon-folder-open'},
+			"language":"en-US",
+			"manyroots":true,
+			"draggable":true,
+			"inputWidth":"300px",
+			
+			"onSelect": function (oNode) {
+			   	window.location.href='{% url search_user_quotes request.user.username %}?subject=' + oNode.id;
+			 },
+			
+		   // url: !oNode.isSaved() ? 'ajax_subject_create' : 'ajax_subject_update?id=' + oNode.getId(),
+			
+			"onSave":function (oNode) {
+			        return {
+			            type: 'GET',
+			            url: !oNode.isSaved() ? '{% url ajax_subjects_create request.user.username %}' : '{% url ajax_subjects_create request.user.username %}?id=' + oNode.getId(),
+			            data: {
+			                parent: oNode.getParent(),
+			                name: oNode.getName(),
+			                position: oNode.getInsertPosition(),
+			                related: oNode.getRelatedNodeId()
+			            },
+			            dataType: 'json',
+			            error: function(XMLHttpRequest) {
+			                console.log(XMLHttpRequest.status+': '+XMLHttpRequest.responseText);
+			            }
+			        };        
+			    },
+				
+			'onMove': function (oSource, oDestination, position) {
+			  return {
+			    type: 'GET',  // temp for testing PARAMS
+			    url: '{% url ajax_subjects_move request.user.username %}?id=' + oSource.getId(),
+			    data: {
+			      related: oDestination.getId(),
+			      position: position
+			    },
+			    dataType: 'json',
+			    error: function(XMLHttpRequest) {
+			      console.log(XMLHttpRequest.status+': '+XMLHttpRequest.responseText);
+			    }
+			  }; 
+			},   
+			
+		    'onDelete':function (oNode) {
+		      return {
+		        type: 'GET',
+		        url: '{% url ajax_subjects_delete request.user.username %}?id=' + oNode.getId(),
+		        dataType: 'json',
+		        error: function(XMLHttpRequest) {
+		          console.log(XMLHttpRequest.status+': '+XMLHttpRequest.responseText);
+		        }
+		      };
+		    },     
+
+			'source': function (id) {
+			  return {
+			    type: 'GET',
+			    url: '{% url ajax_subjects_tree request.user.username %}',
+			    data: { 'id': id },        
+			    dataType: 'json',
+			    error: function(XMLHttpRequest) {
+			      console.log(XMLHttpRequest.status+': '+XMLHttpRequest.responseText);
+			    }
+			  }
+			}
+		});
+		
+		
+	});
+	</script>
+
+
+{% endblock  %}
+

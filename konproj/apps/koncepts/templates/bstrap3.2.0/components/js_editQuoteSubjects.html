@@ -1,0 +1,85 @@
+
+
+{# November 17, 2015: edit the subjects for a snippet #}
+
+
+
+<script type="text/javascript">
+
+
+function escapeStringa(unsafe) {
+    return unsafe
+         .replace(/&/g, "&amp;")
+         .replace(/</g, "&lt;")
+         .replace(/>/g, "&gt;")
+         .replace(/"/g, "&quot;")
+         .replace(/'/g, "&#039;");
+ }
+ 
+
+ 
+function editQuoteSubjects(quote_id, old_subjects) {
+	bootbox.prompt({
+	    title: "Please enter one or more {{SUBJECT_LABEL|lower}}s",
+        className: "modal_quote_subjects",
+	    value: old_subjects,
+	    callback: function(result) {
+			if (result === null) {
+			    // Prompt dismissed
+				console.log("Dismissed.");
+			} else {
+			    // result has a value
+		        $.get('{% url edit_quote_subjects %}', {  subjects: result, quote_id: quote_id, page : '{{page}}' }, function (data) {
+		            if (data.new_subjects) {
+						console.log("New subjects data received from back end.");
+						$("#tags2_" + quote_id).html(data.new_subjects);
+
+		            } else {
+						console.log("Ops - editQuoteSubjects returned no data.");
+					}
+		        });
+			}
+			
+
+	    }
+	});
+	
+};	
+		
+
+
+
+// code wrapped into a function so to be used with editQuoteSubjects()
+
+function modalTagComplete() {
+	
+	// hack: extract tags within the page 
+	var tags_list = [{% for t in usertags %}"{{t|escapejs}}", {% endfor %}];
+
+	$(".modal_quote_subjects input").select2({
+		tags:tags_list, 
+		minimumInputLength: 2,
+		width: 'resolve',
+		dropdownAutoWidth : true,
+	});
+	// fix weird positioning problem
+	$(".modal_quote_subjects .select2-container.form-control").css('padding', '0px');
+	
+}
+
+
+//
+//  2015-11-17: hack to add the event-typeahead to the modal input after it gets loaded
+//  note: problem with this is that it's fired on ALL modalsso we can't customize it further
+//
+$(document).on("shown.bs.modal", function () {
+	// wait a second for the modal to load properly - then set the value
+	setTimeout(function(){
+		// $(".bootbox.modal.fade.in input").parent().append("<br /><br /><p class='text-muted'>Tip: use autocomplete to merge with an already existing ......</p>");
+		modalTagComplete();
+	}, 100);
+});
+
+
+
+</script>

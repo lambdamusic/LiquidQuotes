@@ -1,0 +1,701 @@
+{% extends "bstrap3.2.0/base.html" %}
+{% load konceptstags %}
+
+
+
+{% block extrahead %}
+
+	{# 2015-12-26: the graph stuff #}
+    <link href="{{ STATIC_URL }}libs/visjs/vis.css" rel="stylesheet" type="text/css" />
+    <script src="{{ STATIC_URL }}libs/visjs/vis.js"></script>
+	
+
+{% endblock extrahead %}
+
+
+{% block navigation %}
+		
+		{% with document_detail_page=1 %}
+			{% include "bstrap3.2.0/components/navbar.html" %}
+		{% endwith %}
+		
+{% endblock navigation %}
+
+
+{% block belownavigation %}
+
+
+
+	{% with document_detail_page=1 %}	
+        {% include "bstrap3.2.0/components/navbar_second.html" %}
+    {% endwith %}
+
+
+
+
+{# 2016-04-30: overriding the margin-bottom #}
+<div class="container-fluid source_title_stripe" style="margin-bottom: 0px;">
+		
+	
+	<div class="row" style="margin: 15px 5px 0px 5px;">  {# this css should stay inline #}
+		
+	<div class="col-md-9 col-md-offset-1" style="margin-bottom: 0px;">
+
+		{% if d1 %}		
+		<h3 id="doc_edit_trigger">
+			<small class="text-lowercase quietlink6" style="line-height: 35px;
+">{{DOCUMENT_LABEL|lower}}:&nbsp;</small>
+			<br />
+			<span style="font-size: 33px;">
+				<span class="quietlink4"><span class="glyphicon glyphicon-book"></span>&nbsp;&nbsp;{{d1.title|truncatewords:150}}
+				</span>
+			</span>
+			
+			{% if mykoncepts %}   
+
+				{# EDIT LINKS #}
+				<a data-target="#editDocModal" title="Edit {{DOCUMENT_LABEL}} details" style="text-decoration: none;" data-toggle="modal" class="doc-edit-hidden">
+					&nbsp;<i class="glyphicon glyphicon-edit quietlink9 icon-md"></i>
+				</a>
+				
+				<a href="javascript:confirmDeleteDocument({{d1.id}})" style="text-decoration: none;" title="Delete"
+                   class="doc-edit-hidden">
+					<i class="glyphicon glyphicon-remove quietlink9 icon-md"></i>
+				</a>
+
+				<a href="javascript:privacyDocument()"style="text-decoration: none;" title="Change privacy"
+                    class="doc-edit-hidden">
+				<i int="{{d1.id}}" class="privatebutton-document glyphicon glyphicon-lock icon-md quietlink9"></i>
+		        </a>
+
+			{% endif %}
+			
+			
+	   		 
+	   		 <br />
+
+			 <small  style="line-height: 46px;">
+			 	 {% if  d1.url %}
+				 <a href="{{d1.url}}" class="sourceLinkUrl -bluelink -quietlink8" title="Open {{d1.url}} in a new window" target="_blank" style="font-size: 100%;">
+					 <span class="glyphicon glyphicon-globe"></span>
+					 {{d1.get_url_domain}}
+				 
+				 {# <span class="snippet-date">&nbsp;open original</span> #}
+				 </a>
+				 {% endif %}
+                &nbsp;&nbsp;<small><a class="quietlink4" id="doc_more_details" style="text-transform: capitalize; text-decoration: underline;">more details</a></small>
+
+
+			 </small>
+
+			 
+		</h3>
+		
+		{% else %}
+		{# default when no source is available #}
+				<h3>
+					<small class="text-lowercase" style="line-height: 35px;
+		">a {{SNIPPET_LABEL|lower}} from:&nbsp;</small>
+					<br />
+					<span style="font-size: 33px;">
+						<a class="quietlink4"><span class="glyphicon glyphicon-book"></span>&nbsp;&nbsp;Unknown {{DOCUMENT_LABEL}}
+						</a>
+					</span>
+				</h3>	
+						
+		{% endif %}
+		
+		
+	</div>
+	
+	{# COUNTS #}
+	<div class="col-md-2 text-right" style="margin-top: 30px; -margin-bottom: 10px;">
+		
+		<h4 class="badge" style="padding: 20px;">
+			<a class="quietlink8">
+			<span style="font-size: 30px;">{{snippets|length}}</span> <br />{{SNIPPET_LABEL}}{{ snippets|pluralize}}
+			</a>
+			<br /><span style="font-size: 9px;">in total</span>
+		</h4>
+		
+		
+	</div>
+
+	
+	</div>  {# end of row #}
+
+
+	{# DOCUMENT METADATA #}
+
+	<div class="row" id="doc_metadata" style="margin: 0px 5px 5px 5px; display:none;">  {# this css should stay inline #}
+		
+		<div class="col-md-8 col-md-offset-1" style="font-size: 24px;">
+		
+			{# <hr class="hrblack"> #}
+	 
+		 	{% include "bstrap3.2.0/components/document_metadata.html" %}
+		
+			
+		</div>
+
+		<div class="col-md-3 -col-md-offset-1" style="-margin-top: 20px;">		
+		
+		</div>
+	
+	
+	</div>  {# end of row #}
+
+
+	
+</div>  {# end of container-fluid #}
+
+
+
+
+{% if 1 %}
+
+	{% with document_detail_page=1 %}
+    	{% include "bstrap3.2.0/components/user_badge_stripe.html" %}
+	{% endwith %}
+	
+{% endif %}
+
+
+
+
+<!-- 2016-05-23: the actions row below the user badge stripe-->
+{% if 0 %}
+	{% with document_detail_page=1 %}
+	{% with q1 as snippet %}
+		{% include "bstrap3.2.0/components/actions_stripe.html" %}
+	{% endwith %}
+	{% endwith %}
+{% endif %}
+
+
+
+
+{% endblock belownavigation %}
+
+
+
+
+
+
+
+
+{% block pagecontents %}
+
+
+
+
+{# TOP TABS #}
+
+
+
+<div class="row" style="margin-top: 80px;">
+	
+<div class="container">
+	
+<a name="quotes">&nbsp;</a>  {# for internal links #}
+	
+<div class="tabbable" > <!-- Only required for left/right tabs -->
+
+	  <ul class="nav nav-tabs">
+
+	    <li class="active"><a href="#tab1" data-toggle="tab" class="bluelink">{{SNIPPET_LABEL}}s:&nbsp;<span class="badge">{{snippets|length}}</span>&nbsp;&nbsp;</a></li>
+		  
+		<li><a href="#tab-summary" data-toggle="tab" class="bluelink tab-source-summary">Stats&nbsp;&nbsp;<span class="glyphicon glyphicon-picture icon-xs"></span></a></li>
+				
+		
+	    {% if mykoncepts and snippets|length > 1 %}
+			<li><a href="#tab2" data-toggle="tab" class="bluelink">Edit Order&nbsp;&nbsp;<span class="glyphicon glyphicon-pencil icon-xs"></span></a></li>
+		{% endif %}
+		
+	  </ul>
+	  
+	  	  
+	  <div class="tab-content" id="koncept_detail_tabs_content">
+
+  		
+		 
+	
+
+	{# ========== #}	  
+	{# SNIPPETS TAB #}
+	{# ========== #}
+	
+	    <div id="tab1" class="tab-pane active" style="margin-bottom: 50px;">  
+		
+
+		<div class="container" style="min-height: 300px;">
+
+
+		{# ****** CONTAINER START HERE ******* #}
+
+		{% if snippets|length = 0 %}
+			
+				<br /><br />
+				<div class="alert alert-info" role="alert">
+					
+					Heads up! <br />This {{DOCUMENT_LABEL}} doesn't have any {{SNIPPET_LABEL|lower}}s associated. You may want to <a href="javascript:confirmDeleteDocument({{d1.id}})" class="quietlink">delete it</a>?
+					
+				</div>
+			
+		{% else %}
+		
+			{% for snippet in snippets  %} 
+
+
+			<div class="row margin-top-50 quote_sidebar_trigger">
+		
+				<div class="col-md-3 margin-bottom-50" style="margin-top: -15px;">
+
+{#                hidden counter 2016-07-20#}
+{#                        <small class="text-muted -badge" style="">{{forloop.counter}} / {{snippets|length}}</small>#}
+
+					 <hr>
+
+
+					{% if mykoncepts %}   	
+
+					<a id="{{snippet.id}}_title_href" href="javascript:editQuoteTitle('{{snippet.id}}', '{{snippet.title|escapejs}}')" title="Change this Title" style="text-decoration: none;">
+						<span id="{{snippet.id}}_title" class="quietlink5 quote_title_medsize">
+						{{snippet.title}}
+						</span>	
+					</a>
+
+					{% else %}
+					
+
+					<a href="{{snippet.get_absolute_url}}#title" class="quietlink5" title="Open {{SNIPPET_LABEL}} homepage">
+						<span id="{{snippet.id}}_title" class="quote_title_medsize">
+						{{snippet.title}}
+						</span>	
+					</a>
+
+					{% endif %}
+
+                    <hr>
+
+                    <div class="quote-edit-hidden" style="margin-top: 20px;">
+
+                    {% if mykoncepts %}
+
+                        {% with snippet_detail_actions=1 %}
+                        {% with search_quotes_page=1 %}
+                        {% with ALIGNMENT='left' %}
+                            {% with snippet as snippet %}
+                            {% include "bstrap3.2.0/components/sidebar_tagsinfo.html" %}
+                            {% endwith %}
+                        {% endwith %}
+                        {% endwith %}
+                        {% endwith %}
+                        {# <br /> #}
+                     {% endif %}
+
+                    <hr>
+
+					  {% with snippet_buttons_sidebar=1 %}
+					  		{% include "bstrap3.2.0/components/buttons.html" %}
+					  {% endwith %}
+
+			 	 </div>
+
+
+				</div>
+				
+				<div class="col-md-8 " style="min-height: 250px;">
+					<p class="lead {% comment %}{{snippet.text|test_size}}{% endcomment %}">
+						<a href="{{snippet.get_absolute_url}}#title" class="quietlink2" title="Open {{SNIPPET_LABEL}} homepage">
+						{{snippet.text|truncatewords:100}}
+						</a>
+					</p>
+				</div>
+													
+			</div>  {# END of ROW   #}
+
+			{% endfor %}
+		
+		
+		
+		{% endif %}
+		
+
+		</div> {# END CONTAINER #}
+
+
+		</div>{# ENDS SNIPPETS TAB #}
+		
+	
+	
+
+	
+		{# ========== #}
+		{# OVERVIEW GRAPH TAB #}
+		{# ========== #}
+
+	
+		 <div id="tab-summary" class="tab-pane" > 
+	 
+			
+			{# {% include "bstrap3.2.0/components/js_graphSourceSummary.html" %} #}
+	
+			<div class="container" style="min-height: 300px;">
+				
+				<div class="row">
+					
+				
+				
+				<div class="col-md-12">
+			
+				
+				{% if snippets|length = 0 %}
+			
+						<br /><br />
+						<div class="alert alert-info" role="alert">
+					
+							Heads up! <br />This {{DOCUMENT_LABEL}} doesn't have any {{SNIPPET_LABEL|lower}}s associated. You may want to <a href="javascript:confirmDeleteDocument({{d1.id}})" class="quietlink">delete it</a>?
+					
+						</div>
+			
+				{% else %}
+				
+					
+					<br />
+					
+					{% if mykoncepts and snippets|length > 1 %}
+					<p>{{SNIPPET_LABEL}}s sorted by:&nbsp;&nbsp;&nbsp; 
+						<a href="?sort=words#quotes" class="btn btn-default {% ifequal sort_snippets_var "words" %}quietlink1 bold underline{% else %}quietlink7{% endifequal %}">Word Count</a>
+						&nbsp;&nbsp;
+						<a href="?sort=order#quotes" class="btn btn-default {% ifequal sort_snippets_var "order" %}quietlink1 bold underline{% else %}quietlink5{% endifequal %}">Saved Order</a>
+	
+					</p>	
+					
+					<br />
+					{% endif %}
+					
+					
+					{# {% for snippet in snippets|sortbywordcount  %} #}
+					{% for snippet in snippets_overview  %}
+						<li class="-lead">
+							<div class="bar" style="width: {{snippet.text|wordcount}}px;">
+							</div>
+							<a href="{% url get_quote snippet.created_by snippet.id %}" title="{{snippet.title}}" class="quietlink9 -lead">{{snippet.title|truncatewords:10}}</a>
+							<span class="text-muted">
+						&nbsp;{{snippet.text|wordcount}} words
+						</span>
+					</li>
+					{% endfor %}
+			
+					<div id="push"></div>
+					
+					
+					
+					
+				{% endif %}
+					
+				</div>
+				
+				
+				</div>
+			</div>
+			
+
+		</div>  
+		{# ENDS SUMMARY TAB #}
+
+	
+	
+
+	
+	
+	
+		{# ========== #}
+		{# EDIT ORDER TAB #}
+		{# ========== #}
+	
+		{% if mykoncepts and snippets|length > 1 %}
+			 <div id="tab2" class="tab-pane " > 
+			 
+			 	{% if snippets %}
+				<h3><small>Use the left handle to move {{SNIPPET_LABEL}}s to a new position; press 'save' when finished.</small></h3>
+				<br />
+				<br />
+                <table class="table table-sortable table-striped  leads">
+                    <thead>
+                    <tr>
+                        <th>&nbsp;</th>
+                        <th>#</th>
+                        <th>Title</th>
+                        <th>{{SNIPPET_LABEL}}</th>
+                        <th>Locat.</th>
+                        <th>Remove</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+					{% for snippet in snippets  %} 
+	                    <tr>
+	                        <td id="{{snippet.id}}"><span class="glyphicon glyphicon-move"></span></td>
+							<td><span class="badge">{{forloop.counter}}</span></td>
+							<td><span class="quote_title_smallsize" style="font-size: 13px;">{{snippet.title|truncatewords:5}}</span></td>
+	                        <td class="text-muted- -well">{{snippet.text|truncatewords:30}}</td>
+							<td class="text-muted"><small>{{snippet.location|default:"--"}}</small></td>
+	  					  	<td><p data-placement="top" data-toggle="tooltip" title="Remove {{SNIPPET_LABEL}} from this {{DOCUMENT_LABEL}}"><a><button class="btn btn-danger btn-xs" ><span class="glyphicon glyphicon-trash"></span></button></a></p></td>
+							
+	                    </tr>
+						
+
+					{% endfor %}
+                    </tbody>
+                </table>
+				
+				
+				
+				<hr>
+				<div class="text-right">
+					<a class="btn btn-warning btn-lg" href="javascript:ajax_new_order_source();">Save</a>&nbsp;&nbsp;&nbsp;&nbsp;
+				</div>
+				
+				{% endif %}
+			</div>  
+		{% endif %}	
+			{# ENDS GRAPH-2 TAB #}
+		
+  
+	    </div>
+		
+		{# ENDS EDIT ORDER TAB #}
+
+
+
+
+	   
+	 
+
+  </div>
+  
+  {# ENDS TABBABLE #}
+	
+	
+	
+	</div>
+	{# ENDS CONTAINER DIV #}
+</div>
+{# ENDS ROW DIV #}
+
+
+
+
+{# FINAL BUTTONS ROW #}
+
+
+<div class="row" style="margin-top: 100px;">
+	
+	{% if 0 %}
+		<div class="container">
+		{# <hr> #}
+		<div class="col-md-4  col-md-offset-8" >
+	
+		    {% if mykoncepts %}
+		   	  <p class="col-md-12 -margin-top-50">
+
+		   		<h5 class="text-{{ALIGNMENT|default:'right'}}">Actions</h5>
+		   		<hr>
+		   	   	{# BUTTONS #}
+			    {% with document_detail=1 %}
+				{% with ALIGNMENT='right' %}
+			  	  		{% include "bstrap3.2.0/components/buttons.html" %}
+			  	{% endwith %}
+			  	{% endwith %}
+
+
+		   	  </p>	
+		     {% endif %}
+
+		
+		</div>
+	{% endif %}
+		
+		{% if 0 %}
+		<div class="col-md-4 -col-md-offset-1">
+
+			
+			<p class="col-md-12 -margin-top-50">
+					{% with quote_detail_page=1 %}
+					{% with ALIGNMENT='right' %}
+			    		{% include "bstrap3.2.0/components/user_badge.html" %} 
+					{% endwith %}
+					{% endwith %}
+			</p>
+
+		</div>   
+		{% endif %} 
+		
+		
+
+	</div>
+	{# ENDS CONTAINER DIV #}
+</div>
+{# ENDS ROW DIV #}
+
+
+
+<!-- Modal form starts  href="#editDocModal" -->
+
+<div id="editDocModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+		<form class="modal-form" id="modal-form" accept-charset="UTF-8" action="{% url edit_document d1.id %}" data-remote="true" method="post"> {% csrf_token %}
+		
+		<div class="modal-header">
+		  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+		  <h3 id="myModalLabel">Change {{DOCUMENT_LABEL|lower}} details:</h3>
+		</div>
+
+		<div class="modal-body">
+				
+			{% include "bstrap3.2.0/components/newDocumentForm.html" %}
+	
+		</div>
+
+		<div class="modal-footer">
+		  <button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="true">Cancel</button>
+		  <input type="submit" value="Save" class="btn btn-primary quietlink6" />
+		</div>
+	
+		</form>
+	</div>
+  </div>
+	
+</div>
+<!-- Modal form ends -->
+
+
+
+
+{% endblock pagecontents %}
+
+
+
+
+
+
+{% block beforefooter %}
+	
+	<br /><br /><br /><br /><br /><br />
+	
+	 {% if 0 and d1.get_nextDocument %}
+	{% with document_detail_page=1 %}
+		{% include "bstrap3.2.0/components/bottom_chronobar.html" %}
+	{% endwith %}
+	{% endif %}
+	
+	<br /><br /><br /><br /><br /><br />
+
+{% endblock beforefooter %}
+
+
+
+
+
+{% block closingbody %}
+
+
+
+	{% include "bstrap3.2.0/components/js_show_moretext.html"	%}
+	
+	
+	{% if mykoncepts %}	
+	
+		{# May 16, 2016: no autocomplete here #}
+		{# {% include "bstrap3.2.0/components/js_autocomplete.html" %} #}
+	
+		{% include "bstrap3.2.0/components/js_publicprivate.html" %}
+		
+		{% include "bstrap3.2.0/components/js_pinquote.html" %}
+		
+		{% include "bstrap3.2.0/components/js_favoritequote.html" %}
+	
+		{% include "bstrap3.2.0/components/js_confirmDelete.html" %}
+		
+		{% include "bstrap3.2.0/components/js_confirmDownload.html" %}	
+		
+		{% include "bstrap3.2.0/components/js_editQuoteTitle.html"	%}
+			
+        {% with page="search_quotes"  %}
+            {# same behaviour as other page #}
+            {% include "bstrap3.2.0/components/js_editQuoteSubjects.html"	%}
+        {% endwith %}
+	
+		{% include "bstrap3.2.0/components/js_sortableQuotes.html"	%}
+
+        {% include "bstrap3.2.0/components/js_hover_reveal.html" %}
+
+		{# 	 #}
+		{# {% include "bstrap3.2.0/components/js_graphkoncept.html" %}	 #}
+		{# {% include "bstrap3.2.0/components/js_graphkonceptJIT.html" %}	 #}
+		{# {% include "bstrap3.2.0/components/js_sortableQuotes.html" %}	 #}
+		{#  #}
+
+		
+	{% endif %}
+	
+	
+
+
+<script type="text/javascript" charset="utf-8">
+
+// April 9, 2014: hacking the internal anchor scrolling
+
+$(function(){
+  var hash = window.location.hash;
+  hash = hash.replace("#", "");
+  if (hash) {
+  	scrollToAnchor(hash);
+  } 
+});
+
+
+function scrollToAnchor(name) {
+  	$('html, body').animate({		
+  	        scrollTop: $('a[name="' + name + '"]').offset().top - 120
+  	    }, 2000);
+};
+
+
+        $("#user_badge_stripe").hover(  function () {
+             $(".user-links-hidden").fadeIn();
+            },
+            function () {
+             $(".user-links-hidden").fadeOut();
+             });
+
+
+// draw source chart only when tab is activated [2015-12-27]
+{% if 0 %}
+$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+
+	if ($(e.target).hasClass('tab-source-summary')) {
+
+		drawSourceChart();
+
+	}
+})
+{% endif %}
+
+
+$("#doc_more_details").click( function () {
+     $("#doc_metadata").toggle();
+  });
+
+
+
+</script>
+
+
+{% endblock closingbody %}
+
+
+
+

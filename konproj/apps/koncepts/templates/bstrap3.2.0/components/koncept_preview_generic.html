@@ -1,0 +1,68 @@
+{% load konceptstags %}
+
+
+
+
+		
+		<p class="lead">
+			{# March 28, 2014: fragment hashtag only when on document page! #}
+			<i class="icon"></span><a href="{{k1.get_absolute_url}}{% if intfrag1.orderno > 1 %}#fragment{{intfrag1.orderno}}{% endif %}" title="View {{KONCEPT_LABEL}}" 
+			class="kon_list_item konceptcolorlight">{{k1.name|upper}}</a>	
+    	 {% if mykoncepts %}
+	 
+		
+			{% with k1|koncept_privateIntFrags|length as n %}
+			    <span class="text-muted">({{n}})</span>
+			{% endwith %}
+					
+		
+   		 {% else %}
+	 
+	 	
+			{% with k1|koncept_publicIntFrags|length as n %}
+			     <span class="text-muted">({{n}})</span>
+			{% endwith %}
+	
+
+   		 {% endif %}	
+		
+			<br />
+				
+		</p>
+		
+		
+
+
+
+		<blockquote>
+
+		  
+ 		 {% if mykoncepts %}
+		 
+		 	{% with k1|koncept_privateIntFrags|first as i %}
+				<p>{{i.fragment.text|truncatewords:30}}</p>
+				{% if i.fragment.source %}
+			
+					<small><a style="color: gray;" href="{{i.fragment.source.get_absolute_url}}" title="View Source Record" rel="category tag">{{i.fragment.source|truncatewords:10}}</a>{# <span class="glyphicon glyphicon-file"></span> #}</small>
+					{# <br />		 #}
+				{% endif %}
+			{% endwith %}
+			
+
+		 {% else %}
+		 
+		 
+		 	{% with k1|koncept_publicIntFrags|first as i %}
+				<p>{{i.fragment.text|truncatewords:30}}</p>
+				{% if i.fragment.source %}
+			
+					<small><a style="color: gray;" href="{{i.fragment.source.get_absolute_url}}" title="View Source Record" rel="category tag">{{i.fragment.source|truncatewords:10}}</a>{# <span class="glyphicon glyphicon-file"></span> #}</small>
+					{# <br />		 #}
+				{% endif %}
+			{% endwith %}
+			
+ 		
+		 {% endif %}
+		 
+
+		</blockquote>

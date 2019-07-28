@@ -1,0 +1,134 @@
+{% extends "bstrap3.2.0/base.html" %}
+
+
+
+
+
+{% block belownavigation %}
+
+
+	{% with import=1 %}
+		{% include "bstrap3.2.0/components/navbar_second.html" %}
+	{% endwith %}
+
+{% endblock belownavigation %}
+
+
+
+
+
+
+{% block pagecontents %}
+
+
+  <div class="row">
+
+
+    <div class="col-md-2 " style="margin-top: 40px; margin-bottom: 50px;">
+
+		{# {% include "bstrap3.2.0/components/dashboard-nav-tools.html" %} #}
+		
+		<h4 ><b >Text (PDF) import:</b></h4> 
+		Follow the instructions on this page to import a text file containing a list of {{SNIPPET_LABEL|lower}}s. 
+		
+		<br /><br />
+		Note: you can use third-party apps like <a target="_blank" href="https://www.sumnotes.net/">sumnotes.net</a> to extract highlights from a PDF file, before importing them into LiquidQuotes.com.
+		
+		<br /><br />
+		<small class="text-muted">&gt;&nbsp;Have a Kindle? You can also <a href="{% url importkindle %}" class="quietlink">Import Kindle highlights</a></small>
+		
+		
+		
+    </div>
+	
+	
+    <div class="col-md-8">
+    	
+
+		
+	
+		
+		
+			{% include "bstrap3.2.0/components/importFileForm.html" %}
+
+
+		<br />
+		<h3>What should a text file look like?</h3>
+		<hr>		
+
+		<p class="lead">
+			
+			By using this method you can quickly upload a text file containing a <b>list</b> of {{SNIPPET_LABEL}}s delimited by <b>blank lines</b>. 
+			<br />Note: if a {{SNIPPET_LABEL|lower}} is longer than one line, make sure the text wraps around without any line breaks.
+			
+			
+		<p class="lead">
+			 For example, what follows contains two different snippets:
+		</p>
+	
+
+		   <p><pre class="magenta">
+What has philosophy got to do with measuring anything? It's the mathematicians you have to trust, and they measure the skies like we measure a field.
+
+Among all the great men who have philosophized about this remarkable effect, I am more astonished at Kepler than at any other. Despite his open and acute mind, and though he has at his fingertips the motions attributed to the earth, he nevertheless lent his ear and his assent to the moon's dominion over the waters, to occult properties, and to such puerilities.</pre></p>
+			
+			
+		<br />
+		<h3>How about page numbers?</h3>
+		<hr>
+		
+		
+		<p class="lead">
+			 Your text file can also include <b>page numbers</b>. 
+			 <br /><br />
+			 So if you export highlights using tools like GoodReader or Sumnotes.net, you can upload them directly here. The resulting text file will look something like this:
+			 </p>
+			 
+
+		   <p><pre class="magenta">Page 1: 
+
+What has philosophy got to do with measuring anything? It's the mathematicians you have to trust, and they measure the skies like we measure a field.
+
+Page 2: 
+
+Among all the great men who have philosophized about this remarkable effect, I am more astonished at Kepler than at any other. Despite his open and acute mind, and though he has at his fingertips the motions attributed to the earth, he nevertheless lent his ear and his assent to the moon's dominion over the waters, to occult properties, and to such puerilities.</pre></p>
+		
+		
+		<br />
+		<h3>Can I extract highlights from a PDF file?</h3>
+		<hr>
+
+		<p class="lead">
+			 Yes, but that will require a bit of extra work at the moment. 
+			 <br /><br />
+			 Head over to <a target="_blank" href="https://www.sumnotes.net/">sumnotes.net</a> and create a free account. Once you have done that, you can upload a PDF file there so that all the highlights it contains get extracted (note: you should be able to preview them once the extraction is completed).
+			 <br /><br />
+			 Now import them into LiquidQuotes: under the 'Export your work' menu item in sumnotes.net, click on 'Export to Text'. A new text file will be created and downloaded to your PC. This is the file you can upload to LiquidQuotes using the form above!
+		</p>
+		
+
+		
+	</div>  {# end of col-md-8 #}
+	
+	
+	
+	
+	
+	
+	<div class="col-md-2" style="margin-top: 40px; margin-bottom: 50px;"> 
+
+
+		<h4><b>Note:</b></h4>
+		
+		<p>You can import only a <span class="alert-info">maximum of 50 {{SNIPPET_LABEL}}s</span> at a time by using this method.</p>
+	
+	</div>
+	
+	
+	
+	
+	
+  </div>
+  
+
+{% endblock pagecontents %}

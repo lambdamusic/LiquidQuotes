@@ -1,0 +1,685 @@
+{% extends "bstrap3.2.0/base.html" %}
+{% load konceptstags %}
+
+
+
+{% block extrahead %}
+
+    <link href="{{ STATIC_URL }}libs/visjs/vis.css" rel="stylesheet" type="text/css" />
+    <script src="{{ STATIC_URL }}libs/visjs/vis.js"></script>
+	
+	<style type="text/css" media="screen">
+	.canv {
+		border: 1px solid lightgray;
+		height: 400px;
+	}
+	</style>
+
+{% endblock extrahead %}
+
+
+
+
+{% block pagecontents %}
+
+
+
+    <div id="mytimeline"></div>
+
+    <script type="text/javascript">
+      // DOM element where the Timeline will be attached
+      var container = document.getElementById('mytimeline');
+
+      // Create a DataSet with data (enables two way data binding)
+      var data = new vis.DataSet([
+        {id: 1, content: 'item 1', start: '2013-04-20'},
+        {id: 2, content: 'item 2', start: '2013-04-14'},
+        {id: 3, content: 'item 3', start: '2013-04-18'},
+        {id: 4, content: 'item 4', start: '2013-04-16', end: '2013-04-19'},
+        {id: 5, content: 'item 5', start: '2013-04-25'},
+        {id: 6, content: 'item 6', start: '2013-04-27'}
+      ]);
+
+      // Configuration for the Timeline
+      var options = {};
+
+      // Create a Timeline
+      var timeline = new vis.Timeline(container, data, options);
+    </script>
+	
+	
+	<hr>
+	
+	<div class="row">
+		<h3>1) http://visjs.org/examples/network/01_basic_usage.html</h3>
+		<div id="mynetwork1" class="col-md-6 canv"></div>
+		<div id="mynetwork1-X" class="col-md-6 canv"></div>
+	
+	</div>
+
+	<script type="text/javascript">
+	  // create an array with nodes
+	  var nodes = [
+	    {id: 1, label: 'Node 1'},
+	    {id: 2, label: 'Node 2'},
+	    {id: 3, label: 'Node 3'},
+	    {id: 4, label: 'Node 4'},
+	    {id: 5, label: 'Node 5'}
+	  ];
+
+	  // create an array with edges
+	  var edges = [
+	    {from: 1, to: 2},
+	    {from: 1, to: 3},
+	    {from: 2, to: 4},
+	    {from: 2, to: 5}
+	  ];
+
+	  // create a network
+	  var container = document.getElementById('mynetwork1');
+	  var data = {
+	    nodes: nodes,
+	    edges: edges
+	  };
+	  var options = {edges:{style:'arrow-center'}};
+	  var network = new vis.Network(container, data, options);
+	</script>
+	
+	
+	
+	{# HIERACHICAL EXAMPLE #}
+	
+	
+	<script type="text/javascript">
+	  // create an array with nodes
+	  var nodes = {{nodes|safe}} ;
+
+	  // create an array with edges
+	  var edges = {{edges|safe}}; 
+
+	  // create a network
+	  var container = document.getElementById('mynetwork1-X');
+	  var data = {
+	    nodes: nodes,
+	    edges: edges
+	  };
+	  var options = {
+		  groups: {
+		    group_koncept: {
+		      shape: 'box',
+		      color: {
+			      background: 'white',
+			      border: 'red',
+			      highlight: {
+			        background: 'pink',
+			        border: 'red'
+			      }
+		      }
+		    },
+		    group_document: {
+		      shape: 'circle',
+		      color: {
+			      background: 'white',
+			      border: 'black',
+			      highlight: {
+			        background: 'blue',
+			        border: 'black'
+			      }
+		      }
+		    },
+		    group_root: {
+		      shape: 'box',
+		      color: {
+			      background: 'yellow',
+			      border: 'red',
+			      highlight: {
+			        background: 'pink',
+			        border: 'red'
+			      }
+		      }
+		    }
+		    // add more groups here
+		  },
+          edges: {
+			style:'arrow-center'
+		   },
+		   physics: {
+			   
+			   // THIS IS GOOD
+		       hierarchicalRepulsion: {
+		           centralGravity: 0.5,
+		           springLength: 350,
+		           springConstant: 0.1,
+		           nodeDistance: 190,
+		           damping: 0.09
+		       }
+		   }
+					};
+	  var network = new vis.Network(container, data, options);
+	</script>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="row">
+		<h3>2) http://visjs.org/examples/network/14_dot_language.html</h3>
+		<div id="mynetwork2" class="col-md-6 canv"></div>
+		<div id="mynetwork2-X" class="col-md-6 canv"></div>
+	
+	</div>
+
+	<script type="text/javascript">
+	  var container = document.getElementById('mynetwork2');
+	  var data = {
+	    dot: 'dinetwork {node[shape=circle]; 1 -> 1 -> 2; 2 -> 3; 2 -- 4; 2 -> 1 }'
+	  };
+	  var network = new vis.Network(container, data);
+	</script>
+	
+	
+	{# GRAPH EXAMPLE #}
+	
+	
+	<script type="text/javascript">
+	  // create an array with nodes
+	  var nodes = {{nodes|safe}} ;
+
+	  // create an array with edges
+	  var edges = {{edges|safe}}; 
+
+	  // create a network
+	  var container = document.getElementById('mynetwork2-X');
+	  var data = {
+	    nodes: nodes,
+	    edges: edges
+	  };
+	  var options = {
+		  // nodes: {
+		  //   color: {
+		  //     background: 'white',
+		  //     border: 'red',
+		  //     highlight: {
+		  //       background: 'pink',
+		  //       border: 'red'
+		  //     }
+		  //   },
+		  //   shape: 'box',
+		  //   // mass: 3
+		  // },
+		  
+		  groups: {
+		    group_koncept: {
+		      shape: 'box',
+		      color: {
+			      background: 'white',
+			      border: 'red',
+			      highlight: {
+			        background: 'pink',
+			        border: 'red'
+			      }
+		      }
+		    },
+		    group_document: {
+		      shape: 'circle',
+		      color: {
+			      background: 'white',
+			      border: 'black',
+			      highlight: {
+			        background: 'blue',
+			        border: 'black'
+			      }
+		      }
+		    },
+		    group_root: {
+		      shape: 'box',
+		      color: {
+			      background: 'yellow',
+			      border: 'red',
+			      highlight: {
+			        background: 'pink',
+			        border: 'red'
+			      }
+		      }
+		    }
+		    // add more groups here
+		  },		  
+          edges: {
+			style:'arrow-center'
+		   },
+		   physics: {
+		       barnesHut: {
+		           enabled: true,
+		           gravitationalConstant: -8000,
+		           centralGravity: 0.001,
+		           springLength: 100,
+		           springConstant: 0.04,
+		           damping: 0.1
+		       },
+		       // repulsion: {
+		       //     centralGravity: 0.1,
+		       //     springLength: 1150,
+		       //     springConstant: 0.5,
+		       //     nodeDistance: 1200,
+		       //     damping: 10
+		       // },
+
+		   }
+					};
+	  var network = new vis.Network(container, data, options);
+	</script>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+	<div class="row">
+		<h3>3) http://visjs.org/examples/network/08_mobile_friendly.html</h3>
+		<div id="mynetwork3" class="col-md-6 canv"></div>
+	
+	</div>
+	
+    <script type="text/javascript">
+      var nodes = null;
+      var edges = null;
+      var network = null;
+
+
+      // Called when the Visualization API is loaded.
+      function draw() {
+        nodes = [];
+        edges = [];
+        var EDGE_LENGTH = 50;
+        var connectionCount = [];
+
+        // randomly create some nodes
+        var nodeCount = 20;
+        var cols = parseInt(Math.sqrt(nodeCount));
+        for (var i = 0; i < nodeCount; i++) {
+          nodes.push({
+            id: i,
+            label: '' + i
+          });
+
+          connectionCount[i] = 0;
+
+          // create links in a scale-free-network way
+          if (i == 1) {
+            var from = i;
+            var to = 0;
+            edges.push({
+              from: from,
+              to: to,
+              length: EDGE_LENGTH
+            });
+            connectionCount[from]++;
+            connectionCount[to]++;
+          }
+          else if (i > 1) {
+            var conn = edges.length * 2;
+            var rand = Math.floor(Math.random() * conn);
+            var cum = 0;
+            var j = 0;
+            while (j < connectionCount.length && cum < rand) {
+              cum += connectionCount[j];
+              j++;
+            }
+
+            var from = i;
+            var to = j;
+            edges.push({
+              from: from,
+              to: to,
+              length: EDGE_LENGTH
+            });
+            connectionCount[from]++;
+            connectionCount[to]++;
+          }
+        }
+
+        // Create a network
+        var container = document.getElementById('mynetwork3');
+        var data = {
+          nodes: nodes,
+          edges: edges
+        };
+        var options = {
+          stabilize: false,
+          nodes: {
+            shape: 'dot',
+            radius: 24,
+            fontSize: 24
+          },
+          edges: {
+            width: 2
+          }
+        };
+        network = new vis.Network(container, data, options);
+      }
+	  
+	  draw();
+    </script>
+	
+	
+	
+	
+	
+	<div class="row">
+		<h3>4) http://visjs.org/examples/network/04_shapes.html</h3>
+		<div id="mynetwork4" class="col-md-6 canv"></div>
+		<div id="mynetwork4-X" class="col-md-6 canv"></div>
+	
+	</div>
+	
+	
+	
+    <script type="text/javascript">
+      var nodes = null;
+      var edges = null;
+      var network = null;
+
+      function draw() {
+        nodes = [
+          {id: 1, label: 'circle', shape: 'circle', group: 'group_x'},
+          {id: 2, label: 'ellipse', shape: 'ellipse', group: 'group_x'},
+          {id: 3, label: 'database', shape: 'database', group: 'group_x'},
+          {id: 4, label: 'box', shape: 'box', group: 'group_x'}
+        ];
+
+        edges = [
+          {from: 3, to: 1, style: 'arrow'},
+          {from: 1, to: 4, style: 'dash-line'},
+          {from: 1, to: 2, style: 'arrow-center'}
+        ];
+
+        var mainId = 5;
+        nodes.push({id: mainId, label: 'shapes\nand\nsizes', shape: 'box', group: 'group_main'});
+        var shapes = ['dot', 'square', 'triangle', 'triangleDown', 'star'];
+        var id = 6;
+        for (var size = 1; size < 4; size++) {
+          var groupId = id;
+          nodes.push({id: id, label: 'size ' + size, shape: 'box', group: 'group' + size});
+          edges.push({from: mainId, to: groupId, color: 'gray', width: size});
+          id++;
+
+          for (var i in shapes) {
+            if (shapes.hasOwnProperty(i)) {
+              nodes.push({id: id, value: size, label: shapes[i], shape: shapes[i], group: 'group' + size});
+              edges.push({from: groupId, to: id, color: 'gray', width: size});
+              id++;
+            }
+          }
+        }
+
+        // create a network
+        var container = document.getElementById('mynetwork4');
+        var data = {
+          nodes: nodes,
+          edges: edges
+        };
+        var options = {
+          stabilize: false
+        };
+        network = new vis.Network(container, data, options);
+      }
+	  
+	  draw()
+    </script>
+	
+	
+	{# MULTI SHAPE #2 #}
+	
+	
+    <script type="text/javascript">
+      var nodes = null;
+      var edges = null;
+      var network = null;
+
+      function draw() {
+
+        // create a network
+        var container = document.getElementById('mynetwork4-X');
+        var data = {
+          nodes: {{nodes1|safe}},
+          edges: {{edges1|safe}}
+        };
+        var options = {
+          stabilize: false, 
+	   	   physics: {
+	   	       barnesHut: {
+	   	           enabled: true,
+	   	           gravitationalConstant: -12000,
+	   	           centralGravity: 0.001,
+	   	           springLength: 100,
+	   	           springConstant: 0.04,
+	   	           damping: 0.1
+	   	       }
+		   },
+		  groups: {
+		    group_koncept: {
+		      shape: 'box',
+		      color: {
+			      background: 'white',
+			      border: 'red',
+			      highlight: {
+			        background: 'pink',
+			        border: 'red'
+			      }
+		      }
+		    },
+		    group_document: {
+		      shape: 'circle',
+		      color: {
+			      background: "#97C2FC",
+			      border: "#2B7CE9",
+			      highlight: {
+			        background: "#D2E5FF",
+			        border: 'blue'
+			      }
+		      }
+		    },
+		    group_root: {
+		      shape: 'box',
+		      color: {
+			      background: 'yellow',
+			      border: 'red',
+			      highlight: {
+			        background: 'yellow',
+			        border: 'red'
+			      }
+		      }
+		    }
+		    // add more groups here
+		  },
+		  
+          edges: {
+			style:'arrow'
+		   }
+        };
+        network = new vis.Network(container, data, options);
+      }
+	  
+	  draw()
+    </script>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+	
+	<div class="row">
+	
+		<h3>5) http://visjs.org/examples/network/10_multiline_text.html</h3>
+		<div id="mynetwork5" class="col-md-6 canv"></div>
+	</div>
+	
+	    <script type="text/javascript">
+	      function draw() {
+	        // create some nodes
+	        var nodes = [
+	          {id: 1, label: 'Node in\nthe center', shape: 'text'},
+	          {id: 2, label: 'Node\nwith\nmultiple\nlines', shape: 'circle'},
+	          {id: 3, label: 'This is a lot of text\nbut luckily we can spread\nover multiple lines', shape: 'database'},
+	          {id: 4, label: 'This is text\non multiple lines', shape: 'box'},
+	          {id: 5, label: 'Little text', shape: 'ellipse'}
+	        ];
+
+	        // create some edges
+	        var edges = [
+	          {from: 1, to: 2, style: 'line', color: 'red', width: 3, length: 200}, // individual length definition is possible
+	          {from: 1, to: 3, style: 'dash-line', width: 1, length: 200},
+	          {from: 1, to: 4, style: 'line', width: 1, length: 200, label:'I\'m an edge!'},
+	          {from: 1, to: 5, style: 'arrow', width: 3, length: 200, label:'arrows\nare cool'}
+	        ];
+
+	        // create a network
+	        var container = document.getElementById('mynetwork5');
+	        var data = {
+	          nodes: nodes,
+	          edges: edges
+	        };
+	        var options = {};
+	        var network = new vis.Network(container, data, options);
+	      }
+		  
+		  draw();
+	    </script>
+		
+		
+		
+		
+		
+		<div class="row">
+	
+			<h3>6) http://visjs.org/examples/network/32_hierarchicaLayoutMethods.html</h3>
+			<div id="mynetwork6" class="col-md-6 canv"></div>
+			
+			<p id="selection"></p>
+			
+		</div>
+		
+
+
+
+	    <script type="text/javascript">
+	         var network = null;
+	         var layoutMethod = "hubsize";
+
+	         function draw() {
+	             var nodes = [];
+	             var edges = [];
+	             // randomly create some nodes and edges
+	             for (var i = 0; i < 15; i++) {
+	                 nodes.push({
+	                     id: i,
+	                     label: String(i)
+	                 });
+	             }
+	             edges.push({
+	                 from: 0,
+	                 to: 1
+	             });
+	             edges.push({
+	                 from: 0,
+	                 to: 6
+	             });
+	             edges.push({
+	                 from: 0,
+	                 to: 13
+	             });edges.push({
+	                 from: 0,
+	                 to: 11
+	             });
+	             edges.push({
+	                 from: 1,
+	                 to: 2
+	             });
+	             edges.push({
+	                 from: 2,
+	                 to: 3
+	             });
+	             edges.push({
+	                 from: 2,
+	                 to: 4
+	             });
+	             edges.push({
+	                 from: 3,
+	                 to: 5
+	             });
+	             edges.push({
+	                 from: 1,
+	                 to: 10
+	             });
+	             edges.push({
+	                 from: 1,
+	                 to: 7
+	             });
+	             edges.push({
+	                 from: 2,
+	                 to: 8
+	             });
+	             edges.push({
+	                 from: 2,
+	                 to: 9
+	             });
+	             edges.push({
+	                 from: 3,
+	                 to: 14
+	             });
+	             edges.push({
+	                 from: 1,
+	                 to: 12
+	             });
+
+	             // create a network
+	             var container = document.getElementById('mynetwork6');
+	             var data = {
+	                 nodes: nodes,
+	                 edges: edges
+	             };
+
+	             var options = {
+	                 hierarchicalLayout: {
+	                     layout: layoutMethod
+	                 },
+	                 edges: {style:"arrow"},
+	                 smoothCurves:false
+	             };
+	             network = new vis.Network(container, data, options);
+
+	             // add event listeners
+	             network.on('select', function(params) {
+	                 document.getElementById('selection').innerHTML = 'Selection: ' + params.nodes;
+	             });
+	         }
+			 
+			 draw();
+
+	     </script>
+	
+	
+	
+
+{% endblock  %}

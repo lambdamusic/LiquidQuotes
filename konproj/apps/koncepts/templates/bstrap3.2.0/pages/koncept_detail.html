@@ -1,0 +1,678 @@
+{% extends "bstrap3.2.0/base.html" %}
+{% load konceptstags %}
+
+
+
+{% block extrahead %}
+
+    <link href="{{ STATIC_URL }}libs/visjs/vis.css" rel="stylesheet" type="text/css" />
+    <script src="{{ STATIC_URL }}libs/visjs/vis.js"></script>
+
+	<script src="{{STATIC_URL}}libs/jit/jit.js"></script>
+	
+	<style type="text/css" media="screen">
+	.canv {
+		border: 1px solid lightgray;
+		overflow: hidden;
+		background: black;
+	}
+	</style>
+	
+{% endblock extrahead %}
+
+
+
+
+{% block pagecontents %}
+
+
+
+
+<div class="page-header" >
+	
+	
+	{% with koncept_detail=1 %}
+		{% include "bstrap3.2.0/components/breadcrumbs.html"	%}
+	{% endwith %}
+	
+  
+</div>
+
+  
+	  
+
+
+
+{# =========== FIRST ROW ================================ #}
+
+
+
+<div class="row" style="margin-top: 60px;">
+
+
+{# SIDEBAR #}
+	
+  <div class="col-md-3 margin-bottom-50  word-wrap" style>
+	  
+	  
+	  	<h4 class="text-muted">{{KONCEPT_LABEL}}
+			&nbsp;<span class="glyphicon glyphicon-info-sign jstooltip icon-xs"  title="A {{KONCEPT_LABEL|lower}} is a user-generated group of {{SNIPPET_LABEL|lower}}s."></span>
+		</h4>
+		<hr>
+
+	     <h1 class="konceptcolor konceptTitle" style="margin-right: 5px;">
+	  		&laquo;<span id="konceptTitle" class="konceptTitle">{{k1.name}}</span>&raquo;	
+			
+			<hr style="margin-top: 40px;">
+						
+			
+		    {% with koncept_detail=1 %}
+		  	  		{% include "bstrap3.2.0/components/buttons.html" %} 
+		  	{% endwith %}
+	  	 </h1>
+		 
+		 {% if not mykoncepts %}
+		 	{% with koncept_detail=1 %}
+		 	{% include "bstrap3.2.0/components/user_badge.html" %} 
+			{% endwith %}
+		 {% endif %}
+	
+	  
+	
+	</div>
+	
+	{# END OF SIDEBAR #}
+	
+	
+	{# SECOND COLUMN #}
+	
+	<div id="metadata_colummn" class="col-md-9">
+		
+	
+	<div class="tabbable" style="margin-bottom: 60px; margin-top: 8px;"> <!-- Only required for left/right tabs -->
+
+
+
+	  <ul class="nav nav-tabs">
+		  <li class="active"><a href="#tab0" data-toggle="tab" class="bluelink">Summary</a></li>
+	    {% if 0 and mykoncepts %}
+			<li><a href="#tab3" data-toggle="tab" class="bluelink">Map: Overview</a></li>
+			<li><a href="#tab4" data-toggle="tab" class="bluelink">Map: Similarity </a></li>
+		{% endif %}
+	  </ul>
+	  
+	  	  
+	  <div class="tab-content" id="">
+
+	  	{# ========== #}
+	  	{# DETAILS TAB #}
+	  	{# ========== #}
+		
+  	    <div id="tab5=0" class="tab-pane active" >  
+	
+  			<div class="well col-md-11  margin-top-50">
+
+				
+				
+				<div class="row">
+					<div class="col-md-2 text-uppercase docmetadata">
+						Title:
+					</div>
+					<div class="col-md-9 col-md-offset-1 lead">
+						{% if k1.name %}<strong>{{k1.name}}</strong>{% else %}----</span>{% endif %}
+					</div>
+				</div>
+				
+				{% if k1.description %}
+				<div class="row">
+					<div class="col-md-2 text-uppercase docmetadata">
+						Description:
+					</div>
+					<div class="col-md-9 col-md-offset-1 lead text-info">
+						{{k1.description|default:"----"}}
+					</div>
+				</div>
+				{% endif %}
+											
+				
+				{% if documents.items %}
+				<div class="row">
+					<div class="col-md-2 text-uppercase docmetadata">
+						From Sources:
+					</div>
+					<div class="col-md-9 col-md-offset-1 lead">
+						
+					  {% if documents.items %}
+					  	
+	   		   			  {% for doc_dict in documents.items  %}
+	   		   		 		<div id="source_{{doc_dict.0.id}}">
+	   		   					&gt;&nbsp;<a href="{{doc_dict.0.get_absolute_url}}" title="View {{DOCUMENT_LABEL}} Record" class="quietlink4">{{doc_dict.0.title|capfirst}}</a>
+	   		   					<br /><a href="{{doc_dict.0.url}}" title="{{doc_dict.0.url}}" target="_blank" class="quietlink3"><small>{{doc_dict.0.get_url_domain}}</small></a>
+											
+	   		   		 		</div>
+							<br>
+
+	   		   			  {% endfor %}
+					  
+					  {% else %}----{% endif %}
+					  
+					</div>
+				</div>
+				{% endif %}
+
+
+				
+  				</div>  {# end of well #}
+				
+				<div class="row" id="record_dates">
+					<div class="col-md-11 text-right text-muted">
+				  	    <small><em>{{KONCEPT_LABEL}} added on
+						{% ifequal k1.created_at k1.updated_at  %}
+				  	  		{{k1.created_at}}
+				  	    {% else %}
+				  	  		{{ k1.created_at}} (last modified on {{ k1.updated_at}})
+				  	    {% endifequal %}
+						</em></small>
+						
+						
+						{% if mykoncepts %}
+						<a href="javascript:editKonceptTitle('{{k1.name}}')" title="Edit {{KONCEPT_LABEL}} Title" style="text-decoration: none;">
+							&nbsp;<button type="button" class="btn btn-success btn-xs"><i class="glyphicon glyphicon-pencil"></i>&nbsp;&nbsp;Edit</button>
+						</a>
+						{% endif %}
+						
+
+						
+						
+					</div>
+
+				</div>
+
+				
+				
+
+  		</div>  
+		
+  		{# ENDS DETAIL TAB #}
+		  
+		  
+		  
+		{# ========== #}
+		{# GRAPH-1 TAB #}
+		{# ========== #}
+		
+		{% if 0 and mykoncepts %}
+			 <div id="tab3" class="tab-pane" > 
+				 
+		 
+				 <p class="text-mutedd">The map below shows how the current {{KONCEPT_LABEL}} relates to other {{KONCEPT_LABEL}}s that share the same {{DOCUMENT_LABEL}}(s).</p>
+				 
+				 <small class="text-muted">Tip: double click on a node to open its homepage.</small>
+				 
+				 <div id="graph-div-1" class="" style="border: solid 1px rgb(231, 231, 231); height: 600px; background: #FDF9FD;">
+
+				 </div>
+
+			</div>  
+		{% endif %}	
+			{# ENDS GRAPH TAB #}	 
+		
+	
+		
+		
+		{# ========== #}
+		{# GRAPH-2 TAB #}
+		{# ========== #}
+	
+		{% if 0 and mykoncepts %}
+			 <div id="tab4" class="tab-pane " > 
+			 
+			 
+
+			 
+			 	<p class="text-mutedd">The map below calculates potentially related {{KONCEPT_LABEL}}s by using an automated string-matching algorithm.</p>
+							 
+			 	<small class="text-muted">Tip: click and drag the mouse to center the graph use the mouse wheel to zoom in.</small>
+			 
+				 <div id="graph-div-2" class="canv" {% if 0 %}style="border: solid 1px rgb(231, 231, 231); height: 600px;  background: #F4F4F4;"{% endif %}>
+				 </div>
+				 
+		 		<p id="footertext" class="text-muted"></p>
+		 		<p id="subfooter"></p>
+				
+
+			</div>  
+		{% endif %}	
+			{# ENDS GRAPH-2 TAB #}
+		
+		
+			
+		
+  
+	    </div>
+		
+		{# ENDS TAB-CONTENT #}
+
+
+
+	   
+	 
+
+	  </div>
+	  
+	  {# ENDS TABBABLE #}
+		
+		
+
+		
+	  
+	</div>  {# end of col-md-9 #}
+	
+
+	
+	
+	
+</div>  
+
+{# ROW ENDS #}
+	
+
+
+
+
+
+{# =========== SECOND ROW ================================ #}
+
+		  
+
+<div class="row" style="margin-top: 60px;">
+	
+
+
+
+
+	
+	{# FIRST COLUMN #}
+	
+  <div class="col-md-3 margin-bottom-50" style>
+	  <a name="quotes"></a>
+
+	     <h1 class="text-muted konceptTitle" style="margin-right: 5px; font-size: 25px; text-transform: capitalize;">
+	  		{{SNIPPET_LABEL}}s: <span class="-badge">{{interpretations|length}}</span>
+			
+			<hr>
+								
+	
+	  	 </h1>
+		 
+		 {# <h5 class="text-muted"><span class="badge">{{interpretations|length}}</span> in total</h5> #}
+		 
+		 
+		 {# ################### #}
+		 {#     Slider #}
+		 {# ################### #}
+		 
+		 {% if 0 and interpretations|length > 1 %}
+		 <br />
+		 <small class="text-muted">Use the slider to change displayed content</small>
+		 <br /><br />
+
+	 	<input id="slider" type="text" />
+		{% endif %}
+
+		 <br/>
+
+
+ 		{% if 0 %}	  {# OLD alternative to the slider #}
+
+	 		<div class="glossary_indexx ">
+	 			{% for i in interpretations  %} 
+	 				<button id="fragment_{{i.fragment.id}}_button" role="button" class="btn btn-default btn-sm button-snippet-selection">{{forloop.counter}}</button>
+	 			{% endfor %}
+		
+	 		</div>
+				
+ 		{% endif %}
+
+		 
+		 
+
+	</div>
+
+
+	
+	
+	
+	{# SECOND COLUMN #}
+	
+	<div id="konceptpage_snippets" class="col-md-9">
+		
+	
+	<div class="tabbable" style="margin-bottom: 60px; margin-top: 8px;"> <!-- Only required for left/right tabs -->
+
+
+
+	  <ul class="nav nav-tabs">
+	    <li class="active"><a href="#tab1" data-toggle="tab" class="bluelink">Read&nbsp;&nbsp;<span class="glyphicon glyphicon-eye-open icon-xs"></a></li>
+	    {% if mykoncepts %}
+			<li><a href="#tab2" data-toggle="tab" class="bluelink">Organize&nbsp;&nbsp;<span class="glyphicon glyphicon-pencil icon-xs"></span></a></li>
+		{% endif %}
+	  </ul>
+	  
+	  	  
+	  <div class="tab-content" id="koncept_detail_tabs_content">
+
+
+
+	{# ========== #}	  
+	{# SNIPPETS TAB #}
+	{# ========== #}
+	
+	
+	    <div id="tab1" class="tab-pane active" >  
+		
+				
+
+		{# ****** ROWS START HERE ******* #}
+
+		{% if interpretations|length = 0 %}
+			
+				<br /><br />
+				<div class="alert alert-info" role="alert">
+					
+					Heads up! <br />This {{KONCEPT_LABEL}} doesn't have any {{SNIPPET_LABEL}} (yet).
+					
+				</div>
+			
+		{% endif %}
+
+
+		{% for i in interpretations  %} 
+	
+	
+			<div class="row source_{{i.fragment.source.id}}_div fragment_{{i.fragment.id}}_div snippet_row snippet_row_{{forloop.counter0}}">   {# style="margin-bottom: 70px;" #}
+
+				 
+				 <a name="fragment{{i.orderno}}"></a> {# so make internal anchors work #}	
+				
+				
+				{# TITLE #}
+				<div class="col-md-2" style="margin-bottom: 40px;">
+					<br /><br />
+					
+						{% with i.fragment as snippet %}				
+						{% with koncept_detail_page=1 %}
+						{% with ALIGNMENT="left" %}
+							{% include "bstrap3.2.0/components/sidebar_title.html"	%}
+				 		{% endwith %}
+				 		{% endwith %}
+						{% endwith %}	
+				</div>	
+				
+		
+				{# QUOTE #}
+				 <div id="koncept_detail_page" class="col-md-10 " style="min-height: 50px;">
+		
+		
+				  {% with koncept_detail_page=1 %}	
+				  {% with i.fragment as snippet %}
+				  		{% include "bstrap3.2.0/components/snippet_preview.html" %}
+				  {% endwith %}
+				  {% endwith %}
+	  
+			
+				  <hr>
+				</div>
+
+				
+			</div>  
+			
+
+		{% endfor %}
+		
+		
+		{# END of ROW INTERPRETATIONS  #}
+
+		</div>
+		{# ENDS SNIPPETS TAB #}
+		
+	
+	
+	
+	
+	
+		{# ========== #}
+		{# EDIT ORDER TAB #}
+		{# ========== #}
+	
+		{% if mykoncepts %}
+			 <div id="tab2" class="tab-pane " > 
+			 
+			 	{% if interpretations %}
+				<h3><small>Use the left handle to move {{SNIPPET_LABEL}}s to a new position</small></h3>
+				<br />
+				<br />
+                <table class="table table-sortable table-striped  leads">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Title</th>
+                        <th>{{SNIPPET_LABEL}}</th>
+                        <th>{{DOCUMENT_LABEL}}</th>
+                        <th>Remove</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+					{% for i in interpretations  %} 
+	                    <tr>
+	                        <td id="{{i.fragment.id}}"><span class="glyphicon glyphicon-move"></span></td>
+							<td class="konceptcolor">{{i.fragment.title|truncatewords:5}}</td>
+	                        <td class="text-muted">{{i.fragment.text|truncatewords:30}}</td>
+	                        {% if i.fragment.source %}
+								<td class="text-warning">{{i.fragment.source.title|truncatewords:5}}</td>
+							{% else %}
+								<td>&nbsp;</td>
+							{% endif %}
+	  					  	<td><p data-placement="top" data-toggle="tooltip" title="Remove {{SNIPPET_LABEL}} from this {{KONCEPT_LABEL}}"><a href="javascript:confirmUnlinkFragment({{i.id}}, '{{i.koncept.name|escapejs}}');"><button class="btn btn-danger btn-xs" ><span class="glyphicon glyphicon-trash"></span></button></a></p></td>
+	                    </tr>
+						
+
+					{% endfor %}
+                    </tbody>
+                </table>
+				
+				
+				
+				<hr>
+				<div class="text-right">
+					<a class="btn btn-warning btn-lg" href="javascript:ajax_new_order_koncept();">Save</a>
+				</div>
+				
+				{% endif %}
+			</div>  
+		{% endif %}	
+			{# ENDS GRAPH-2 TAB #}
+		
+  
+	    </div>
+		
+		{# ENDS EDIT ORDER TAB #}
+
+
+
+
+	   
+	 
+
+	  </div>
+	  
+	  {# ENDS TABBABLE #}
+		
+		
+
+		
+	  
+	</div>  {# end of col-md-9 #}
+	
+
+	
+	
+	
+</div>  {# ROW ENDS #}
+
+
+
+
+
+
+
+
+
+
+
+
+{% endblock pagecontents %}
+
+
+
+
+
+
+{% block beforefooter %}
+	
+	
+	{% with koncept_detail_page=1 %}
+		{% include "bstrap3.2.0/components/bottom_chronobar.html" %}
+	{% endwith %}
+	
+	
+	<br /><br /><br /><br /><br /><br /><br /><br />
+
+{% endblock beforefooter %}
+
+
+
+
+
+{% block closingbody %}
+
+
+
+	{% include "bstrap3.2.0/components/js_show_moretext.html"	%}
+	
+	
+	{% if mykoncepts %}	
+		{% include "bstrap3.2.0/components/js_edit_koncept.html" %}
+		{% include "bstrap3.2.0/components/js_publicprivate.html" %}
+		{% include "bstrap3.2.0/components/js_pinquote.html" %}		
+		{% include "bstrap3.2.0/components/js_favoritequote.html" %}
+		{% include "bstrap3.2.0/components/js_confirmDelete.html" %}
+		{% include "bstrap3.2.0/components/js_editQuoteTitle.html"	%}
+	
+		{% include "bstrap3.2.0/components/js_graphkoncept.html" %}	
+		{% include "bstrap3.2.0/components/js_graphkonceptJIT.html" %}	
+		{% include "bstrap3.2.0/components/js_sortableQuotes.html" %}	
+		
+		{% include "bstrap3.2.0/components/js_confirmDownload.html" %}	
+		
+	{% endif %}
+	
+	
+
+
+<script type="text/javascript" charset="utf-8">
+
+// April 9, 2014: hacking the internal anchor scrolling
+
+$(function(){
+  var hash = window.location.hash;
+  hash = hash.replace("#", "");
+  if (hash) {
+  	scrollToAnchor(hash);
+  } 
+});
+
+
+
+function scrollToAnchor(name) {
+  	$('html, body').animate({		
+  	        scrollTop: $('a[name="' + name + '"]').offset().top - 120
+  	    }, 1000);
+};
+
+
+{% if 0 %}
+// ====
+// Slider
+// ====
+
+// Note: the 'all' value corresponds to the TOTAL number of quotes
+// the other values are 0-indexed 
+
+$("#slider").slider({
+	tooltip: 'hide',
+	// orientation: 'vertical',
+	value: {{interpretations|length}},
+    ticks: [{% for x in interpretations %}{{forloop.counter0}}, {% endfor %}{{interpretations|length}}],
+    ticks_labels: [{% for x in interpretations %}'{{forloop.counter}}', {% endfor %} 'All'],
+    ticks_snap_bounds: 30
+});
+
+
+$("#slider").on("change", function(ev) {
+	
+	val = ev.value.newValue; 
+	console.log(ev.value.newValue);
+	
+	if (val == {{interpretations|length}}) {
+		$("#tab1 div.snippet_row").slideDown();
+	} else {
+		var snippet_class = "snippet_row_" + val;
+		$("#tab1 div.snippet_row:not(." + snippet_class +")").slideUp(); 
+
+		$("#tab1 div." + snippet_class).slideDown();
+	}
+	
+});
+{% endif %}
+// ====
+// Slider ends
+// ====
+
+
+// ======
+// Example working with static data for DOCUMENTATION
+// ======
+// $("#slider").slider({
+// 	tooltip: 'hide',
+// 	value: 5,
+//     ticks: [1, 2, 3, 4, 5],
+//     ticks_labels: ['1', '2', '3', '4', 'All'],
+//     ticks_snap_bounds: 30
+// });
+//
+//
+//
+// $("#slider").on("change", function(ev) {
+//
+// 	val = ev.value.newValue;
+// 	console.log(ev.value.newValue);
+// 	if (val == 5) {
+// 		$("#tab1 div.snippet_row").slideDown();
+// 	} else {
+// 		$("#tab1 div.snippet_row").slideUp();
+// 		$("#tab1 div.snippet_row:eq(" + val + ")").slideDown();
+// 	}
+//
+// });
+// ======
+// Example ends
+// ======	
+</script>
+
+
+{% endblock closingbody %}
+
+
+
+

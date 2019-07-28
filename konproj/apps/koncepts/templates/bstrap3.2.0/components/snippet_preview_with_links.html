@@ -1,0 +1,200 @@
+{# NOTE: there is a copy of this file including links: "snippet_preview_with_links.html" #}
+
+
+{% load konceptstags %}
+
+	{% if not quote_detail_page and not person_public_page and not koncept_detail_page and not document_detail_page and not document_search_page %}
+		{% with snippet as this_snippet %}
+			{% with newline_text=1 %}
+				{% include "bstrap3.2.0/components/snippet_date.html" %} 
+						
+			{% endwith %}
+		{% endwith %}
+	{% else %}
+		<br />
+	{% endif %}
+
+
+
+	{# top div: full width - hence determined by its container #}
+	
+	<div class="col-md-12 quotecornice snippetdiv {% if koncept_detail_page %}{{snippet.get_interpretation.fragment.source.id}}{% else %}{{snippet.get_interpretation.koncept.id}}{% endif %}">  
+	
+		<div id="q">
+			<blockquote>
+				<q class="lead">
+					
+				{% if snippet_search_page and searchval %}
+				
+					<a href="{{ snippet.get_absolute_url }}" title="Open {{SNIPPET_LABEL}}">
+						{{snippet.text|linebreaksbr|highlightText:searchval|safe}}
+					</a>
+						
+				{% else %}
+				
+					{% if quote_detail_page %}
+					
+						{{snippet.text|linebreaksbr}}
+						
+					{% else %}	
+						
+						{% if person_public_page  %}
+						{# SHORT PREVIEW VERSION #}
+						
+				  	  	  	{% if snippet.text|length > 200 %}
+	 		  	  	  		  	<span><a href="{{ snippet.get_absolute_url }}"  title="Open {{SNIPPET_LABEL}}">{{snippet.text|slice:":200"|linebreaksbr}}</a></span><span class="dots-text" >...&nbsp;</span><span class="complete-text" style="display: none;"><a href="{{ snippet.get_absolute_url }}"  title="Open {{SNIPPET_LABEL}}">{{snippet.text|slice:"200:"|linebreaksbr}}</a></span>
+	 		  	  				<button class="more-text btn btn-default btn-xs" name="fragment{{i.orderno}}">show more</button>
+
+			  	  	  		  {% else %}
+
+			  	  	  		  	<span><a href="{{ snippet.get_absolute_url }}"  title="Open {{SNIPPET_LABEL}}">{{snippet.text|linebreaksbr}}</a></span>
+
+			  	  	  		  {% endif %}
+					  
+				
+						{% else %}
+				
+							{% if document_search_page %}
+							
+								{# SHORT PREVIEW, MINUS MORE BUTTON #}
+								<span><a href="{{ snippet.get_absolute_url }}"  title="Open {{SNIPPET_LABEL}}">{{snippet.text|linebreaksbr|slice:":300"}}</a></span><span class="dots-text">...&nbsp;</span>							
+							
+							{% else %}
+							
+  								{# DEFAULT: LONG PREVIEW #}
+	  				  	  		  {% if snippet.text|length > 700 %}
+	  				  	  		  	<span><a href="{{ snippet.get_absolute_url }}"  title="Open {{SNIPPET_LABEL}}">{{snippet.text|slice:":500"|linebreaksbr}}</a></span><span class="dots-text">...&nbsp;</span><span class="complete-text" style="display: none;"><a href="{{ snippet.get_absolute_url }}"  title="Open {{SNIPPET_LABEL}}">{{snippet.text|slice:"500:"|linebreaksbr}}</a></span>
+				  						
+	  								<button class="more-text btn btn-default btn-xs" name="fragment{{i.orderno}}">show more</button>
+				  	  		  	  	
+	  							  {% else %}
+	  				  	  		  	<span><a href="{{ snippet.get_absolute_url }}"  title="Open {{SNIPPET_LABEL}}">{{snippet.text|linebreaksbr}}</a></span>
+	  				  	  		  {% endif %}
+							
+							{% endif %}
+							
+							
+
+ 
+							{% endif %}  {# ENDS person_public_page #}
+						{% endif %}  {# ENDS quote_detail_page #}
+						
+					{% endif %}  {# ENDS snippet_search_page  #}
+				
+				
+				</a>	
+				</q>
+			
+			
+			
+			
+			{% if snippet.source and not document_search_page and not document_detail_page and not quote_detail_page %}			
+				<small class="snippetsourceinfo">
+				
+					<a class="sourcelink" href="{{snippet.source.get_absolute_url}}" title="View other {{SNIPPET_LABEL}}s from this {{DOCUMENT_LABEL}}" rel="category tag"><span class="glyphicon glyphicon-book"></span>
+					{{snippet.source.title|truncatewords:15}}</a>
+					{# {% if snippet.location %}<br>{{snippet.location}}{% endif %} #}
+			   		 {% if  snippet.source.url %}
+			   		 <br /><a href="{{snippet.source.url}}" class="sourceLinkUrl bluelink" title="Open original webpage" target="_blank">{{snippet.source.get_url_domain}}</a>
+					 
+			   		 {% endif %}
+				</small>
+
+			{% endif %}
+			
+			
+			{% if quote_detail_page %}
+				
+				<small style="margin-bottom: 20px;" class="snippetsourceinfo col-md-10 col-md-offset-2">
+				
+					<a class="sourcelink" href="{{snippet.source.get_absolute_url}}" title="View other {{SNIPPET_LABEL}}s from this {{DOCUMENT_LABEL}}" rel="category tag"><span class="glyphicon glyphicon-book"></span>
+					{{snippet.source.title|truncatewords:30}}</a>
+					
+		   		 {% if  snippet.source.url %}
+		   		 <br /><a href="{{snippet.source.url}}" class="sourceLinkUrl bluelink" title="Open original webpage" target="_blank">{{snippet.source.get_url_domain}}</a>
+				 
+		   		 {% endif %}
+
+				</small>
+			
+			
+			{% endif %}
+			
+			
+			
+			
+			
+			{# February 25, 2015: deprecated #}
+			
+				{% if 0 and snippet_search_page %}
+
+					{% with snippet as object %}
+					<div class="text-right">
+						  {% include "bstrap3.2.0/components/publicprivate_button.html" %}	
+					</div>
+					{% endwith %}
+
+				{% endif %}
+
+			
+			
+			
+			</blockquote>
+			
+			
+		</div>
+					
+	</div>
+	
+	
+
+{% if 0 %}
+{% if koncept_detail_page or  document_detail_page or quote_detail_page %}
+	
+{% if mykoncepts %}
+	
+	{% if snippet.get_interpretation %}
+
+		<p style="margin-left: 30px; margin-top: -15px; margin-bottom: 30px;">
+			<small class="text-muted">
+				
+								
+				
+			
+			{% if koncept_detail_page %}
+				&nbsp;&nbsp;<span class="glyphicon glyphicon-resize-small"></span>&nbsp;<a href="javascript:confirmUnlinkFragment({{snippet.get_interpretation.id}}, '{{snippet.get_interpretation.koncept.name|escapejs}}');" title="Unlink from {{KONCEPT_LABEL}}">Remove from {{KONCEPT_LABEL}}</a>
+				
+				&nbsp;&nbsp;<span class="glyphicon glyphicon-view"></span>&nbsp;<a href="{% url get_quote snippet.created_by snippet.id %}" title="Open">Open</a>
+				
+			{% endif %}	
+				
+{# 				&nbsp;&nbsp;<span class="glyphicon glyphicon-pencil"></span>&nbsp; #}
+{# <a href="{% url create_quote %}?intfrag={{snippet.get_interpretation.id }}" title="Edit">Edit</a> #}
+{# 			 #}
+				{# &nbsp;&nbsp;<span class="glyphicon glyphicon-remove"></span>&nbsp;<a href="javascript:confirmDeleteLinkedFragment({{snippet.get_interpretation.id}}, '{{snippet.text|escapejs|truncatewords:10}}');" title="Delete">Delete</a> #}
+				
+
+			</small>
+
+		</p>
+
+
+	{% else %}
+
+
+		<p style="margin-left: 30px; margin-top: -15px; margin-bottom: 30px;">
+			<small class="text-muted">
+				&nbsp;&nbsp;
+				&nbsp;&nbsp;<span class="glyphicon glyphicon-pencil"></span>&nbsp;<a href="{% url create_quote %}?fragment={{snippet.id}}" title="Link">Edit</a>
+								
+				
+
+			</small>					
+		</p> 
+
+
+	{% endif %}
+
+{% endif %}
+{% endif %}
+{% endif %}	

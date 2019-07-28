@@ -1,0 +1,33 @@
+
+{% extends "bstrap3.2.0/registration/base.html" %}
+{% load konceptstags %}
+
+
+{% block title %}Activation complete{% endblock %}
+
+
+{% block content %}
+
+  {# is there a better space to add empty space? #}
+ 
+  
+  
+<div class="row-fluid" style="margin-top: 50px;">
+	
+	<div class="col-md-6 col-md-offset-3">
+
+	
+		<h1>Congratulations!</h1>
+		<hr >
+		<p class="lead">Your registration is now complete. Go to the site and start having fun!</p>
+		<br />
+		<p class="lead">Now you can <a href="{% url auth_login %}">log in</a> and starts using the website.</p>
+		
+	</div>
+	
+</div>
+
+
+
+
+{% endblock %}

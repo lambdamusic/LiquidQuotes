@@ -1,0 +1,114 @@
+{% extends "bstrap3.2.0/base.html" %}
+
+
+
+{% block belownavigation %}
+
+
+	{% with tools=1 %}
+		{% include "bstrap3.2.0/components/navbar_second.html" %}
+	{% endwith %}
+
+{% endblock belownavigation %}
+
+
+
+
+
+
+{% block pagecontents %}
+
+
+
+<div class="row margin-top-50">
+	
+	
+    <div class="col-md-8 col-md-push-3 margin-bottom-50">
+    	
+		<div class="page-header">
+			<h2 class="">Bookmarklet</h2>
+		</div>
+		
+
+		
+	 	<p class="lead">
+			The LiquidQuotes bookmarklet allows you to save {{SNIPPET_LABEL}}s quickly <i>while browsing the web</i>. 
+			
+	 	</p>
+
+
+	 	<p class="lead">Just <b>drag the button below to your browser's bookmarks bar</b>, select any text you'd like to save as a {{SNIPPET_LABEL}} and then click on the bookmarklet to save it.</p>
+		
+		
+		<p class="lead">A pop up window will let you finalize the {{SNIPPET_LABEL}} before saving it. You can add tags, or link it to an existing {{KONCEPT_LABEL|lower}}. The URL, title and description (if available) of the page you're on will be imported automatically too.</p> 
+		
+		
+	 	<p class="lead text-center">
+	 		 <a  	 		href="javascript:(function()%7Bjavascript:(function()%7Bvar%20POPUP_URL%3D%22{{bookmarklet}}%22%3Bvar%20text%3Btry%7Btext%3D((window.getSelection%26%26window.getSelection())%7C%7C(document.getSelection%26%26document.getSelection())%7C%7C(document.selection%26%26document.selection.createRange%26%26document.selection.createRange().text))%3B%7Dcatch(e)%7Btext%3D%22%22%3B%7Dvar%20url%3DencodeURIComponent(location.href)%3Bvar%20title%3DencodeURIComponent(document.title)%3Bwindow.open(POPUP_URL%2B%22%3Ftext%3D%22%2Btext%2B%22%26url%3D%22%2Burl%2B%22%26title%3D%22%2Btitle,%22myWindow%22,%22status%20%3D%201,%20height%20%3D%20500,%20width%20%3D%20650,%20resizable%20%3D%200%22)%3B%7D)()%3B%7D)()%3B" title="Drag this to your toolbar">
+	 		<button class="btn btn-danger">Add to LiquidQuotes</button></a> 
+			
+			<br />
+			&#8682;  {# &#8593; #}
+			<br />
+			
+			<span style="font-family:'Comic Sans MS', cursive, sans-serif; font-size: 12px; color: gray;">Drag me to your browser's toolbar!</span>
+			
+	 	</p>
+			
+		
+
+	
+	
+		{% if 0 %}
+	
+			 	<style type="text/css" media="screen">
+			 	.modal {
+			 	    border:0;            
+			 	    height:200px;
+			 	    position:fixed;
+			 	    right:20px;
+			 	    top:20px;
+			 	    width:200px;
+			 	    z-index:101;   
+			 	}
+			 	</style>
+	
+			 	Test: <a href="javascript:var i,s,ss=['{{ STATIC_URL }}legacy/js/bookmarklet.js','http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js'];for(i=0;i!=ss.length;i++){s=document.createElement('script');s.src=ss[i];document.body.appendChild(s);}void(0);">Drag me to your toolbar</a>
+
+			    <br />
+	
+			     Test 2: <a href="javascript:(function(){var modal=document.createElement('iframe');modal.setAttribute('src','http://codinghorror.com');modal.setAttribute('scrolling','no');modal.className='modal';document.body.appendChild(modal);}());">Bookmarklet</a>
+	
+			 	<br />
+	
+			 	Test 3: <a href="javascript:(function()%7Bvar%20d=document;window.open('http://stackoverflow.com','_blank','width=600,height=250,left='+(screen.width/2-300)+',top='+(screen.height/2-125))%7D)();">Bookmarklet</a>
+	
+			 	<br />
+	
+			 	Test 4 <a href="javascript:(function(F,i,r,e,b,u,g,L,I,T,E){if(F.getElementById(b))return;E=F[i+'NS']&&F.documentElement.namespaceURI;E=E?F[i+'NS'](E,'script'):F[i]('script');E[r]('id',b);E[r]('src',I+g+T);E[r](b,u);(F[e]('head')[0]||F[e]('body')[0]).appendChild(E);E=new%20Image;})(document,'createElement','setAttribute','getElementsByTagName','FirebugLite','4','bookmarklet2.js','','{{ STATIC_URL }}legacy/js/','#startOpened');">Bookmark</a>
+		
+	
+		{% endif %}		
+		
+
+
+    </div>   {# end of col-md- #}
+	
+	
+	
+	
+	
+	
+    <div class="col-md-3 col-md-pull-8">
+
+		{% with bookmarklet=1 %}
+			{% include "bstrap3.2.0/components/dashboard-nav-tools.html" %}
+		{% endwith %}
+    </div>
+	
+	
+	
+  </div>
+  
+
+{% endblock pagecontents %}

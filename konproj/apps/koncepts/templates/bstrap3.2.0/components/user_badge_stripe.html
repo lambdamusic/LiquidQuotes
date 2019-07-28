@@ -1,0 +1,177 @@
+
+{% load konceptstags %}
+
+
+<!-- 2016-04-30
+
+	overriding some css properties of quote_title_stripe2
+-->
+
+<div class="container-fluid quote_title_stripe2" style="{% if document_detail_page %}
+	margin-top: 0px;{% else %}margin-top: -20px; border-top: 1px #00BCD4 solid;{% endif %} min-height: 40px;">
+
+
+	<div id="user_badge_stripe" class="row" style="margin: 0px 5px 10px 5px;">  {# this css should stay inline #}
+
+
+	{# THE BADGE #}
+
+	<div class="col-md-8 col-md-offset-1" style="-margin-bottom: 20px;">
+
+			<h5 style="margin-top: 10px; margin-bottom: 0px; ">
+
+				<small class="text-lowercase quietlink6" style="line-height: 0px;
+	">Saved by:&nbsp;&nbsp;&nbsp;
+
+
+{# public page link only if not logged in 2016-07-20  #}
+                {% if mykoncepts %}
+                    <a style="text-decoration: none;" class="quietlink7">
+
+                {% else %}
+				    <a href="{% url person_public_page person %}" title="View {{person.profile.pretty_name|capfirst}}'s profile" style="text-decoration: none;" class="quietlink7">
+                {% endif  %}
+
+
+
+				<button type="button" class="btn btn-default btn-circle btn-info btn-xs"><i class="glyphicon glyphicon-user"></i></button>&nbsp;
+
+					{{person.profile.pretty_name|capfirst}}{% if mykoncepts %}&nbsp;(you!){% endif %}
+				</a>
+				</small>
+
+
+{% if mykoncepts %}
+					{# QUOTES LINK #}
+				<small class="user-links-hidden">
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<a href="{% url search_user_quotes request.user.username %}" title="{{SNIPPET_LABEL}}s" style="text-decoration: none;" class="quietlink7">
+							<i class="glyphicon glyphicon-list -icon-black"></i>
+						&nbsp;{{SNIPPET_LABEL}}s
+						</a>
+
+				</small>
+
+				<small  class="user-links-hidden">
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<a href="{% url search_user_documents request.user %}" title="{{DOCUMENT_LABEL}}s" style="text-decoration: none;" class="quietlink7">
+							<i class="glyphicon glyphicon-book -icon-black"></i>
+						&nbsp;{{DOCUMENT_LABEL}}s
+						</a>
+
+				</small>
+
+
+               <small  class="user-links-hidden">
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<a href="{% url search_user_subjects request.user %}" title="{{DOCUMENT_LABEL}}s" style="text-decoration: none;" class="quietlink7">
+							<i class="glyphicon glyphicon-tag -icon-black"></i>
+						&nbsp;{{SUBJECT_LABEL}}s
+						</a>
+
+				</small>
+
+                <small  class="user-links-hidden">
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<a href="{% url get_random_quote  %}" title="Random {{SNIPPET_LABEL}}" style="text-decoration: none;" class="quietlink7">
+							<i class="glyphicon glyphicon-link -icon-black"></i>
+						&nbsp;Roulette
+						</a>
+
+				</small>
+
+
+
+{% endif %}
+
+
+
+
+
+			</h5>
+
+
+
+	</div>
+
+
+	{# NEXT BUTTON #}
+
+
+	<div class="col-md-3 -col-md-offset-1" style="margin-bottom: -6px; -margin-top: 50px;">
+
+        <div class="text-right">
+
+
+            <small class="text-uppercase" style="font-size: 11px; text-transform: uppercase;">
+
+				{% if document_detail_page %}
+
+				<a href="javascript:confirmDownload({{snippet.id}});" title="Download" style="text-decoration: none;" class="quietlink6">
+					<i class="glyphicon glyphicon-save -icon-black"></i>
+				&nbsp;Download
+				</a>
+
+				{% endif %}
+
+				{% if quote_detail_page %}
+
+				<a href="javascript:confirmDownload({{snippet.id}});" title="Download" style="text-decoration: none;" class="quietlink6">
+							<i class="glyphicon glyphicon-save -icon-black" style="font-size: 100%;"></i>
+						&nbsp;Download
+				</a>
+
+				{% endif %}
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			</small>
+
+
+
+
+    	 {% if nextQuoteSource %}
+
+
+				<small class="text-uppercase" style="font-size: 11px; text-transform: uppercase;">Next</small>
+				{# <br /> #}
+
+	  			<a href="{{nextQuoteSource.get_absolute_url}}" class="quietlink6 next_quote_link" style="vertical-align: middle;">
+	  				<span class="glyphicon glyphicon-chevron-right" style="font-size: 100%;"></span>
+	  			</a>
+
+				<div class="next_hover" style="font-size: 12px;">{{nextQuoteSource.title|capfirst|truncatewords:5}} {% if nextQuoteSource.source %}<br /><span class="text-muted" style="font-size: 10px;">{{nextQuoteSource.source.title|truncatewords:5}}</span>{% endif %}
+
+				</div>
+
+
+    	{% endif %}
+
+
+
+	    {% if document_detail_page and d1.get_nextDocument %}
+
+
+				<small class="text-uppercase" style="font-size: 11px; text-transform: uppercase;">Next Source</small>
+				{# <br /> #}
+
+	  			<a href="{{d1.get_nextDocument.get_absolute_url}}" class="quietlink6 next_quote_link" style="vertical-align: middle;" {# title="{{d1.get_nextDocument.title|capfirst}}" #}>
+	  				<span class="glyphicon glyphicon-chevron-right" style="font-size: 100%;"></span>
+	  			</a>
+
+				<div class="next_hover text-muted" style="font-size: 12px;">{{d1.get_nextDocument.title|capfirst|truncatewords:8}}
+
+				</div>
+
+
+
+	    {% endif %}
+
+        {# end of text-right #}
+		</div>
+
+        {# end of col-md-3#}
+	</div>
+
+
+	</div>
+
+</div>

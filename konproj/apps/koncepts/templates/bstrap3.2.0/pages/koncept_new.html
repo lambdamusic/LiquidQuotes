@@ -1,0 +1,197 @@
+{% extends "bstrap3.2.0/base.html" %}
+{% load konceptstags %}
+
+
+
+
+
+{% block belownavigation %}
+
+
+	{% with add_edit=1 %}
+		{% include "bstrap3.2.0/components/navbar_second.html" %}
+	{% endwith %}
+
+{% endblock belownavigation %}
+
+
+
+
+
+{% block pagecontents %}
+
+
+  <div class="row  margin-top-50">
+	
+	<div class="col-md-8" >
+
+		<div class="page-header" >
+			
+		{% if 1 %}	 
+		  <h2 class="koncept-title ">
+			
+			{% if increaseFragment %}Edit&nbsp;{% else %}Add&nbsp;{% endif %}{{SNIPPET_LABEL}}:
+
+		  </h2>
+		  {% endif %}
+		  
+		  
+		</div>
+
+		
+
+
+
+			{% include "bstrap3.2.0/components/newKonceptForm.html" %}
+	
+
+
+
+		</div>   	{# END OF col-md-8 #}
+		
+
+
+
+
+		{# =========== #}
+		{# SIDEBAR  #}
+		{# =========== #}
+
+
+	    <div class="col-md-2 col-md-offset-1" style="margin-top: 40px; margin-bottom: 50px;">
+
+			<div id="quicktips1" class="margin-bottom-50">
+				<h4><b>Quick Tips</b></h4>
+		
+				<p class="text-muted">
+					A <b class="text-info">{{SNIPPET_LABEL}}</b> can be any text fragment that you want to save and catalogue for later reuse.
+					 {# {{SNIPPET_LABEL}}s can be made public or private, and can be tagged and grouped into {{KONCEPT_LABEL|lower}}s.  #}
+					{# <br /><br /> #}
+					{# A <b class="alert-successs">{{KONCEPT_LABEL}}</b> is the primary idea or topic your {{SNIPPET_LABEL|lower}} is about.  #}
+					{# Differently from tags, you can only associate one {{KONCEPT_LABEL|lower}} to each {{SNIPPET_LABEL|lower}}. This is because normally {{KONCEPT_LABEL|lower}}s are much more specific than tags: they are the one single idea a {{SNIPPET_LABEL|lower}} is worth remembering for. #}			
+			
+					<br /><br />
+				    A <b class="text-info">{{DOCUMENT_LABEL}}</b> is the document or website your {{SNIPPET_LABEL|lower}} was originally taken from. 
+					{# This is where you can add some bibliographical information.  #}
+
+						
+				</p>
+			</div>
+
+			
+			<div id="quicktips2"  class="margin-bottom-50">
+				<h5>Did you know that..</h5>
+				<p class="text-muted">You can create {{SNIPPET_LABEL}}s quickly while browsing the web by installing our wonderful <a href="{% url bookmarklet  %}" title="click to find out more" class="btn btn-danger btn-xs">Web Bookmarklet</a>
+			</div>
+				
+
+			{% if 0%}<div id="quicktips3">
+		 		<h5>Kindle user?</h5>
+
+		 		<p class="text-muted">Good news: extract all of your Kindle highlights and annotations by using the <a href="{% url importkindle %}" class="btn btn-warning btn-xs">Kindle Importer</a></p>
+
+		 		</p>
+			</div>{% endif %}
+
+	
+	
+			{% if 0 %}   {# DISABLED ON August 30, 2014 #}
+					{% if not increaseKoncept and recentKoncepts %}
+
+						<h4><b>Your recent {{KONCEPT_LABEL}}s</b>
+						<span class="help-block">
+							Click to reuse
+						</span>
+						</h4>
+	
+						{% for k in recentKoncepts  %}
+							<li><a class="konceptcolor" href='javascript:addKoncept("{{k.name}}");' title="Click to reuse">{{k.name}}</a></li>
+						{% endfor %}
+	
+					<br /><br />
+	
+					{% endif %}
+	
+	
+					{% if not increaseDocument and not increaseFragment and recentDocuments %}
+	
+					<h4><b>Your recent Sources</b>
+						<span class="help-block">
+							Click to reuse
+						</span>
+					</h4>
+					{% for d in recentDocuments  %}
+						<li><a class="documentcolor" href='javascript:addDocument("{{d.title}}");' title="Click to reuse">{{d.title}}</a></li>
+					{% endfor %}
+	
+					<br /><br />
+	
+					{% endif %}
+	
+	
+			{% endif %}
+			
+			
+			
+
+	    </div>   
+		{# end of SIDEBAR #}
+		
+		
+
+
+</div>
+{# end row #}
+
+
+
+	
+
+</div>
+
+
+
+
+{% endblock pagecontents %}
+
+
+
+
+
+
+{% block closingbody %}
+
+
+	{% include "bstrap3.2.0/components/js_autocomplete.html" %}	
+	
+	
+	<script type="text/javascript">
+
+	
+		// allow reusing recent koncepts
+		
+		function addKoncept(name) {
+			$('#myTabs a[href="#tab1"]').tab('show');
+			$('#id_name').val(name);
+			konPreviewInfo(name);  // reusing fn from in autocomplete_js
+		}
+		
+
+		// allow reusing recent docs
+		
+		function addDocument(name) {
+			$('#myTabs a[href="#tab2"]').tab('show');
+			$('#id_sourcetitle').val(name);
+			docPreviewInfo(name); // reusing fn from in autocomplete_js
+		}
+	
+	
+		{% if increaseKoncept or editKoncept %}
+			$('#myTabs a[href="#tab1"]').tab('show');
+		{% endif %}
+	
+	
+			  
+	  </script>
+	
+{% endblock closingbody %}

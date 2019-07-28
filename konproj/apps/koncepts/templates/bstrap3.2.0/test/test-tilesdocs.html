@@ -1,0 +1,151 @@
+{% extends "bstrap3.2.0/base.html" %}
+{% load konceptstags %}
+
+
+
+
+{% block extrahead %}
+
+	<style type="text/css" media="screen">
+	p {
+		font-size: 12px;
+		line-height: 10px;
+	}
+	
+	.row > div {border:10px solid white}
+	.B {background:blue; height:200px}
+	.G {background:green; height:100px}
+	.O {background:orange; height:100px}
+	
+	.Z {background:lightgrey; min-height:200px; height: auto; font-size: 70%;}
+	.X {background:lightgrey; font-size: 100%;}
+	
+	</style>
+	
+	
+	{# funky search box #}
+
+
+	<style type="text/css" media="screen">
+	.search-form .form-group {
+	  float: right !important;
+	  transition: all 0.35s, border-radius 0s;
+	  width: 32px;
+	  height: 32px;
+	  background-color: #fff;
+	  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+	  border-radius: 25px;
+	  border: 1px solid #ccc;
+	}
+	.search-form .form-group input.form-control {
+	  padding-right: 20px;
+	  border: 0 none;
+	  background: transparent;
+	  box-shadow: none;
+	  display:block;
+	}
+	.search-form .form-group input.form-control::-webkit-input-placeholder {
+	  display: none;
+	}
+	.search-form .form-group input.form-control:-moz-placeholder {
+	  /* Firefox 18- */
+	  display: none;
+	}
+	.search-form .form-group input.form-control::-moz-placeholder {
+	  /* Firefox 19+ */
+	  display: none;
+	}
+	.search-form .form-group input.form-control:-ms-input-placeholder {
+	  display: none;
+	}
+	.search-form .form-group:hover,
+	.search-form .form-group.hover {
+	  width: 100%;
+	  border-radius: 4px 25px 25px 4px;
+	}
+	.search-form .form-group span.form-control-feedback {
+	  position: absolute;
+	  top: -1px;
+	  right: -2px;
+	  z-index: 2;
+	  display: block;
+	  width: 34px;
+	  height: 34px;
+	  line-height: 34px;
+	  text-align: center;
+	  color: #3596e0;
+	  left: initial;
+	  font-size: 14px;
+	}
+	</style>
+	
+	
+{% endblock extrahead %}
+
+
+{% block pagecontents %}
+
+
+	<div class="container">
+		<div class="row">
+    		<div class="col-md-6 col-md-offset-6">
+	        <form action="" class="search-form">
+	            <div class="form-group has-feedback">
+	        		<label for="search" class="sr-only">Search</label>
+	        		<input type="text" class="form-control" name="search" id="search" placeholder="search">
+	          		<span class="glyphicon glyphicon-search form-control-feedback"></span>
+	        	</div>
+	        </form>
+   	 		</div>
+		</div>
+	</div>
+
+	<div class="container">
+		<div class="row">
+	      <div class="col-md-8 col-lg-6 B"></div>
+	      <div class="col-md-4 col-lg-3 G"></div>
+	      <div class="col-md-4 col-lg-3 G"></div>
+	      <div class="col-md-12 col-lg-6 O"></div>
+	  	</div>
+	</div>
+
+
+
+	<div class="container">
+		<div class="row">
+			
+			{% for d1 in data  %}
+				{# <div class="col-md-{{d1|get_tile_width}} X" style="height: auto;"> #}
+				<div {{d1|get_tile_style|safe}}>
+					{{d1.title|truncatewords:10}}
+					<br>
+					<h3 class="text-muted">{{d1.fragment_set.all|length}} {{SNIPPET_LABEL}}s</h3>
+				</div>
+			{% endfor %}
+
+	  	</div>
+	</div>
+	
+
+
+{% endblock  %}
+
+
+
+
+{% block closingbody %}
+
+	{# 	 #}
+	{# <script> #}
+	{# $(function () #}
+	{# 	{ $(".doc_list_item").popover({   // can be tooltip too #}
+	{# 		placement: 'top',  #}
+	{# 		trigger: 'click',  #}
+	{# 		html: true, #}
+	{# 		delay: { show: 500, hide: 300 }, #}
+	{# 	}); #}
+	{# }); #}
+	{# </script> #}
+
+
+{% endblock  %}

@@ -1,0 +1,643 @@
+
+/* Sticky footer styles
+-------------------------------------------------- */
+
+html,
+body {
+height: 100%;
+/* The html and body elements cannot have any padding or margin. */
+}
+
+/* Wrapper for page content to push down footer */
+#wrap {
+min-height: 100%;
+height: auto !important;
+height: 100%;
+/* Negative indent footer by it's height */
+margin: 0 auto -60px;
+}
+
+/* Set the fixed height of the footer here */
+#push,
+#footer {
+height: 80px;
+margin-top: 30px;
+}
+#footer {
+background-color: #000000 ; /*#f5f5f5*/
+}
+
+#footer a {
+    color: #fff;
+}
+#footer a:hover {
+    color: #DFDADA;
+}
+
+
+
+/* Lastly, apply responsive CSS fixes as necessary */
+@media (max-width: 767px) {
+#footer {
+  margin-left: -20px;
+  margin-right: -20px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+}
+
+
+
+/* Custom page CSS
+-------------------------------------------------- */
+/* Not required for template or sticky footer method. */
+
+#wrap > .container {
+padding-top: 60px;
+}
+.container .credit {
+margin: 20px 0;
+}
+
+code {
+font-size: 80%;
+}
+
+
+/* Koncepts CSS
+-------------------------------------------------- */
+
+
+h1.konceptTitle  {
+    line-height: 30px;
+    font-size: 30px;
+}
+
+span.konceptTitle {
+    line-height: 30px;
+    font-size: 25px;
+}
+
+h1.konceptTitle small {
+  font-size: 13px;
+}
+
+
+.strongerh2 {
+    color: darkgoldenrod;
+    text-transform: uppercase;
+}
+
+.magenta {
+    color: darkmagenta;
+}
+
+
+.konceptcolor {
+color: #e03a3a;
+}
+
+.konceptcolorlight {
+/*color: rgba(243, 60, 60, 0.54);*/
+    color: #e03a3a;
+    opacity: 0.5;
+}
+
+.tagcolor {
+color: #F6358A;
+}	  
+
+/*
+Ratings Stars
+(with as little code as possible)
+  http://dabblet.com/gist/1722368
+*/
+.rating {
+unicode-bidi: bidi-override;
+direction: rtl;
+text-align: left;
+font-size: 20px;
+color: #EBDDE2;
+}
+.rating > span {
+display: inline-block;
+position: relative;
+width: 1.1em;
+}
+.rating > *:hover,
+.rating > *:hover ~ span,
+.rating:not(:hover) > input:checked ~ span {
+color: transparent;
+}
+.rating > *:hover:before,
+.rating > *:hover ~ span:before,
+.rating:not(:hover) > input:checked ~ span:before {
+ content: "\2605";
+ position: absolute;
+ left: 0; 
+ color: gold;
+}
+
+.rating > input {
+ margin-left:-1.1em;
+ margin-right:0;
+ top:3px;
+ width:1.1em;
+ height:1.1em;
+ position:relative;
+ z-index:2;
+ opacity:0;
+}
+
+
+
+/*	  February 26, 2014  */
+
+.width-90percent { width: 90% }
+
+.line-height-5 {line-height: 5px;}
+
+/*	  March 14, 2014 */
+
+#breadcrumb.sticky {
+  position: fixed;
+  top: 41px;
+  width: 100%;
+  left: 0px;
+}
+
+
+.breadcrumb {
+padding: 0px;
+background-color: white;
+margin: 5px;
+font-size: 11px;
+}
+
+.breadcrumb a {
+  color: grey;
+}
+
+.searchval {
+  text-transform: italic;
+  color: red;
+  background: lemonchiffon;
+}
+
+
+/*	  April 7, 2014*/
+
+.beta_suffix {
+  padding: 2px;
+  font-weight: normal;
+  font-size: 13px;
+  color: #e03a3a ;
+  background: white;
+/*		  display: none;*/
+}
+
+
+/*	  April 9, 2014*/
+
+.complete-text{
+  display:none;
+}
+
+/*.more-text {
+  padding:3px;
+  cursor:pointer;
+  font-size: 90%;
+  background: whitesmoke;
+}*/
+
+
+.quietlink {
+  color: #999;
+  text-decoration: underline;
+}
+
+
+a.sourceLink {
+  color: #072053;  /*#7C7979*/
+  text-decoration: underline;
+/*  text-transform: uppercase;*/
+  opacity: 0.5;
+}
+
+a.sourceLinkUrl {
+/*  color: #999;*/
+  text-decoration: none;
+/*  opacity: 0.5;*/
+  font-size: 80%;
+}	  
+
+.konceptdate {
+color: rgba(248, 157, 157, 0.42);
+font-weight: bold;
+/*		rgba(248, 157, 157, 0.42)*/
+font-size: 22px;
+}
+
+
+
+/*	  May 13, 2014*/
+
+.row_beforefooter {
+background: #E4E7E7; 
+margin-top: -50px; 
+margin-bottom: -50px; 
+margin-left: -20px; 
+margin-right: -20px;
+padding-bottom: 10px;
+}
+
+
+
+.legend-smaller {
+  font-size: 80%;
+}
+
+.privatebutton {
+    margin: 10px -11px -6px 0px;
+}
+
+
+
+.badge-snippet-count {
+  background-color: #FEF6F6;
+  color: black;
+  font-weight: normal;
+
+}
+
+
+/*.badge-snippet-count:hover {
+  background-color: #FE6262;
+  color: white;
+  font-weight: normal;
+}*/
+
+.badge-koncept-count {
+  background-color: #FEF6F6;
+  color: black;
+  font-weight: normal;
+
+}
+
+
+.badge-koncept-count:hover {
+  background-color: #FE6262;
+  color: white;
+  font-weight: normal;
+
+}
+
+
+
+
+
+.badge-snippet-count-2 {
+  background: white;
+  color: black;
+  font-weight: normal;
+
+}
+
+
+/*	  July 22, 2014: changes for COSMO bug with labels size  */
+
+.label {
+  min-width: 0px;
+  min-height: 0px;
+}
+
+
+.snippet-date {
+font-size: 80%;
+}
+
+
+.snippet_preexists a {
+  color: yellow;
+}
+
+#sidebar-right li {
+  line-height: 30px;
+}
+
+
+.right-sidebar-div {
+margin-bottom: 40px;
+}
+
+
+/*	  August 26, 2014*/
+
+
+.documentcolor {
+color: #5E5A80;
+}
+
+#docmetadata {
+  border: 1px solid lightgray;
+  padding: 20px;
+  background: rgb(242, 241, 241);
+  overflow: auto;
+  margin-bottom: 20px;
+}
+.doctitle {
+/*    text-transform: uppercase;*/
+/*    background: rgb(252, 252, 207);*/
+    font-size: 260%;
+}
+
+.docdefinition {
+    font-size: 18px;
+    margin-left: 20px;
+    line-height: 30px;
+}
+.docfield {
+  text-transform: uppercase;
+  color: lightgrey;
+}
+
+span.docdefinition .muted {
+    color: black;
+}
+
+.topicHighlighted {
+    background: rgb(255, 255, 71);
+    text-transform: uppercase;
+/*    font-size: 110%;*/
+/*    line-height: 40px;*/
+}
+
+
+.searchHighlighted {
+    background: rgb(253, 253, 72);
+    font-size: 110%;
+}
+
+
+.quote_arrows_navigation i {
+    margin-top: 5px;
+    margin: 0 1px;
+}
+
+/*
+.sidebar_left_global {
+    margin-top: 20px;
+    margin-bottom: 60px;
+}
+.sidebar_left_global ol {
+    margin-left: 30px;
+}
+*/
+
+
+.kon_list_item:hover {
+    color: #e03a3a;
+} 
+
+
+.koncept_result_item {
+    margin-top: 30px;
+    margin-bottom: 50px;
+}
+
+
+/*      */
+/* 2014-09-02: Stuff extracted from koncept_detail.html @todo remove whats not used */
+/*      */
+ 
+ .mypills .nav-pills >li >a {
+    background-color: linen;
+	color: black;
+ }
+ .mypills .nav-pills > li > a:hover {
+   background-color: lightcoral;
+   color: white;
+ }
+ .mypills .nav-pills .active > a {
+    background-color:red;
+    color:white;
+}
+
+ .mypills .nav-pills >li a.fake_pill  {
+	background: white;
+}
+ .mypills .nav-pills >li a.fake_pill:hover  {
+	color: black;
+}
+
+
+.breadcrumb {
+/*	March 14, 2014: test for colors */
+	
+/*	background: white;
+	margin-bottom: 5px;
+	padding: 0px;*/
+}
+
+
+.bootbox .modal-body { 	height: 160px; }
+
+
+
+/*March 14, 2014: testing smaller tabs*/
+.tabs-left>.nav-tabs>li>a {
+	min-width: 30px;
+}
+.tab-pane {
+	margin-top: 20px;
+	margin-left: 20px;
+}
+
+
+#koncept_edit_icons i {
+	margin-top: 20px;
+}
+
+
+/* ======== */
+
+/* STYLES FOR THE QUOTES */
+
+/* ======== */
+
+blockquote, blockquote.fragment, blockquote.fragment p {
+    font-family: sans-serif;
+    font-size: 20.5px; 
+    color: black;
+    background: rgb(249, 247, 247);
+ 	font-weight: 300;
+ 	line-height: 1.50;
+}
+
+
+blockquote.fragment:hover, blockquote.fragment p:hover {
+	border-left-color: black ;    /* candidates: #e03a3a lightcoral lightgray */
+/*    background: rgb(239, 235, 235);*/
+}
+
+
+
+blockquote a,  blockquote a:visited  {
+    color: black;
+}
+blockquote a:hover {
+    color: black;
+    background: rgb(253, 253, 158);
+    text-decoration: none;
+}
+
+
+
+p.fragment::first-letter {
+   text-transform: uppercase;
+   font-size: 200%;
+   line-height: 100%;
+/*   font-weight: 20;*/
+}
+
+
+blockquote.fragment small {
+    line-height: 20px;
+    margin-top: 15px;
+}
+
+
+
+/* MORE SPECIFIC STYLES FOR THE QUOTES */
+
+
+/*fragment for person homepage*/
+#person_public_profile blockquote.fragment, #person_public_profile blockquote.fragment p {
+
+}
+
+/*fragment for snippet search */
+#snippet_search_page blockquote.fragment, #snippet_search_page blockquote.fragment p {
+    color: black;
+    background: rgb(249, 247, 247);
+	font-size: 16.5px;
+	font-weight: 300;
+	line-height: 1.30;
+}
+
+/*fragment for koncept search*/
+#koncept_search_page blockquote.fragment, #koncept_search_page blockquote.fragment p {
+    color: black;
+    background: rgb(249, 247, 247);
+	font-size: 13px;
+	font-weight: 300;
+	line-height: 1.30;
+}
+
+
+/*fragment for document search*/
+#document_search_page blockquote.fragment, #document_search_page blockquote.fragment p {
+    color: black;
+    background: rgb(249, 247, 247);
+	font-size: 16.5px;
+	font-weight: 300;
+	line-height: 1.30;
+}
+
+
+#quote_detail_page blockquote.fragment, #quote_detail_page blockquote.fragment p {
+    font-size: 28px;
+}
+
+/*in quote detail, no :hover changes are allowed*/
+#quote_detail_page blockquote.fragment:hover, #quote_detail_page blockquote.fragment p:hover {
+	border-left-color: #bbb ;    /* candidates: #e03a3a lightcoral lightgray */
+/*    background: rgb(239, 235, 235);*/
+}
+
+
+
+
+#koncept_detail_page blockquote.fragment, #koncept_detail_page blockquote.fragment p {
+
+}
+
+
+#document_detail_page blockquote.fragment , #document_detail_page blockquote.fragment p {
+
+}
+
+
+/*TODO: this should happen everywhere*/
+ /* candidates: #e03a3a lightcoral lightgray */
+/*#person_public_profile .fragment:hover, .fragment p:hover {
+    border-left-color: black ;
+    background: rgb(239, 235, 235);
+}
+#document_detail_page .fragment:hover, .fragment p:hover {
+    border-left-color: lightgray ;
+    background: rgb(239, 235, 235);
+}
+*/
+
+
+
+/* March 21, 2014 */
+
+p.fragmentModalText {
+	font-size: 21px;
+	font-weight: 200;
+	line-height: 35px;
+}
+
+
+/*March 24, 2014*/
+
+
+.doc-well  {
+    position: relative;
+}
+.doc-well span.corner  {
+    position: absolute;
+	bottom: 3px;
+	right: 3px;
+}
+
+.doc-well span.corner-blockquote  {
+    position: absolute;
+	bottom: 0px;
+	right: 3px;
+}
+
+
+.koncept_subtext {
+	opacity: 0.4;
+	font-size: 60%;
+}
+
+
+p.docdates {
+    margin-top: 20px;
+}
+
+
+
+/*blockquote.fragment:before {
+  color: #ccc;
+  content: open-quote;
+  font-size: 4em;
+  line-height: 0.1em;
+  margin-right: 0.25em;
+  vertical-align: -0.4em;
+  quotes: "\201C""\201D";
+}
+*/
+
+.shadow {
+  -moz-box-shadow:    3px 3px 5px 6px #ccc;
+  -webkit-box-shadow: 3px 3px 5px 6px #ccc;
+  box-shadow:         3px 3px 5px 6px #ccc;
+}
+
+
+

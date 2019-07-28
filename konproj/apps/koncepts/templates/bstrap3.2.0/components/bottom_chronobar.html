@@ -1,0 +1,254 @@
+{% load konceptstags %} 
+  
+
+{# NOTE: the margin bottom could be avoided by changing the margin-top of the footer #}
+
+<div class="abovefooter" style="background: #D0D5DA;">
+
+<div class="container">
+
+	{% if not person_dashboard and not document_detail_page %}
+	<h5 class="text-muted">&nbsp;&nbsp;&nbsp;&nbsp;Timeline </h5>
+	{% endif %}
+			
+<div class="row" style="margin-top: 40px; margin-bottom: 40px;">
+		
+
+
+
+{# =========== #}
+{# DOCUMENT #}
+{# =========== #}
+		
+
+{% if document_detail_page %}
+
+		
+  	  {% if d1.get_nextDocument %}
+	  
+	  {% with d1.get_nextDocument as nextDoc %}
+		<div class="text-right">
+			
+			Next {{DOCUMENT_LABEL}}:
+			<a href="{{nextDoc.get_absolute_url}}" class="nextkonlink">
+				<span class="glyphicon glyphicon-chevron-right" style="font-size: 300%;"></span>
+			</a>
+		    <br >
+		   	<h4 class="text-muted"  style="margin-right: 45px;">
+				<a href="{{nextDoc.get_absolute_url}}" class="quietlink4">
+				<span class="glyphicon glyphicon-book"></span>&nbsp;&nbsp;"{{nextDoc.title|upper|truncatewords:6}}"
+			</a></h4>
+		</div>
+	  {% endwith %}
+	
+  	  {% endif %}
+	   
+
+
+{% endif %}
+
+
+
+
+
+{# =========== #}
+{# QUOTE #}
+{# =========== #}
+		
+
+{% if quote_detail_page %}
+
+		<div class="col-md-6 text-left" style="margin-bottom: 30px;">
+			
+			{% if prevQuoteGeneric %}
+			<a href="{{prevQuoteGeneric.get_absolute_url}}" title="Go to previous {{SNIPPET_LABEL}} in chronological order " class="nextkonlink">			 
+			<span class="glyphicon glyphicon-chevron-left" style="font-size: 300%;"></span>&nbsp;Previous:
+			</a>
+		    <br ><br >
+		   	
+			<a href="{{prevQuoteGeneric.get_absolute_url}}" class="quietlink2">
+				<span class="quote_title_medsize2" style="margin-left: 45px;">{{prevQuoteGeneric.title}}</span>
+			</a>
+			
+				{% if prevQuoteGeneric.source %}
+					<br >
+					<span class="text-muted" style="margin-left: 45px;">From "{{prevQuoteGeneric.source.title|truncatewords:5}}"</span>				
+				{% endif %}
+			
+			{% endif %}
+			
+		</div>	
+
+
+		<div class="col-md-6 text-right">
+			
+			{% if nextQuoteGeneric %}
+			<a href="{{nextQuoteGeneric.get_absolute_url}}" title="Go to next {{SNIPPET_LABEL}} in chronological order " class="nextkonlink">
+			Next: 
+			<span class="glyphicon glyphicon-chevron-right" style="font-size: 300%;"></span>
+			</a>
+		    <br ><br >
+		   	<a href="{{nextQuoteGeneric.get_absolute_url}}" class="quietlink2">
+				<span class="quote_title_medsize2" style="-color: #EFEAEA; margin-right: 45px;">{{nextQuoteGeneric.title}}</span>
+				</a>
+			
+				{% if nextQuoteGeneric.source %}
+					<br >
+					<span class="text-muted" style="margin-right: 45px;">From "{{nextQuoteGeneric.source.title|truncatewords:5}}"</span>				
+				{% endif %}
+			
+			{% endif %}
+			
+		</div>
+	
+
+
+{% endif %}
+
+
+
+
+
+
+
+{# =========== #}
+{# COLLECTION #}
+{# =========== #}
+
+
+
+{% if koncept_detail_page %}
+
+	{% if k1.get_next %}
+		<div class="text-right">
+			<a href="{{k1.get_next.get_absolute_url}}" class="nextkonlink">
+			Next {{KONCEPT_LABEL}}
+			<span class="glyphicon glyphicon-chevron-right" style="font-size: 300%;"></span>
+			</a>
+		</div>
+	
+	{% endif %}
+
+	
+{% endif %}
+
+
+
+
+
+
+{# =========== #}
+{# PERSON PUBLIC PAGE #}
+{# =========== #}
+
+
+{% if person_public_page %}
+	
+	
+	{% if recentDocuments %}
+		<div class="col-md-4 " id="sidebar-right" >
+		<ul class="nav nav-tabs">		
+		  <li class="active">
+		    <a href="{% url search_user_documents person.username %}" title="Home">Recent {{DOCUMENT_LABEL}}s</a>
+		  </li>  
+		</ul>
+
+		
+		
+			<ul style="margin-left: 20px; margin-top: 20px;">
+
+				{% for d1 in recentDocuments  %}
+					<li>
+						<a href="{{d1.get_absolute_url}}" class="documentcolor" title="Go to this document's homepage">{{d1.title}}</a>
+					</li>
+				{% endfor %}
+
+			</ul>
+
+		  
+		</div>
+	  {% endif %}
+
+
+  
+  
+  
+  		{% if recentKoncepts %}
+		<div class="col-md-4 " id="sidebar-right" >
+			<ul class="nav nav-tabs">		
+			  <li class="active">
+			    <a href="{% url search_user_koncepts person.username %}" title="Home">Recent {{KONCEPT_LABEL}}s</a>
+			  </li>  
+			</ul>
+
+			
+	
+				<ul style="margin-left: 20px; margin-top: 20px;">
+	
+					{% for k1 in recentKoncepts  %}
+						<li>
+							<i class="icon"></i><a href="{{k1.get_absolute_url}}" title="View {{KONCEPT_LABEL}}" 
+						class="kon_list_item konceptcolor">{{k1.name|capfirst}}</a>
+						</li>
+					{% endfor %}
+	
+				</ul>	
+	
+		  	</div>
+  
+		{% endif %}
+  
+ 
+{% endif %}	
+
+
+	  
+
+
+
+
+
+
+
+
+{# =========== #}
+{# PERSON DASHBOARD #}
+{# =========== #}
+
+
+
+{% if person_dashboard %}
+	
+
+  
+	<div class="text-right">
+		<a href="{% url get_random_quote %}" class="nextkonlink">
+		More? Click here to jump to a random {{SNIPPET_LABEL}}
+		<span class="glyphicon glyphicon-chevron-right" style="font-size: 300%;"></span>
+		</a>
+	</div>
+
+
+	  
+
+{% endif %}	
+
+
+
+
+
+
+
+
+
+
+
+{#  FINALLY #}
+
+
+		</div>
+	</div>
+</div>
+
+	
+	

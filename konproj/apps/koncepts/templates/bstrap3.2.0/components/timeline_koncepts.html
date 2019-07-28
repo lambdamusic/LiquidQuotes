@@ -1,0 +1,85 @@
+{% load konceptstags %}
+
+
+{# 2014-11-09: not used #}
+
+ 
+ {# <script type="text/javascript" src="http://www.google.com/jsapi"></script> October 6, 2013: got it locally.. #}	
+ 
+ <script type="text/javascript" src="{{ STATIC_URL }}legacy/google/jsapi.js"></script>
+ <script type="text/javascript" src="{{ STATIC_URL }}legacy/timeline-2.5.0/timeline.js"></script>
+ <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}legacy/timeline-2.5.0/timeline.css">
+
+ <script type="text/javascript">
+   google.load("visualization", "1");
+
+   // Set callback to run when API is loaded
+   google.setOnLoadCallback(drawVisualization);
+
+
+   var timeline;
+ 
+ 
+   function getSelectedRow() {
+       var row = undefined;
+       var sel = timeline.getSelection();
+       if (sel.length) {
+           if (sel[0].row != undefined) {
+               row = sel[0].row;
+           }
+       }
+       return row;
+   }
+     
+   // Called when the Visualization API is loaded.
+   function drawVisualization() {
+     // Create and populate a data table.
+     var data = new google.visualization.DataTable();
+     data.addColumn('datetime', 'start');
+     data.addColumn('datetime', 'end');
+     data.addColumn('string', 'content');
+
+     data.addRows([
+		 
+		 {% for k1 in recentKoncepts  %}
+		 	// the empty space is for dateEnd
+         	[new Date({{ k1.updated_at|date:"Y,n,j,G,H,i"}}), , '{{k1.name}}',],
+		 {% endfor %}
+     ]);
+
+     // specify options
+     var options = {
+       "width":  "100%",
+       "height": "400px",
+       "style": "box" // optional
+     };
+
+     // Instantiate our timeline object.
+     timeline = new links.Timeline(document.getElementById('timeline_koncepts'));
+
+     // Add event listeners
+     google.visualization.events.addListener(timeline, 'select', onselect);
+	 
+     // Draw our timeline with the created data and options
+     timeline.draw(data, options);
+   }
+   
+   
+   // Make a callback function for the select item
+   var onselect = function (event) {
+       var row = getSelectedRow();
+
+       if (row != undefined) {
+		   var name = "element_" + row
+           document.getElementById(name).style.display = 'block';;
+           // Note: you can retrieve the contents of the selected row with
+           //       data.getValue(row, 2);
+       }
+       // else {
+       //     document.getElementById("info").innerHTML += "no item selected<br>";
+       // }
+   };
+ 
+ 
+ 
+</script>

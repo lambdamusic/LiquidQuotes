@@ -1,0 +1,151 @@
+{% extends "bstrap3.2.0/base.html" %}
+{% load konceptstags %}
+
+
+
+
+{% block belownavigation %}
+
+
+	{% with person_subjects=1 %}
+		{% include "bstrap3.2.0/components/navbar_second.html" %}
+	{% endwith %}
+
+{% endblock belownavigation %}
+
+
+
+
+
+{% block pagecontents %}
+
+
+<div class="container">
+	
+<div class="row  margin-top-50" id="koncept_search_page"> {# style="margin-top: 40px;" #}
+
+		
+		<div class="col-md-8">
+		{% with subjects_search=1 %}
+			{% include "bstrap3.2.0/components/search_results_top.html" %}
+		{% endwith %}
+		</div>
+		
+		
+		{% with subjects_search=1 %}
+			{% include "bstrap3.2.0/components/search_box.html" %}
+		{% endwith %}
+		
+				
+		
+	</div>
+
+	
+</div>
+
+
+
+
+
+
+<div class="row  margin-top-50" > {# style="margin-top: 40px;" #}
+
+	{# MAIN CONTENT #}	
+	<div class="col-md-12 margin-bottom-50" id="koncept_search_page" >
+		
+		
+		<ul class="nav nav-tabs margin-bottom-50">
+		   <li role="presentation"><a href="{% url subject_list request.user.username %}" class="quietlink2">List View</a></li>
+		   <li role="presentation" class="active"><a href="{% url subject_detail request.user.username %}" class="quietlink2">Details View</a></li>
+		  <li role="presentation"><a href="{% url subjects_tree request.user.username %}" class="quietlink2">Tree View</a></li>
+		</ul>
+	
+		
+		{% if letters %}
+			<div class="glossary_index ">
+				{% for l in letters   %}
+					<a href="?start={{l}}" role="button" class="btn btn-default btn-sm {% ifequal active_letter l  %}active{% endifequal %}">{{l|upper}}</a>
+				{% endfor %}
+
+			
+			</div>
+			<hr class="margin-bottom-50">
+		{% endif %}
+		
+		
+		{% if page_object %}
+			{% include "bstrap3.2.0/components/table_subjects.html" %}
+
+		
+		{% else %}
+		
+			
+			{% include "bstrap3.2.0/components/firstlogin.html" %}
+			{# note: if searchval, this returns the no results box too #}
+		
+		{% endif %}
+		
+	
+		
+	</div>  
+	
+		
+</div> {# end of row #}
+
+</div> {# end of container #}
+
+
+
+
+
+{% include "bstrap3.2.0/components/paginator.html" %}
+
+
+<br /><br />
+
+{% endblock pagecontents %}
+
+
+
+
+
+
+
+
+{% block closingbody %}
+
+
+<script type="text/javascript">
+
+	$("#mytable #checkall").click(function () {
+	        if ($("#mytable #checkall").is(':checked')) {
+	            $("#mytable input[type=checkbox]").each(function () {
+	                $(this).prop("checked", true);
+	            });
+
+	        } else {
+	            $("#mytable input[type=checkbox]").each(function () {
+	                $(this).prop("checked", false);
+	            });
+	        }
+	    });
+	
+
+
+</script>
+
+
+{% include "bstrap3.2.0/components/js_confirmDelete.html" %}
+
+{# {% include "bstrap3.2.0/components/js_crud_collections.html"	%} #}
+
+
+
+
+
+
+
+	
+{% endblock closingbody %}
+
+

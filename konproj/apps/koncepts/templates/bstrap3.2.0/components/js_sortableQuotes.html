@@ -1,0 +1,74 @@
+
+<script>
+	
+
+
+// ---------------------------------
+
+// KONCEPT page  [doc should be similar]
+
+// ---------------------------------
+
+
+
+// edit ordering of fragments
+
+ $('.table-sortable tbody').sortable({
+                handle: 'span'
+            });
+
+
+
+//  KONCEPT
+
+{% if k1 %}				
+function ajax_new_order_koncept() {
+			   
+   var ids = [];
+
+   $(".table-sortable td:first-child").each(function () {
+     ids.push($(this).attr('id')); // ids.push(this.id) would work as well.
+   });
+   
+   // alert(ids);
+   
+    $.get('{% url edit_koncept_quotes_order k1.id %}', { o: ids }, function (data) {
+        if (data.new_url) {
+        	window.location.replace(data.new_url);
+        } else {
+		alert("Sorry can't update at this time");
+	}
+    }); 
+   
+}
+{% endif %}	
+
+
+
+// DOCUMENT		
+{% if d1 %}	
+function ajax_new_order_source() {
+			   
+   var ids = [];
+
+   $(".table-sortable td:first-child").each(function () {
+     ids.push($(this).attr('id')); // ids.push(this.id) would work as well.
+   });
+   
+   // alert(ids);
+   
+    $.get('{% url edit_source_quotes_order d1.id %}', { o: ids }, function (data) {
+        if (data.new_url) {
+        	window.location.replace(data.new_url);
+        } else {
+		alert("Sorry can't update at this time");
+	}
+    }); 
+   
+}
+{% endif %}	
+
+
+				
+
+</script>

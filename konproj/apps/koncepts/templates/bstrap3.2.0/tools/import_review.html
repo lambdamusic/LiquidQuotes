@@ -1,0 +1,281 @@
+{% extends "bstrap3.2.0/base.html" %}
+{% load konceptstags %}
+
+
+
+{# // TODO on clicked checkbox, the table changes: #}
+{# // border-left: 3px solid; #}
+{# // border-left-color: red; #}
+
+
+
+{% block belownavigation %}
+
+
+	{% with import_selecthighlights=1 %}
+		{% include "bstrap3.2.0/components/navbar_second.html" %}
+	{% endwith %}
+
+{% endblock belownavigation %}
+
+
+
+
+
+
+{% block pagecontents %}
+
+
+
+<div class="row">
+
+
+
+
+	
+    <div class="col-md-12">
+		
+		
+		{# MAIN SECTION #}
+
+		<div class="page-header">
+					
+			<h2>{{formset|length}} {{SNIPPET_LABEL}}{{formset|pluralize}} found</h2>
+
+		</div>
+		
+		
+		{# NAVIGATION #}
+		
+		<div class="container">
+			<div class="row">
+				<div class="col-md-10">
+					<div class="button_shortcuts">
+			
+						<h5>From Document <span class="text-info">"{{doctitle|default:"untitled"}}"</span></h5>
+
+						Review the quotes and select them by ticking the box on the right. 
+						<br />
+						<strong>Note</strong>: you can flick through the quotes by moving the mouse over index. <em>Green</em>=selected, <em>Red</em>=duplicate, <em>Click</em>=select.
+						<br /><br />
+						{% for form in formset   %}
+							<a href="form_{{forloop.counter}}" role="button" class="btn btn-default btn-sm {% if forloop.first %}active{% endif %} {% if form.duplicates_info.value %}btn-pressed-warning{% endif %}">{{forloop.counter}}</a>
+						{% endfor %}
+
+						<hr>
+					</div>
+				</div>
+				
+				<div class="col-md-2">
+					
+				<label class="btn btn-success btn">
+				    <input id="select-all" type="checkbox">&nbsp;&nbsp;Select All / None 
+				</label>
+				
+				</div>
+			
+			</div>
+		</div>		
+
+		
+		
+		
+		
+		{# THE MEGA FORM #}
+		
+		
+		<form action="{% url do_import %}?d={{kindle_document}}" method="post" id="snippets_form">{% csrf_token %}
+
+
+		{{ formset.management_form }}
+
+
+
+		{% for form in formset  %}
+		
+		<div id="form_{{forloop.counter}}" class="formcomponent" {% if not forloop.first %}style="display: none;"{% endif %}>
+			
+		
+
+			<h3 class="badge label-success">{{forloop.counter}}&nbsp;/&nbsp;{{formset|length}}
+			</h3>
+			
+			
+			{% if form.duplicates_info.value %}
+              <div class="alert alert-warning snippet_preexists">
+                  {# <button type="button" class="close" data-dismiss="alert">×</button> #}
+                  {{ form.duplicates_info.value|safe}}
+              </div>
+			{% endif %}
+			
+			<div style="background: 'white'; margin-bottom: 40px;">
+			<table style="border: none; width: 100%;">
+		       
+			   
+			    <tr>
+					
+
+		           
+		            {# February 10, 2015: inverted location and text cells #}
+					
+					<td style="padding: 20px;">Text:</td>
+
+		            <td>
+	      		      {% if form.frag.errors %}
+	                      <div class="alert alert-danger">
+	                          <button type="button" class="close" data-dismiss="alert">×</button>
+	                          {{ form.frag.errors.as_text|cut:"* " }}
+	                      </div>
+	      		      {% endif %}
+					  
+						<textarea name="form-{{forloop.counter0}}-frag" id="id_form-{{forloop.counter0}}-frag" name="text" rows="14" cols="80" class="width-98percent lead">{{form.frag.value|default_if_none:""}}</textarea>
+											
+						{# <p>{{form.frag}}</p> #}
+					</td>
+
+					<td class="select_button" rowspan="2" style="padding: 20px;">
+						<input type="hidden" value="form_{{forloop.counter}}" > 
+						{# Hidden input used for getting the right button #}
+						{{form.doimport}}
+						<small class="text-muted pull-right">Keep it?</small>
+					</td>
+					
+					
+					
+		        </tr>
+			
+			   
+				
+		        <tr>
+					
+					 <td style="padding: 20px;">Location:</td>
+					 
+					<td>
+	 	      		      {% if form.location.errors %}
+	 	                      <div class="alert alert-danger">
+	 	                          <button type="button" class="close" data-dismiss="alert">×</button>
+	 	                          {{ form.location.errors.as_text|cut:"* " }}
+	 	                      </div>
+	 	      		      {% endif %}
+						<input rows="5" type="text" name="form-{{forloop.counter0}}-location" id="id_form-{{forloop.counter0}}-location" class="width-90percent text-muted"  autocomplete="off" 
+						placeholder="The location in the document" value="{{form.location.value|default_if_none:""}}" readonly />
+					
+					</td>
+					
+
+
+		       
+			   
+			    </tr>
+				
+								
+				
+			    <tr style="display: none;">
+		            <td style="padding: 20px;"></td>
+		            <td style="padding: 20px;">{{KONCEPT_LABEL}}:</td>
+		            <td>
+  	      		      {% if form.name.errors %}
+  	                      <div class="alert alert-danger">
+  	                          <button type="button" class="close" data-dismiss="alert">×</button>
+  	                          {{ form.name.errors.as_text|cut:"* " }}
+  	                      </div>
+  	      		      {% endif %}
+						<input rows="5" type="text" name="form-{{forloop.counter0}}-name" id="id_form-{{forloop.counter0}}-name" class="width-90percent kon_name"  autocomplete="off" 
+						placeholder="Type something..." value="{{form.name.value|default_if_none:""}}"/>
+						{# <p class="form_koncept">{{form.kon}}</p> #}
+						<br />
+						<span class="text-muted" id="koncept_preview_link">
+								{# Tip: Use autocomplete to reuse an existing {{KONCEPT_LABEL}} #}
+						</span>
+						
+					</td>
+		        </tr>
+				
+				
+				
+		        <tr style="display: none;">
+		            <td style="padding: 0px;"></td>
+					<td style="padding: 0px;">{{DOCUMENT_LABEL}}:</td>
+		            <td>
+						<p class="form_source">{{form.source}}</p>
+					</td>
+		        </tr>
+				
+				
+				
+					{# 		        <tr> #}
+					{# 		            <td style="padding: 20px;"></td> #}
+					{# <td style="padding: 20px;">Tags:  #}
+					{# 	<a href="#" title="Add some tags, comma delimited">?</a>  #}
+					{# </td> #}
+					{# 		            <td> #}
+					{# 	<p class="form_tags">{{form.tags}}</p> #}
+					{# </td> #}
+					{# 		        </tr> #}
+		   
+		   
+		    </table>
+		
+			</div>
+
+
+		</div>	
+		{% endfor %}
+
+
+
+		<hr>
+
+		<div class="text-right">
+			
+			
+			{% if doctitle %}	
+		
+			<a style="color: black;" href="{% url getLatestKindleImport %}"><button type="button" class="btn btn-default">Back</button></a>
+	
+			{% else %}
+			<a style="color: black;" href="{% url importtext %}"><button type="button" class="btn btn-normal">Back</button></a>
+			{% endif %}
+			
+			<button type="submit" class="btn btn-primary btn-normal" value="Submit">Import Selected</button>
+
+
+			
+		</div>
+
+
+
+		</form>
+	
+	
+	</div>{# end of col-md-10 #}
+
+
+
+
+
+
+
+	
+	
+</div>
+{# end of row #}
+  
+
+
+
+{% endblock pagecontents %}
+
+
+
+
+
+
+{% block closingbody %}
+
+	{% include "bstrap3.2.0/components/js_importform.html" %}
+	
+
+	
+	
+{% endblock closingbody %}

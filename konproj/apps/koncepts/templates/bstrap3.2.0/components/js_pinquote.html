@@ -1,0 +1,56 @@
+
+
+{# November 27, 2015 Functions to deal with pin/unpin action #}
+
+
+
+<script type="text/javascript">
+
+
+// ===========
+// FUNCTIONS which are GENERIC: used just to update state on buttons 
+// ===========
+
+
+function makePinned(button) {
+  	button.removeClass('btn-default');
+  	button.addClass('btn-success');
+	button.attr('title', "Currently in clipboard. Click to remove it.");
+}
+function makeUnPinned(button) {
+  	button.removeClass('btn-success');
+  	button.addClass('btn-default');
+	button.attr('title', "Pin to clipboard.");
+}
+
+
+
+
+
+// ===========
+// // QUOTE  Pin/Unpin buttons
+// ===========
+
+
+	
+$(".clipboardbutton-circle").click(function() {
+	var int_id = $(this).attr('int');
+	var button = $(this);
+	
+    $.get('{% url make_fragment_clipboard %}', { frag_id: int_id }, function (data) {
+		// check JSON data 
+        if (data.clipboard == 'true') {
+        	makePinned(button);
+        } else {
+			makeUnPinned(button);
+        }
+		
+	});
+
+});
+
+
+
+
+
+</script>

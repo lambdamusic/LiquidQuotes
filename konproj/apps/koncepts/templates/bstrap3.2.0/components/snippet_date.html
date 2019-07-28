@@ -1,0 +1,104 @@
+
+{% if newline_text %}
+
+
+  <p class="text-right snippet-date">
+	 	  
+
+
+	
+	  {% if mykoncepts %}
+	    
+	    {% ifequal this_snippet.created_at this_snippet.updated_at  %}
+	    	{# {{ this_snippet.created_at|date:"d M Y, f a"}} #}
+	  	Added on {{this_snippet.created_at|date:"M d Y"}}
+	    {% else %}
+	    	{# {{ i.created_at|date:"d M Y, f a"}} (modified on {{ i.updated_at|date:"d M Y, f a"}}) #}
+	  	Added on {{ this_snippet.created_at|date:"M d Y"}} (modified on {{ this_snippet.updated_at|date:"M d Y"}})
+	    {% endifequal %}
+		
+	  {% else %}
+	  
+	  		{{this_snippet.created_at|date:"M d Y"}}
+	  	
+	  {% endif %}
+
+	 
+		
+	  	
+	  
+	  {# <a href="{% url get_quote request.user this_snippet.id %}"> #}
+	  {# 		  <button class="btn btn-xs"><span class="glyphicon glyphicon-zoom-in"></span> #}
+	  {# </button></a> #}
+
+	  
+
+  </p>
+
+
+
+{% endif %}
+
+
+
+
+
+
+{% if inline_text %}
+
+  <span class="text-muted snippet-date">
+	  
+	  
+	  {% if mykoncepts %}
+	  
+	  
+	    {% ifequal this_snippet.created_at this_snippet.updated_at  %}
+	    	{# {{ this_snippet.created_at|date:"d M Y, f a"}} #}
+	  	{{this_snippet.created_at}}
+	    {% else %}
+	    	{# {{ i.created_at|date:"d M Y, f a"}} (modified on {{ i.updated_at|date:"d M Y, f a"}}) #}
+	  	{{ this_snippet.created_at}} (modified on {{ this_snippet.updated_at}})
+	    {% endifequal %}
+		
+	  {% else %}
+	  
+	  		{{this_snippet.created_at}}
+	  	
+	  {% endif %}
+	  
+
+  </span>
+
+
+{% endif %}
+
+
+
+
+
+{% if search_view_date %}
+
+    <span class=" text-muted " style="font-size: 50%;">&nbsp;&nbsp;
+  	  {% if mykoncepts %}
+
+  	    {% ifequal k1.created_at this_snippet.updated_at  %}
+  	    	{# {{ this_snippet.created_at|date:"d M Y, f a"}} #}
+  	  	Added on {{k1.created_at}}
+  	    {% else %}
+  	    	{# {{ i.created_at|date:"d M Y, f a"}} (modified on {{ i.updated_at|date:"d M Y, f a"}}) #}
+  	  	Added on {{ k1.created_at}} (modified on {{ k1.updated_at}})
+  	    {% endifequal %}
+
+  	  {% else %}
+
+  	  		{{k1.created_at}}
+
+  	  {% endif %}
+
+    </span>
+
+
+{% endif %}
+
+
+

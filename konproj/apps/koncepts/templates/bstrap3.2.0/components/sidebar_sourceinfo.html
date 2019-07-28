@@ -1,0 +1,52 @@
+
+ {% load konceptstags %} 
+  
+
+
+ <h5 class="text-{{ALIGNMENT|default:'right'}}">From</h5>
+ <hr>
+ 	
+
+ {# ==SOURCE INFO=== #}
+ 
+ {% if snippet.source %}
+
+
+
+	 <p class="text-{{ALIGNMENT|default:'right'}}">
+
+		 
+		 <a href="{{snippet.source.get_absolute_url}}" class="quietlink5" title="{{DOCUMENT_LABEL}}: {{snippet.source.title}}">	
+			 <span class="glyphicon glyphicon-book"></span>
+		   {{snippet.source.title|truncatewords:5}}
+
+		</a>
+		 
+		 {% if  snippet.source.url %}
+		 <br /><a href="{{snippet.source.url}}" class="sourceLinkUrl bluelink" title="Open link in new window" target="_blank" style="font-size: 70%;">{{snippet.source.get_url_domain}}</a>
+		 {% endif %}
+		 
+	 </p>
+
+
+
+
+
+
+{% else %}
+
+		<p class="text-{{ALIGNMENT|default:'right'}}">
+
+			<small class="text-muted" id="{{snippet.id}}_sourcelabel">No {{DOCUMENT_LABEL}} associated</small>
+			
+		</p>
+
+{% endif %}
+	 
+	 
+	 
+
+	
+		
+	
+	

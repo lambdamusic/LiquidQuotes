@@ -1,0 +1,22 @@
+{% load konceptstags %}
+
+
+
+	{% with intfrag1.koncept as k1  %}
+
+	{% ifchanged k1 %}
+
+		{% if not forloop.first %}<br />{% endif %}
+				
+			{% include "bstrap3.2.0/components/koncept_title_preview.html" %}
+	
+	{% endifchanged %}
+
+
+		
+		<blockquote>
+		  <p>{{intfrag1.fragment.text|truncatewords:50}}</p>	
+		</blockquote>
+
+
+	{% endwith %}

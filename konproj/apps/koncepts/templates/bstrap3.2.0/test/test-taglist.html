@@ -1,0 +1,73 @@
+{% extends "bstrap3.2.0/base.html" %}
+{% load konceptstags %}
+
+
+
+
+{% block extrahead %}
+
+<style type="text/css" media="screen">
+	p.glossary {
+		font-size: 12px;
+		line-height: 10px;
+	}
+	
+	.popover
+	{
+	background-color: #ffffff;
+	color: black;
+	}
+
+	.popover-title {
+	color: black;
+	border-bottom: 0;
+	}
+
+	.popover-title {
+	background-color: #f7f7f7;
+	}
+	
+	.popover.top .arrow:after {
+		border-top-color: white;
+	}
+	
+	</style>
+
+{% endblock extrahead %}
+
+
+{% block pagecontents %}
+
+
+	<div class="row">
+		
+		{% for each in data  %}
+			{% ifchanged each.name.0  %}
+			    {% if not forloop.first %}</div>{% endif %}
+				<div class="col-md-3" style="-height: 400px; -overflow: auto;">
+				<h4>{{each.name.0}}</h4>
+				<p>{{each.name}}</p>
+			{% else %}	
+				<p>{{each.name}}</p>
+			{% endifchanged %}	
+
+		{% endfor %}
+		
+	</div>
+	
+
+
+{% endblock  %}
+
+
+
+
+{% block closingbody %}
+
+		
+	<script>
+
+	</script>
+
+
+{% endblock  %}

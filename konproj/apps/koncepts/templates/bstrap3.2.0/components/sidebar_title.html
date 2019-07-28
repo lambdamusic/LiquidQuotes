@@ -1,0 +1,110 @@
+
+ {% load konceptstags %} 
+  
+
+{# >2< #}
+{# QUOTE DETAIL PAGE #}
+{# === #}
+
+{% if quote_detail_page %}  
+  
+		 <h5 class="text-{{ALIGNMENT|default:'right'}}">{{TITLE_LABEL}}
+ 	 
+			{% if mykoncepts %}   			
+			<a id="{{snippet.id}}_title_href" href="javascript:editQuoteTitle('{{snippet.id}}', '{{snippet.title|escapejs}}')" title="Change this Title" style="text-decoration: none;">
+				{# 2015-04-22: tried less prominent edit link #}
+				{# <button type="button" class="btn btn-default btn-circle btn-xs"><i class="glyphicon glyphicon-pencil"></i></button> #}
+				&nbsp;<i class="glyphicon glyphicon-edit quietlink5"></i>
+			</a>
+			{% endif %}
+	
+		 </h5>
+		 <hr>
+
+
+		 {# SNIPPET TITLE #}
+ 
+		{% if snippet.title %}
+
+
+
+			 <p class="text-{{ALIGNMENT|default:'right'}}">
+
+			
+				 <span id="{{snippet.id}}_title" class="-snippetTitle quote_title_medsize2">{{snippet.title}}</span>
+				
+						  
+			 </p>
+	
+
+		{% else %}
+
+				{# in theory this case should never happen #}
+		
+				<p class="text-{{ALIGNMENT|default:'right'}}">
+
+					<small id="{{snippet.id}}_title" class="text-muted">None</small>
+			
+				</p>
+
+		{% endif %}
+	 
+	 
+		 <br />	 
+
+	
+{% endif %}		
+
+
+
+
+
+
+{# >2< #}
+{# DOCUMENT DETAIL PAGE #}
+{# --- #}
+
+
+{% if document_detail_page or koncept_detail_page %}  
+  
+
+ {# SNIPPET TITLE #}
+ 
+ <p class="text-{{ALIGNMENT|default:'right'}}" style="font-size: 90%;">
+	 
+	 {% if snippet.title %}
+
+	 	<span id="{{snippet.id}}_title" class="snippetTitle">{{snippet.title}}</span>
+		
+	 	{# <a id="{{snippet.id}}_title" class="snippetTitle" href="{{snippet.get_absolute_url}}" title="Open {{SNIPPET_LABEL}}">{{snippet.title}}</a> #}
+	 	{# 		 #}	
+
+		{% else %}
+
+		{# in theory this case should never happen #}
+
+
+			<small id="{{snippet.id}}_title" class="text-muted">None</small>
+			
+
+
+	 {% endif %}
+	 
+	
+	 
+ 	{% if mykoncepts %}   	
+	<br />		
+	<a id="{{snippet.id}}_title_href" href="javascript:editQuoteTitle('{{snippet.id}}', '{{snippet.title|escapejs}}')" title="Change this Title" style="text-decoration: none;">
+		{# 2015-04-22: tried less prominent edit link #}
+		{# <button type="button" class="btn btn-default btn-circle btn-xs"><i class="glyphicon glyphicon-pencil"></i></button> #}
+		&nbsp;<i class="glyphicon glyphicon-edit quietlink5"></i>
+	</a>
+ 	{% endif %}
+
+					  
+  </p>
+	
+
+	
+{% endif %}			
+	

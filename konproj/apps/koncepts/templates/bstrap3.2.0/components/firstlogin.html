@@ -1,0 +1,51 @@
+
+
+
+<div class="alert alert-info alert-block text-center margin-top-50" style="font-size: 20px;">
+  {# <button type="button" class="close" data-dismiss="alert">&times;</button> #}
+
+
+
+  {% if mykoncepts %}
+
+	
+  		{% if searchval or active_letter %}
+		
+  			<b>No results found.</b> 
+			
+  			<br /><br />
+			
+  			Please modify your search criteria.
+		
+  		{% else %}
+		
+		
+  			<b>No content available.</b>
+		
+  			<br />
+		
+  			{# So why not <a href="{% url create_quote %}" title="Add new {{KONCEPT_LABEL}} using the online form">adding a new {{KONCEPT_LABEL}}</a> or <a href="{% url bookmarklet  %}" title="Get your bookmarklet to create {{KONCEPT_LABEL}}s while browsing">installing the bookmarklet</a>?</p> #}
+		
+		
+  		{% endif %}
+
+
+
+	{% else %}
+	
+	
+		<b>No results found.</b> 
+		
+		<br /><br />
+		
+		Please modify your search criteria.
+		
+
+  {% endif %}
+
+
+</div>
+
+
+
+

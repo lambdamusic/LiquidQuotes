@@ -1,0 +1,44 @@
+{% load konceptstags %}
+
+
+{# June 28, 2014: this doesnt seem to be used anymore #}
+
+
+<div class="row" id="page_title">
+
+
+	  {% include "bstrap3.2.0/components/person_icon.html" %}
+			  
+
+	  <div class="col-md-8 ">
+		  {# <div class="page-header"> #}
+		     <h1 class="documentcolor">
+		  		{{person.profile.pretty_name|capfirst}}	
+				{% if tab_koncepts %}
+						: {{KONCEPT_LABEL}}s
+				{% endif %}
+				{% if tab_documents %}
+						: {{DOCUMENT_LABEL}}s
+				{% endif %}
+				{% if searchval %}
+						with &laquo;<span class="searchval">{{searchval}}</span>&raquo;	
+				{% endif %}
+				{% if tag %}
+					tagged <span class="searchval">#{{tag}}</span>
+				{% endif %}
+		  	</h1>
+		  {# </div> #}
+
+		</div>
+		
+</div>   {# end of title section #}
+
+<div class="row" style="margin-top: 20px;">
+
+	<div class="col-md-12 ">
+	  
+	  	{% include "bstrap3.2.0/components/person_tabs.html" %}
+
+    </div>
+	 
+</div>

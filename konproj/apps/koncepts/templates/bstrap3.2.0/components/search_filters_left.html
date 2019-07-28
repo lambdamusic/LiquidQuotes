@@ -1,0 +1,437 @@
+
+
+ {% load konceptstags %} 
+  
+
+
+{% if koncept_detail_page %}
+
+{# =========== #}
+{# SEARCH WIDGET ON KONCEPT PAGE  #}
+{# =========== #}
+
+{# =========== #}
+{# UPDATE 2014-11-07: this is not used anymore!  #}
+{# The sources tab contains a simpler version of the radio boxes #}
+{# =========== #}
+
+		<form method="get" id="search_form_sidebar" 
+			{% if documents_search %}
+				action="{% url search_user_documents person %}">
+			{% endif %}
+			{% if ideas_search %}
+				action="{% url search_user_koncepts person %}">
+			{% endif %}			
+			{% if snippets_search %}
+				action="{% url search_user_quotes person %}">
+			{% endif %}
+			
+			
+		  <fieldset>
+		   			
+			
+		<br />	
+		<legend><span class="legend-smaller text-muted" >{{DOCUMENT_LABEL|capfirst}}s{% if 0 %}&nbsp;({{documents|length}}){% endif %}:
+		</span></legend>
+			
+			
+		{% if k1.hasEmptySources %}
+		
+			<label class="radio legend-smaller">
+			  <input class="optionsRadiosDoc" type="radio" name="optionsRadiosDoc" value="all" checked>
+			  All <span class="label">{{interpretations|length}}</span>
+			</label>
+		
+		
+			  {% for doc_dict in documents.items  %}
+				<label class="radio legend-smaller">
+				  <input class="optionsRadiosDoc" type="radio" name="optionsRadiosDoc" value="{{doc_dict.0.id}}">
+				  {{doc_dict.0.title|capfirst}} <span class="label">{{doc_dict.1}}</span>
+				</label>
+			  {% endfor %}
+		  
+		  
+		{% else %}
+							
+				
+			{% ifnotequal documents|length 1  %}
+		
+				<label class="radio legend-smaller">
+				  <input class="optionsRadiosDoc" type="radio" name="optionsRadiosDoc" value="all" checked>
+				  All <span class="label">{{interpretations|length}}</span>
+				</label>
+			
+			{% endifnotequal %}
+			
+			  {% for doc_dict in documents.items  %}
+				<label class="radio legend-smaller">
+				  <input class="optionsRadiosDoc" type="radio" name="optionsRadiosDoc" value="{{doc_dict.0.id}}" {% ifequal documents|length 1  %}checked{% endifequal %}>
+				  {{doc_dict.0.title|capfirst}} <span class="label">{{doc_dict.1}}</span>
+				</label>
+			  {% endfor %}
+			
+		{% endif %}
+			
+
+
+
+
+
+			{% if 0 %}
+			
+			<br />
+		    <label class="legend90percent">Contains</label>
+		    <input type="text" placeholder="{% if searchval %}{{searchval}}{% else %}Keywords{% endif %}" name="q" id="sidebar_search">
+			
+			
+
+			<label class="legend90percent">Sort by</label>
+			<select name="sort" onchange="$(this).closest('form').submit()">
+			  <option {% ifequal sort_var "modified" %}selected="selected"{% endifequal %} value="modified">
+				  Date Modified</option>				  
+			  <option {% ifequal sort_var "created" %}selected="selected"{% endifequal %} value="created">
+				  Date Created</option>
+			  <option {% ifequal sort_var "alpha" %}selected="selected"{% endifequal %} value="alpha">
+				  Alpha</option>
+			  {% if 0 %}  {# June 28, 2014: algorithm needs to checked first #}
+  			  <option {% ifequal sort_var "popular" %}selected="selected"{% endifequal %} value="popular">
+				  Popular</option>
+			  {% endif %}
+			</select>
+			
+
+			{% if 0 and mykoncepts %}
+			<label class="legend90percent">Privacy</label>
+			<select>
+			  <option>All</option>
+			  <option>Private</option>
+			  <option>Public</option>
+			</select>
+			{% endif %}
+			
+			
+			{% endif %}
+			
+			
+			
+			<br /><br />
+		    <button type="submit" class="btn" style="display: none;">Submit (todo)</button>
+		  </fieldset>
+		</form>
+
+
+
+
+
+
+
+{% else %}
+
+
+{# =========== #}
+{# MAIN SEARCH PAGES  #}
+{# =========== #}
+
+
+
+		<form role="form" method="get" id="search_form_sidebar" 
+			{% if documents_search %}
+				action="{% url search_user_documents person %}">
+			{% endif %}
+			{% if ideas_search %}
+				action="{% url search_user_koncepts person %}">
+			{% endif %}			
+			{% if snippets_search %}
+				action="{% url search_user_quotes person %}">
+			{% endif %}
+			
+			
+		  <fieldset class="col-md-11">
+		    <legend><b class="bigger-legend">Filter</b>
+
+				<span class="glyphicon glyphicon-info-sign jstooltip icon-sm"  title="You can use the filters to show only results that match your interests"></span>
+
+			</legend>	
+
+				{# {% if mykoncepts %}My&nbsp;{% endif %}{{DOCUMENT_LABEL}}s #}
+			{# <p class="text-muted"><small>You can use the filters to show only results that match your interests</small></p> #}
+			{# <br /> #}
+			
+			
+			
+		
+		<div class="form-group">
+			
+			<div class="panel panel-default">
+			  <div class="panel-heading">Contains:</div>
+			  <div class="panel-body">
+			    <input type="text" placeholder="{% if searchval %}{{searchval}}{% else %}Keywords{% endif %}" {% if searchval %}value="{{searchval}}"{% endif %} name="q" id="sidebar_search" class="form-control">
+			  </div>
+			</div>
+			
+			{% if 0 %}
+		      <label for="sidebar_search" class="text-mutedd">Contains:</label>
+		      <input type="text" placeholder="{% if searchval %}{{searchval}}{% else %}Keywords{% endif %}" {% if searchval %}value="{{searchval}}"{% endif %} name="q" id="sidebar_search" class="form-control">
+			  {% endif %}
+
+		</div>
+
+{#        2015-09-02: hidden#}
+		{% if 0 and snippets_search and not searchval and not tag %}
+		<br />
+		<div class="panel panel-default">
+		  <div class="panel-heading">Created:</div>
+		  <div class="panel-body">
+			<div class="radio text-muted">
+				<label><input type="radio" name="g" onclick="document.location='{% url search_user_quotes person.username %}?g=all{% if searchval %}&amp;?q={{searchval}}{% endif %}';" id="opt-all" value="all" {% ifequal active_group 'all'  %}checked{% endifequal %}>Any time</label></div>
+			
+			<div class="radio">
+				<label class="text-muted"><input type="radio" onclick="document.location='{% url search_user_quotes person.username %}?g=last-week';" name="g" id="opt-last-week" value="last-week" {% ifequal active_group 'last-week'  %}checked{% endifequal %}>Last week</label>
+			</div>	
+			<div class="radio">
+				<label class=" text-muted"><input type="radio" onclick="document.location='{% url search_user_quotes person.username %}?g=last-month';" name="g" id="opt-last-month" value="last-month" {% ifequal active_group 'last-month'  %}checked{% endifequal %}>Last month
+				</label>
+			</div>
+			{% if 0 %} {# February 24, 2015 #}
+			<div class="radio">
+				<label class="text-muted"><input type="radio" onclick="document.location='{% url search_user_quotes person.username %}?g=no-collection';" name="g" id="opt-no-collection" value="no-collection" {% ifequal active_group 'no-collection'  %}checked{% endifequal %}>No {{KONCEPT_LABEL}}
+				</label>
+			</div>
+			{% endif %}
+		  </div>
+		</div>
+		{% endif %}
+		
+
+
+	
+		
+		{% if ideas_search %}
+		<br />
+		<div class="panel panel-default">
+		  <div class="panel-heading">Created:</div>
+		  <div class="panel-body">
+
+			<div class="radio text-mutedd">
+				<label class="text-muted"><input type="radio" name="g" onclick="document.location='{% url search_user_koncepts person.username %}?g=all{% if searchval %}&amp;?q={{searchval}}{% endif %}';" id="opt-all" value="all" {% ifequal active_group 'all'  %}checked{% endifequal %}>Any time</label></div>
+		
+			<div class="radio">
+				<label class="text-muted"><input type="radio" onclick="document.location='{% url search_user_koncepts person.username %}?g=last-week';" name="g" id="opt-last-week" value="last-week" {% ifequal active_group 'last-week'  %}checked{% endifequal %}>Last week</label>
+			</div>	
+			<div class="radio">
+				<label class=" text-muted"><input type="radio" onclick="document.location='{% url search_user_koncepts person.username  %}?g=last-month';" name="g" id="opt-last-month" value="last-month" {% ifequal active_group 'last-month'  %}checked{% endifequal %}>Last month
+				</label>
+			</div>
+			  
+			  
+		  </div>
+		</div>
+		{% endif %}
+		
+
+		{% if documents_search %}
+		<br />
+		<div class="panel panel-default">
+		  <div class="panel-heading">Created:</div>
+		  <div class="panel-body">
+
+				<div class="radio text-mutedd">
+					<label class="text-muted"><input type="radio" name="g" onclick="document.location='{% url search_user_documents person.username %}?g=all{% if searchval %}&amp;?q={{searchval}}{% endif %}';" id="opt-all" value="all" {% ifequal active_group 'all'  %}checked{% endifequal %}>Any time</label></div>
+			
+				<div class="radio">
+					<label class="text-muted"><input type="radio" onclick="document.location='{% url search_user_documents person.username %}?g=last-week';" name="g" id="opt-last-week" value="last-week" {% ifequal active_group 'last-week'  %}checked{% endifequal %}>Last week</label>
+				</div>	
+				<div class="radio">
+					<label class=" text-muted"><input type="radio" onclick="document.location='{% url search_user_documents person.username  %}?g=last-month';" name="g" id="opt-last-month" value="last-month" {% ifequal active_group 'last-month'  %}checked{% endifequal %}>Last month
+					</label>
+				</div>
+			  
+			  
+		  </div>
+		</div>
+		
+		{% endif %}			
+
+			
+
+		
+			{% if 0 %}
+			<div class="form-group">
+				<label>Sort by</label>
+				<select class="form-control" name="sort" onchange="$(this).closest('form').submit()">
+				  <option {% ifequal sort_var "created" %}selected="selected"{% endifequal %} value="created">
+					  Date Created</option>
+				  <option {% ifequal sort_var "modified" %}selected="selected"{% endifequal %} value="modified">
+				  	  Date Modified</option>	  
+				  <option {% ifequal sort_var "alpha" %}selected="selected"{% endifequal %} value="alpha">
+					  Alpha</option>
+				  {% if 0 %}  {# June 28, 2014: algorithm needs to checked first #}
+	  			  <option {% ifequal sort_var "popular" %}selected="selected"{% endifequal %} value="popular">
+					  Popular</option>
+				  {% endif %}
+				</select>
+			</div>
+			{% endif %}
+
+			{% if 0 and mykoncepts %}   {# not implemented yet #}
+ 			<div class="form-group">
+				<label>Privacy</label>
+				<select class="form-control" >
+				  <option>All</option>
+				  <option>Private</option>
+				  <option>Public</option>
+				</select>
+			</div>
+			{% endif %}
+			
+		
+		
+		{% if tags_options and not documents_search and not searchval %}
+			<br />
+			<div class="panel panel-default">
+			  <div class="panel-heading">Tags:</div>
+			  <div class="panel-body">
+			  {% for each in tags_options  %}
+			  		
+					&nbsp;<a class="{% ifequal each.name tag %}btn-warning{% else %}text-info{% endifequal %}" href="{% url search_user_quotes person.username %}?tag={{each.name}}">#{{each.name}}&nbsp;({{each.count}})</a>
+					<br />
+			
+			  {% endfor %}
+			  </div>
+			</div>
+
+		{% endif %}
+		
+		
+
+		{% if 0 and sourcesfacet %}
+
+			<br />
+			<div class="panel panel-default">
+			  <div class="panel-heading">View only {{DOCUMENT_LABEL}}:</div>
+			  <div class="panel-body">
+				{% if active_sourcefacet %}
+					{# hardcode active source at the top #}
+					&gt;&nbsp;<a href="{% url get_document person.username active_sourcefacet.1 %}"class="btn-primary documentcolor" title="Open homepage">{{active_sourcefacet.0}}</a>
+					&nbsp;<a class="quietlink jstooltip" href="{% url search_user_quotes person.username %}?q={{searchval}}" title="Remove this filter"><span class="glyphicon glyphicon-remove icon-sm "></span></a>
+					<hr>
+				{% endif %}
+				
+				  {% for each in sourcesfacet  %}
+				  	{% if each.1 %}
+						{% ifnotequal each.1 active_sourcefacet.1 %}
+						
+							<div class="sourcesfacetOption">
+								&gt;&nbsp;<a class="text-muted documentcolor" href="{% url search_user_quotes person.username %}?d={{each.1}}&amp;q={{searchval}}">{{each.0}}</a>
+							</div>
+
+						{% else %}
+							<div class="sourcesfacetOption">
+								&gt;&nbsp;<span class=" documentcolor">{{each.0}}</span>
+							</div>
+
+						{% endifnotequal %}
+				    {% endif %}
+				  {% endfor %}
+			  </div>
+			</div>
+			
+			
+
+		
+		{% endif %}	
+
+
+
+			{% if 0 and searchval %}   {# 2015-01-04: moved to page bottom 2014-11-25: readded / 2014-10-31: removed #}
+			
+			<br />
+			{# <hr > #}
+			<div class="form-group">
+				<label class="text-muted">Searching for:</label>
+	
+				{% if snippets_search %}
+					<div class="radio text-muted">
+						<label>
+					  	  <input type="radio" name="optionsRadios" id="optionsRadios3" value="option3" checked>{{SNIPPET_LABEL}}s
+						</label>
+					</div>	
+				{% else %}
+					<div class="radio">
+						<label class="radio text-muted">
+					  	  <input type="radio" onclick="document.location='{% url search_user_quotes person.username %}{% if searchval %}?q={{searchval}}{% endif %}';" name="optionsRadios" id="optionsRadios3" value="option3" >{{SNIPPET_LABEL}}s
+						</label>
+					</div>	
+				{% endif %}		
+			
+			
+				{% if ideas_search %}
+					<div class="radio text-muted">
+						<label class="radio">
+					  	  <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>{{KONCEPT_LABEL}}s
+						</label>
+					</div>	
+				{% else %}		
+					<div class="radio text-muted">
+						<label class="radio">
+					  	  <input type="radio" onclick="document.location='{% url search_user_koncepts person.username %}{% if searchval %}?q={{searchval}}{% endif %}';" name="optionsRadios" id="optionsRadios1" value="option1" >{{KONCEPT_LABEL}}s
+						</label>
+					</div>	
+				{% endif %}	
+					
+				{% if 0 %}
+				{% if documents_search %}
+					<div class="radio text-muted">
+						<label class="radio">
+					  	  <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2" checked>
+					  	{{DOCUMENT_LABEL}}s
+						</label>
+					</div>	
+				{% else %}
+					<div class="radio text-muted">
+						<label class="radio">
+					  	  <input type="radio" onclick="document.location='{% url search_user_documents person.username %}{% if searchval %}?q={{searchval}}{% endif %}';" name="optionsRadios" id="optionsRadios2" value="option2">
+					  	{{DOCUMENT_LABEL}}s
+						</label>
+					</div>	
+				{% endif %}
+				{% endif %}
+				
+				<br />
+			
+			</div>
+			{% endif %}
+			
+			
+			<br /><br />
+			
+			{# SECOND GROUP #}
+			{# :: removed collections on 2015-02-09 #}
+			
+			
+
+			
+			{# FINAL PART OF FORM #}
+			
+
+		    <button type="submit" class="btn" style="display: none;">Submit (todo)</button>
+		  </fieldset>
+		  
+		  
+		  
+		</form>
+		
+		
+
+		
+
+
+
+
+{% endif %}
+
+
+		
+		
+		
+	

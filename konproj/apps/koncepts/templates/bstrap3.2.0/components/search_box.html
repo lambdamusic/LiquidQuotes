@@ -1,0 +1,56 @@
+
+{% load konceptstags %}
+
+
+<div class="col-md-4">
+
+  	  <div id="custom-search-input">
+  	      <div class="input-group col-md-10">
+			  
+			  {% if snippets_search %}
+			  <form role="search" method="get" id="search_form" action="{% url search_user_quotes request.user.username %}">
+			  <span class="input-group-btn">				  
+	  	          <input type="text" class="search-query form-control" placeholder="Search {{SNIPPET_LABEL}}s" value="{% if searchval %}{{searchval}}{% endif %}" name="q" />         				  {% endif %}	
+			  
+			  
+			  {% if documents_search %}
+			  <form role="search" method="get" id="search_form" action="{% url search_user_documents request.user.username %}">
+			  <span class="input-group-btn">				  
+	  	          <input type="text" class="search-query form-control" placeholder="Search {{DOCUMENT_LABEL}}s" value="{% if searchval %}{{searchval}}{% endif %}"name="q" />         				  {% endif %}
+				  
+			
+			  {% if subjects_search %}
+			  <form role="search" method="get" id="search_form" action="{% url subject_detail request.user.username %}">
+			  <span class="input-group-btn">				  
+	  	          <input type="text" class="search-query form-control" placeholder="Search {{SUBJECT_LABEL}}s" value="{% if searchval %}{{searchval}}{% endif %}" name="q" />         				  {% endif %}	  
+				  
+				  
+	  	              <button class="btn btn-info" type="submit">
+	  	                  <span class=" glyphicon glyphicon-search"></span>
+	  	              </button>
+  	          </span>
+			  
+			  {% if snippets_search %}
+			  <div class="checkbox">
+			      <label>
+			          <input type="checkbox" name="exact" id="exact_input" value="1" {% if  exactmatch %}checked="checked"{% endif %}> Exact words
+					  &nbsp;<span class="glyphicon glyphicon-info-sign jstooltip icon-xs"  title="Return less results by matching only exact words."></span>
+			      </label>
+			  </div>
+			  {% endif %}
+			  
+			  
+			  </form>
+		  
+
+  	      </div>
+  	  </div>
+	  
+	  
+
+	  
+	  
+
+</div>
+
+	

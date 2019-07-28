@@ -1,0 +1,126 @@
+{% load konceptstags %} 
+  
+  
+{#  DOCUMENT DETAIL PAGE - December 27, 2015  #}
+
+
+
+<div class="container">
+
+	<h5 class="text-muted">Summary of {{SNIPPET_LABEL}}s from this {{DOCUMENT_LABEL}}:&nbsp;&nbsp;
+	<br>
+	<small>Tip: Double click on a node to open its homepage</small>
+	
+	</h5>
+
+
+			
+<div class="row" style="margin-top: 40px; margin-bottom: 40px;">
+		
+
+	<div class="col-md-9 col-md-offset-1 text-left" style="margin-bottom: 30px;">
+		
+		
+		<div id="mygraph-1" class="canv"></div>
+
+		
+	</div>	
+
+
+    <script type="text/javascript">
+      var nodes = null;
+      var edges = null;
+      var network = null;
+
+      function drawSourceChart() {
+
+        // create a network
+        var container = document.getElementById('mygraph-1');
+        var data = {
+          nodes: {{nodes|safe}},
+          edges: {{edges|safe}}
+        };
+        var options = {
+          stabilize: true, 
+	   	   physics: {
+	   	       barnesHut: {
+	   	           enabled: false,
+	   	           gravitationalConstant: -12000,
+	   	           centralGravity: 0.001,
+	   	           springLength: 100,
+	   	           springConstant: 0.04,
+	   	           damping: 0.1
+	   	       }
+		   },
+		  groups: {
+		    group_quote: {
+		      shape: 'square',
+		      color: 				  {
+			      background: 'yellow',
+			      border: 'red',
+			      highlight: {
+			        background: 'yellow',
+			        border: 'red'
+			      }
+		      }
+		    },
+			// = the source
+		    group_root: {
+		      shape: 'circle',
+		      color: {
+			      background: "#97C2FC",
+			      border: "#2B7CE9",
+			      highlight: {
+			        background: "#D2E5FF",
+			        border: 'blue'
+			      }
+		      }
+		    }
+		    // add more groups here
+		  },
+	  
+          edges: {
+			style:'arrow'
+		  }
+        };
+
+        network = new vis.Network(container, data, options);
+		
+	  	function onDbClick (properties) {
+	  		if (properties.nodes) {
+	  			if (properties.nodes[0].substring(0, 2) == "q_") {
+	  				var temp = properties.nodes[0].substring(2);
+	  				var usr = "{{person.username}}";
+	  				var path = "{{SNIPPET_LABEL|lower}}s";
+	  				window.location.href="/" + usr + "/" + path + "/" + temp + '#title';
+	  			}
+		
+	  			if (properties.nodes[0].substring(0, 2) == "s_") {
+	  				var temp = properties.nodes[0].substring(2);
+	  				var usr = "{{person.username}}";
+	  				var path = "{{DOCUMENT_LABEL|lower}}s";
+	  				window.location.href="/" + usr + "/" + path + "/" + temp;
+	  			} 
+		
+	  		}
+	  	}
+	
+		network.on('doubleClick', onDbClick);
+		
+      }
+
+
+	  // draw(); // ==> this happens only when tab is activated, see main page js
+	
+	 
+    </script>
+
+
+
+{#  FINALLY #}
+
+	</div>
+</div>
+
+	
+	

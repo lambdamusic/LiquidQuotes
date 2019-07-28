@@ -1,0 +1,45 @@
+
+
+{# February 25, 2015: change the title of a quote #}
+
+
+
+<script type="text/javascript">
+
+
+function escapeStringa(unsafe) {
+    return unsafe
+         .replace(/&/g, "&amp;")
+         .replace(/</g, "&lt;")
+         .replace(/>/g, "&gt;")
+         .replace(/"/g, "&quot;")
+         .replace(/'/g, "&#039;");
+ }
+ 
+ 
+	function editQuoteTitle(quote_id, old_title) {
+		bootbox.prompt({
+		    title: "Please enter a new title",
+		    value: old_title,
+		    callback: function(result) {
+		        $.get('{% url edit_quote_title %}', {  name: result, quote_id: quote_id }, function (data) {
+		            if (data.new_name) {
+						// window.location.href = data.saved_url;
+						$("#" + quote_id + "_title").text(data.new_name);
+						
+						var new_href_js = "javascript:editQuoteTitle('" + quote_id + "', '"+ escapeStringa(data.new_name) + "')";
+						$("#" + quote_id + "_title_href").attr('href', new_href_js);
+						
+						// alert(data.new_name)
+		            } else {
+						alert("Ops - there was a server error with that.");
+					}
+		        });
+		    }
+		});
+		
+	};	
+			
+
+
+</script>

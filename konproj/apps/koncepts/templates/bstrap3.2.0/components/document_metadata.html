@@ -1,0 +1,93 @@
+{# 2015-11-08: new @todo clean up #}
+{% load konceptstags %}
+
+	<h3 style="font-size: 80%;">
+
+	{# ===DOC METADATA SECTION=== #}
+
+		{% if 1 or d1.author %}
+		<div class="row row-margin-left">
+			<div class="col-md-2">
+				<small class="quietlink6">Author(s):</small>
+			</div>
+			<div class="col-md-8 col-md-offset-1">
+				{% if mykoncepts %}<a data-target="#editDocModal" title="Edit {{DOCUMENT_LABEL}} details" style="text-decoration: none;" data-toggle="modal" class="quietlink12">{% endif %}
+				<small class="">{% if d1.author %}{{d1.author}}{% else %}----{% endif %}</small>
+				{% if mykoncepts %}   			
+				</a>
+				{% endif %}
+			</div>
+		</div>
+		{% endif %}
+
+		{% if 1 or d1.pubyear %}
+		<div class="row row-margin-left">
+			<div class="col-md-2 text-uppercase -docmetadata">
+				<small class="quietlink6">Year:</small>
+			</div>
+			<div class="col-md-8 col-md-offset-1 ">
+				{% if mykoncepts %}<a data-target="#editDocModal" title="Edit {{DOCUMENT_LABEL}} details" style="text-decoration: none;" data-toggle="modal" class="quietlink12">{% endif %}
+				<small class="">{% if d1.pubyear %}{{d1.pubyear}}{% else %}----{% endif %}</small>
+				{% if mykoncepts %}   			
+				</a>
+				{% endif %}
+			</div>
+		</div>
+		{% endif %}
+	
+
+		{% if 1 or d1.description %}
+		<div class="row row-margin-left">
+			<div class="col-md-2 text-uppercase  -docmetadata">
+				<small class="quietlink6">Notes:</small>
+			</div>
+			<div class="col-md-8 col-md-offset-1">
+				{% if mykoncepts %}<a data-target="#editDocModal" title="Edit {{DOCUMENT_LABEL}} details" style="text-decoration: none;" data-toggle="modal" class="quietlink12">{% endif %}
+				<small class="" style="text-transform: capitalize;">{% if d1.description %}{{d1.description|linebreaksbr}}{% else %}----{% endif %}</small>
+				{% if mykoncepts %}   			
+				</a>
+				{% endif %}
+			</div>
+		</div>
+		{% endif %}
+		
+
+		{% if 1  %}
+		<div class="row row-margin-left">
+			<div class="col-md-2 text-uppercase  -docmetadata">
+				<small class="quietlink6">URL:</small>
+			</div>
+			<div class="col-md-8 col-md-offset-1">
+				{% if mykoncepts %}<a data-target="#editDocModal" title="Edit {{DOCUMENT_LABEL}} details" style="text-decoration: none;" data-toggle="modal" class="quietlink12">{% endif %}
+				<small class="" style="text-transform: capitalize;">{% if d1.url %}{{d1.url}}{% else %}----{% endif %}</small>
+				{% if mykoncepts %}   			
+				</a>
+				{% endif %}
+			</div>
+		</div>
+		{% endif %}
+
+
+
+		{% if 1  %}
+		<div class="row row-margin-left">
+			<div class="col-md-2 text-uppercase  -docmetadata">
+				<small class="quietlink6">Added:</small>
+			</div>
+			<div class="col-md-8 col-md-offset-1">
+		  	    <small class="quietlink4" style="text-transform: capitalize; font-size: 50%;">
+				{% ifequal d1.created_at d1.updated_at  %}
+		  	  		{{d1.created_at|date:"M d Y"}}
+		  	    {% else %}
+		  	  		{{ d1.created_at|date:"M d Y"}} (last modified on {{ d1.updated_at|date:"M d Y"}})
+		  	    {% endifequal %}
+				</small>
+			</div>
+		</div>
+		{% endif %}
+
+
+		
+		{# END  - doc metadata section	 #}
+		
+		</h3>

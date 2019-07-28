@@ -1,0 +1,149 @@
+
+{% load konceptstags %}
+
+
+<!-- Navigation -->
+<nav class="navbar navbar-default  {% if splashpage %}navbar-fixed-top{% else %}navbar-static-top navbar-shrink{% endif %}">
+    <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+				
+            <a class="navbar-brand page-scroll" href="{% if splashpage %}#page-top{% else %}/{% if request.user.is_authenticated %}{% else %}?f=true{% endif %}{% endif %}" title="{% if splashpage %}Welcome to the alpha version of LiquidQuotes!{% else %}home{% endif %}">Liquid Quotes <span style="font-size: 13px; color: #e03a3a ;">alpha</span></a>
+        </div>
+		
+		
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li class="hidden">
+                    <a href="#page-top"></a>
+                </li>
+				
+				{% if not request.user.is_authenticated %}
+	                <li>
+	                    <a class="page-scroll" href="/?f=true#features">Features</a>
+	                </li>
+					{% if splashpage %}
+	                <li>
+	                    <a class="page-scroll" href="/?f=true#howto">How it works</a>
+	                </li>
+	                <li>
+	                    <a class="page-scroll" href="/?f=true#about">About</a>
+					</li>
+					
+	                <li>
+	                    <a class="page-scroll" href="/?f=true#contact">Contact</a>
+	                </li>
+					{% endif %}
+		
+				{% endif %}
+						
+				{% if request.user.is_authenticated %}
+									
+					{# <li role="presentation"><a href="{% url get_random_quote  %}" class="quietlink2 navbar2link"><span class="glyphicon glyphicon-link"></span>&nbsp;Roulette</a></li> #}				
+					
+					{% if quote_detail_page or document_detail_page %}
+
+					<li class="dropdown">  {# {{request|navbar_getclass:'browse'}} #}
+		              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+		              {# <span class="glyphicon glyphicon-user icon-white"></span>&nbsp; #}
+		              Jump To <b class="caret"></b></a>
+		              <ul class="dropdown-menu" data-no-collapse="true">	
+						
+						<li><a rel="tooltip" href="{% url search_user_quotes request.user.username %}{% if searchval %}?q={{searchval}}{% endif %}" style="color: black;">{{SNIPPET_LABEL}}s&nbsp;<span class="glyphicon glyphicon-th-list"></span></a></li>
+						<li class="divider"></li>
+					 	 <li><a rel="tooltip" href="{% url search_user_documents request.user %}{% if searchval %}?q={{searchval}}{% endif %}"  style="color: black;">{{DOCUMENT_LABEL}}s <span class="glyphicon glyphicon-book"></span></a></li>
+					 	 <li class="divider"></li>
+					 	 <li><a rel="tooltip" href="{% url search_user_subjects request.user %}{% if searchval %}?q={{searchval}}{% endif %}"  style="color: black;">{{SUBJECT_LABEL}}s <span class="glyphicon glyphicon-tag"></span></a></li>
+					 	 {% if 0 %}					 	 
+						<li class="divider"></li>
+					 	 <li><a rel="tooltip" href="{% url search_user_favorites request.user %}{% if searchval %}?q={{searchval}}{% endif %}"  style="color: black;">Favorites <span class="glyphicon glyphicon-heart"></span></a></li>
+
+					 	 <li><a rel="tooltip" href="{% url search_user_clipboard request.user %}{% if searchval %}?q={{searchval}}{% endif %}"  style="color: black;">Clipboard <span class="glyphicon glyphicon-pushpin"></span></a></li></>
+					 	 {% endif %}
+
+						<li class="divider"></li>
+
+						<li><a rel="tooltip" href="{% url get_random_quote %}" style="color: black;">Roulette <span class="glyphicon glyphicon-link"></span>
+							</a></li>
+
+		              </ul>
+		            					
+					</li>
+
+					{% endif %}
+
+
+		            <li class="dropdown">  {# {{request|navbar_getclass:'browse'}} #}
+		              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user icon-white"></span>&nbsp;{{user.profile.pretty_name}} <b class="caret"></b></a>
+		              <ul class="dropdown-menu" data-no-collapse="true">	
+		  				<li><a rel="tooltip" href="{% url person_home request.user %}" style="color: black;">Home <span class="glyphicon glyphicon-home"></span></a></li>
+
+							<li class="divider"></li>
+						<li><a rel="tooltip" href="{% url profile request.user %}" style="color: black;">Profile <span class="glyphicon glyphicon-user"></span>
+		  					</a></li>		  
+						<li><a rel="tooltip" href="{% url settings request.user %}" style="color: black;">Settings <span class="glyphicon glyphicon-adjust"></span>
+							</a></li>
+							{% if 0 %}
+						<li class="divider"></li>
+						<li><a rel="tooltip" href="{% url get_random_quote %}" style="color: black;">Roulette <span class="glyphicon glyphicon-link"></span>
+							</a></li>
+							{% endif %}
+						<li class="divider"></li>
+						<li><a rel="tooltip" href="{% url auth_logout %}" title="" style="color: black;">Log Out <span class="glyphicon glyphicon-off"></span></a></li>
+		              </ul>
+		            					
+					</li>
+
+					
+					{% if not splashpage %}
+					
+						{# {% if page_flag in "searchdocs searchquotes favorites clipboard searchkoncepts searchsubjects" %} #}
+						 
+						{% if page_flag in "document_detail quote_detail" %}
+						
+					        <form class="navbar-form navbar-left" role="search" method="get" id="search_form" action="{% url search_user_quotes request.user.username %}">
+					          <div class="form-group">
+					            <input type="text" class="form-control" name="q" id="navbar_search" autocomplete="off" placeholder="{% if searchval %}{{searchval}}{% else %}Search..{% endif %}">
+					          </div>
+					          <button type="button" class="btn btn-default"><span class=" glyphicon glyphicon-search"></span></button>
+					        </form>
+					
+						{% endif %}  {# END of page_flag #}
+					
+					{% endif %}
+
+
+
+					
+					
+		
+				{% else %}	
+				
+				<li role="presentation"><a href="{% url get_random_quote  %}" class="quietlink2 navbar2link">Explore</a></li>
+						 
+				<li><a rel="tooltip" href="{% url auth_login %}" title="">SIGN IN <span class="glyphicon glyphicon-share-alt"></span></a></li>
+				{% endif %}
+		
+
+
+		
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container-fluid -->
+</nav>
+
+
+
+
+
+
+

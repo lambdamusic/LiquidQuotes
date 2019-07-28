@@ -1,0 +1,254 @@
+{% extends "bstrap3.2.0/base.html" %}
+{% load konceptstags %}
+
+
+
+{% block extrahead %}
+
+
+<style type="text/css" media="screen">
+
+
+
+
+#q blockquote {
+	margin: .75em 0;
+	background: #fff;
+	padding: 1.5em 1em;
+	font-size: 1.35em;
+/* so to override bootstraps style*/
+	border-left: none;
+}
+
+
+#q blockquote:before {
+	border-top: 1em solid #fff;
+	border-left: 1em solid transparent;
+	border-left: 1em solid rgba(255,255,255,0);
+	border-right: 1em solid transparent;
+	border-right: 1em solid rgba(255,255,255,0);
+}
+@media (min-width: 50em)
+#q blockquote:before {
+	font-size: 1.25em;
+}
+#q blockquote:before {
+	content: '';
+	display: block;
+	position: absolute;
+	border-top: 1em solid #F2F0F0;
+	border-left: 1em solid transparent;
+	border-left: 1em solid rgba(255,255,255,0);
+	border-right: 1em solid transparent;
+	border-right: 1em solid rgba(255,255,255,0);
+	margin-right: -1em;
+	right: 99%;
+	top: 0;
+}
+.quotecornice {
+	background: #F2F0F0;   /*has to be the same as border-top color!*/
+}
+
+
+/*this is the FONT you want to play with */
+
+#q blockquote q {
+	font-family: Verdana,sans-serif;
+	font-size: 1.30em;
+}
+#q blockquote p, blockquote q {
+	position: relative;
+	display: block;
+	font-family: Georgia,'Times New Roman',serif;
+	padding-left: 2em;
+	color: #222;
+}
+#q blockquote q {
+	position: relative;
+	display: block;
+	font-family: Georgia,'Times New Roman',serif;
+	padding-left: 2em;
+	color: #222;
+}
+
+
+
+#q blockquote q:before {
+	color: #00768a;
+}
+#q blockquote p:before, blockquote q:before {
+	content: '\201C';
+	color: #d83b5b;
+	position: absolute;
+	left: 0;
+	top: -.2em;
+	font-family: Arial sans-serif;
+}
+#q blockquote q:before {
+	content: '\201C';
+	color: #d83b5b;
+	position: absolute;
+	left: 0;
+	top: -.2em;
+	font-family: Arial sans-serif;
+	font-size: 4em;
+}
+
+
+
+
+#q blockquote p:after, blockquote q:after {
+	content: '';
+}
+#q blockquote q:after {
+	content: '';
+}
+
+
+{% if 1 %}
+/*flip stuff  http://www.bootply.com/129165   */
+
+
+.flip {
+  -webkit-perspective: 800;
+perspective: 800;
+
+    position: relative;
+ 
+}
+.flip .card.flipped {
+  -webkit-transform: rotatex(-180deg);
+    transform: rotatex(-180deg);
+}
+.flip .card {
+
+  height: 100%;
+  -webkit-transform-style: preserve-3d;
+  -webkit-transition: 0.5s;
+    transform-style: preserve-3d;
+    transition: 0.5s;
+}
+.flip .card .face {
+
+  -webkit-backface-visibility: hidden ;
+    backface-visibility: hidden ;
+  z-index: 2;
+   
+}
+.flip .card .front {
+  position: absolute;
+   width: 100%;
+  z-index: 1;
+
+}
+.flip .card .back {
+  -webkit-transform: rotatex(-180deg);
+    transform: rotatex(-180deg);
+}
+  .inner{margin:0px !important;}
+
+{% endif %}
+
+</style>
+
+
+
+
+{% endblock extrahead %}
+
+
+
+
+{% block pagecontents %}
+
+	<div class="row">
+		<h3>Showing a random <a href="{{data.get_absolute_url}}">quote</a></h3>	
+		<br /><br />
+	</div>
+	
+	
+
+	<div class="row" >
+		
+		<div class="col-md-8 col-md-offset-2 quotecornice flip">
+
+			<div id="q" class="card">
+				<blockquote class="face front"><q>{{data.text}}</q>
+				
+				{% with data as snippet %}
+				{% if snippet.source %}			
+					<small style="text-align: right; margin-top: 20px;">
+					
+						<a style="color: gray;" href="{{snippet.source.get_absolute_url}}" title="View {{DOCUMENT_LABEL}} details" rel="category tag"><span class="glyphicon glyphicon-book"></span>
+						{{snippet.source.title|truncatewords:15}}</a>
+						{# {% if snippet.location %}<br>{{snippet.location}}{% endif %} #}
+					</small>
+
+				{% endif %}
+				{% endwith %}
+				
+				
+				</blockquote>
+				
+				
+				<div class="face back">
+					Hi there
+			    </div>
+				
+			</div>	
+
+			
+			
+						
+		</div>
+		
+	</div>
+
+	
+	
+	
+
+
+{% endblock  %}
+
+
+
+
+{% block closingbody %}
+
+
+	<script type="text/javascript">
+
+		$('.flip').click(function(){
+		       $(this).find('.card').toggleClass('flipped');
+
+		   });
+   
+   
+   
+		// $(".quotecornice").flip();
+		//
+		// $(".quotecornice").click(function(e) {
+		// 	$(this).flip({
+		// 				direction:'lr',
+		// 				content:'this is my new content'
+		// 			});
+		// });
+		
+		
+	  // $( ".quotecornice" )
+	  //   .mouseover(function() {
+	  // 			$(this).flip({
+	  // 						direction:'lr',
+	  // 						content:'this is my new content'
+	  // 					});
+	  //   })
+	  //   .mouseout(function() {
+	  // 			$(this).revertFlip();
+	  //   });
+	  //
+	  //
+		
+	</script>
+	
+{% endblock closingbody %}

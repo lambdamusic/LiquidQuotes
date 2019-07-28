@@ -1,0 +1,181 @@
+
+
+{% if 0 %}
+<script src="{{ STATIC_URL }}dropzone-3.10.0/downloads/dropzone.js"></script>
+<link href="{{ STATIC_URL }}dropzone-3.10.0/downloads/css/dropzone.css" rel="stylesheet">
+{% endif %}
+
+{# <br /> #}
+{# <h3>Select content</h3> #}
+{# <hr> #}
+
+
+<div class="tabbable" style="margin-top: 20px;"> 
+  <ul class="nav nav-tabs">
+    <li class="active"><a href="#tab1" data-toggle="tab">Upload a file</a></li>
+    {% if 0 %}
+		<li><a href="#tab2" data-toggle="tab">Copy and Paste</a></li>
+	{% endif %}	
+  </ul>
+  <div class="tab-content">
+
+<style type="text/css" media="screen">
+.file-select {
+	padding: 15px;
+	margin: 30px 0px 30px 38px;
+}
+</style>
+
+    <div class="tab-pane active fileform" id="tab1">
+
+
+		<form enctype="multipart/form-data" method="post" action="" class="dropzone" id="my-dropzone-form">
+		   {% csrf_token %}   
+	
+			  
+		 <p class="lead">Please select a {% if importkindle %}Kindle highlights{% endif %} file from your computer: </p>	  
+			  
+	      {% if form.file.errors %}
+              <div class="alert alert-danger" role="alert">
+                  <button type="button" class="close" data-dismiss="alert">×</button>
+                  {{ form.file.errors.as_text|cut:"* " }}
+              </div>
+	      {% endif %}
+		  
+		  
+		  	
+		  
+		  {% if 1 %}
+
+			<div class="well fallback" style="padding: 80px;">   
+		{# August 12, 2014: the fallback class allows DropZone.js to use this only if js fails #}
+
+	    {# April 15, 2014: putting the well here breaks the file-upload popup.. #}
+
+				   			 <div style="position:relative;" class="form-group">
+				   			         <a class='btn btn-default' href='javascript:;' style="font-size: 25px;">
+				   			             Choose file...
+				   			             <input type="file" style='position:absolute;z-index:2;top:0;left:0;filter: alpha(opacity=0);-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";opacity:0;background-color:transparent;color:transparent;' name="file" size="40"  id="id_file" onchange='$("#upload-file-info").html($(this).val());' class="form-control">
+				   			         </a>
+				   			         &nbsp;
+				   			         <span class='label label-info' id="upload-file-info"></span>
+				   			 </div>
+
+			</div>
+
+			 
+		
+		<br />	 
+		
+		
+		
+		<p class="text-right"><button id="submit-file" type="submit" class="btn btn-success btn-lg">Go!</button></p>
+		
+		{% endif %}
+		
+		
+
+		
+		
+		{% if 0 %}    
+		{# August 12, 2014: disabled cause it submitted the form only via AJAX #}
+
+		
+		{# https://github.com/enyo/dropzone/wiki/FAQ #}
+		{# https://github.com/enyo/dropzone/wiki/Upload-all-files-with-a-button #}
+		{# http://stackoverflow.com/questions/25198331/autoprocessqueue-false-not-working-in-dropzone-js #}
+		
+		{# this seems better: #}
+		{# http://blueimp.github.io/jQuery-File-Upload/ #}
+		
+		
+        <script type="text/javascript">
+            Dropzone.options.myDropzoneForm = {
+ 
+                // Prevents Dropzone from uploading dropped files immediately
+                autoProcessQueue : false,
+				maxFilesize: 3, // MB
+				uploadMultiple: true,
+				maxFiles: 100,
+				parallelUploads: 100,
+ 
+                init : function() {
+                    
+                    myDropzone = this;
+ 				   
+				   var submitButton = document.querySelector("#submit-file");
+                    submitButton.addEventListener("click", function(e) {
+                         e.preventDefault();
+						 e.stopPropagation();
+						 myDropzone.processQueue();
+                        // Tell Dropzone to process all queued files.
+                    });
+ 				  
+					
+                    // You might want to show the submit button only when
+                    // files are dropped here:
+                    this.on("addedfile", function() {
+                        // Show submit button here and/or inform user to click it.
+                    });
+					
+					this.on("success", function(file, messageOrDataFromServer, myEvent) {
+						// alert(file, messageOrDataFromServer);
+						var newfile = file;
+					     window.setTimeout(function() { window.location.href = "{% url importkindle request.user %}?file=" + file; }, 1000);
+					}); 
+ 
+                }
+            };
+        </script>
+		{% endif %}
+		
+	
+	
+	
+	
+	
+
+    </div>
+
+
+	{% if 0 %}
+		    <div class="tab-pane" id="tab2">
+
+
+				<p class="lead">Paste some text directly in the box below:</p>	  
+				 
+	
+			    {% if form.text.errors %}
+			        <div class="alert alert-danger">
+			            <button type="button" class="close" data-dismiss="alert">×</button>
+			            {{ form.text.errors.as_text|cut:"* " }}
+			        </div>
+			    {% endif %}
+		
+		        <div style="position:relative;" class="well">
+			        <textarea id="id_text" name="text" rows="10" cols="80" class="width-90percent">{{form.text.value|default_if_none:""}}</textarea>
+				</div>
+
+
+				<br />		
+				<p class="text-left"><button type="submit" class="btn btn-primary">Go!</button></p>
+				
+		
+		
+		
+				</form>
+			
+			
+			
+		    </div>
+	{% endif %}
+
+
+
+  </div>
+</div>
+
+
+
+
+

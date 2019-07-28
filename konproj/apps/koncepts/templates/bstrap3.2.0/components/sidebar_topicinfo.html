@@ -1,0 +1,116 @@
+{# note this is the doc info, but no in sidebar anymore #}
+
+
+
+ {% load konceptstags %} 
+
+
+
+ {# == TOPIC === #}
+ 
+
+ <h5 class=" margin-top-50 text-right">{{KONCEPT_LABEL}}</h5>
+ <hr>
+ 
+
+
+{% if snippet.get_interpretation %}
+
+
+	<p class="text-{{ALIGNMENT|default:'right'}}">
+		
+	    {# &gt;&nbsp; #}
+		<span class="glyphicon glyphicon glyphicon-map-marker"></span>
+		&nbsp;<a href="{{snippet.get_interpretation.koncept.get_absolute_url}}" title="{{KONCEPT_LABEL}}: {{snippet.get_interpretation.koncept.name}}" 
+	class="kon_list_item {% ifchanged snippet.get_interpretation.koncept.name %}konceptcolor{% else %}konceptcolorlight{% endifchanged %} {% if quote_detail_page %}underline{% endif %}">{{snippet.get_interpretation.koncept.name}}</a>
+				&nbsp;({{totQuotesKoncept}})&nbsp;
+
+				{% if mykoncepts %}
+				<span style="font-size: 70%;">			
+					&nbsp;&nbsp;<span class="glyphicon glyphicon-resize-small"></span>&nbsp;<a href="javascript:confirmUnlinkFragment({{snippet.get_interpretation.id}}, '{{snippet.get_interpretation.koncept.name|escapejs}}');" title="Unlink from {{KONCEPT_LABEL}}">Unlink</a>
+					</span>
+					
+				{% endif %}
+				
+				
+	</p>
+
+
+	{% if 0 %}
+	<div class="text-{{ALIGNMENT|default:'right'}}">
+		<small class="text-muted">
+			{{totQuotesKoncept}}&nbsp;{{SNIPPET_LABEL}}{{totQuotesKoncept|pluralize}} in total
+		</small>
+	</div>
+	{% endif %}
+		
+
+
+
+		{% if prevQuoteKoncept or nextQuoteKoncept %}	
+				<div class="quote_arrows_navigation text-{{ALIGNMENT|default:'right'}}">
+					<br />
+					  {% if prevQuoteKoncept %}
+					  	 <a class="btn btn-default btn-xs" href="{{prevQuoteKoncept.get_absolute_url}}" title="Previous {{SNIPPET_LABEL}} for this {{KONCEPT_LABEL}}">
+					  {% else %} 
+					 	 <a class="btn btn-default btn-xs disabled" >
+					  {% endif %} 
+						 	 <span class="glyphicon glyphicon-arrow-left"></span>
+					  	</a>	  
+
+
+					  {% if nextQuoteKoncept %}
+					  	 <a class="btn btn-default btn-xs" href="{{nextQuoteKoncept.get_absolute_url}}" title="Next {{SNIPPET_LABEL}} for this {{KONCEPT_LABEL}}">
+					  {% else %} 
+					 	 <a class="btn btn-default btn-xs disabled" >
+					  {% endif %} 
+						 	 <span class="glyphicon glyphicon-arrow-right"></span>
+					  	</a>
+
+				</div>
+
+		{% endif %}
+
+
+
+
+
+
+
+{% else %}
+
+
+		{% if mykoncepts %}
+
+		<p class="text-{{ALIGNMENT|default:'right'}}">
+
+			<small class="text-muted" id="{{snippet.id}}_label">No {{KONCEPT_LABEL}} associated</small><br />
+			{# element hidden, displayed after ajax update #}
+			<a id="{{snippet.id}}_relatedKoncept" href="" title="View {{KONCEPT_LABEL}} Homepage" 
+class="kon_list_item konceptcolor" style="display: none;"></a>
+			&nbsp;								
+
+			{% if mykoncepts %}
+			<span style="font-size: 70%;">
+				<span class="glyphicon glyphicon-pencil"></span>
+				<a href="javascript:changeKonceptReference({{snippet.id}})" title="Edit" data-toggle="--modal">Add?</a></span>
+			{% endif %}
+
+
+
+
+		{% else %}
+		
+		<p class="text-{{ALIGNMENT|default:'right'}}">
+
+			<small class="text-muted" id="{{snippet.id}}_label">No {{KONCEPT_LABEL}} associated</small>
+			
+		</p>
+		
+		{% endif %}
+
+{% endif %}
+
+
+
+	

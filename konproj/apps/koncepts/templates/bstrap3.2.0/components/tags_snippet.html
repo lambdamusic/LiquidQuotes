@@ -1,0 +1,24 @@
+
+{% load konceptstags %}
+
+
+{# 2016-01-08: deprecated in favor of sidebar_tagsinfo #}
+
+{% block snippet_tags_snippet %}
+
+	{% if snippet.subjects.all %}
+	{% for c in snippet.subjects.all  %}
+		<a {% if mykoncepts %}href="{{c.get_absolute_url}}"{% endif %} title="{{SUBJECT_LABEL}}: {{c.name_url}}" class="btn btn-xxs  btn-warning" style="white-space: normal; text-transform: capitalize;">
+			<span class="glyphicon glyphicon-tag icon-xs" aria-hidden="true"></span>&nbsp;{{c.name}}</a>&nbsp;
+	{% endfor %}
+	{% else %}
+	<small class="quietlink7" style="text-transform: capitalize;{% if quote_detail_page %}font-size: 60%;{% endif %}">None</small>
+	{% endif %}		
+	{% if mykoncepts %}						
+	<a href="javascript:editQuoteSubjects('{{snippet.id}}', '{{snippet.subjects.all|printmany:"name"|escapejs}}')" title="Edit {{ SUBJECT_LABEL }}s" class="quietlink" style="text-decoration: none;{% if quote_detail_page %}font-size: 70%;{% endif %}">
+		&nbsp;<i class="glyphicon glyphicon-edit quietlink5"></i>
+	</a>
+	{% endif %}		
+
+	
+{% endblock snippet_tags_snippet %}	

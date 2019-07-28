@@ -1,0 +1,110 @@
+{% load konceptstags %}
+
+
+{# 2014-10-30: not used in search_koncepts anymore #}
+
+
+		
+		<p class="lead" style="margin-top:30px;">			 
+			 
+			{# March 28, 2014: fragment hashtag only when on document page! #}
+			
+			<span class="" style="font-size: 80%;">{{forloop.counter}}.&nbsp;&nbsp;</span>
+			
+			<a href="{{k1.get_absolute_url}}{% if intfrag1.orderno > 1 %}#fragment{{intfrag1.orderno}}{% endif %}" title="View {{KONCEPT_LABEL}} Homepage" 
+			class="kon_list_item konceptcolor">
+				{# {{k1.name}} #}
+				{{k1.name|highlightText:searchval|safe}}
+			</a>	
+		
+ 
+
+
+		   <br />
+		   
+		   
+		   		{% if 0 %}
+				<span class="bar" title="Snippets">
+					{% for x in k1|koncept_privateIntFrags %}1
+						{% if not forloop.last %}, {% endif %}
+					{% endfor %}
+				</span>		   
+		  	  	{% endif %}
+		  
+			   {% if 0 %}<span class="pie">{% for x in k1|koncept_privateIntFrags %}1{% if not forloop.last %}, {% endif %}{% endfor %}</span>
+		   	 <span class="pie">{{k1|koncept_privateIntFrags|length}}/20</span>
+		       {% endif %}
+		   
+		   
+		   	 
+		 
+
+		  {% if 0 and mykoncepts %}
+		  		
+				{# July 22, 2014 @todo: could be btn btn-xs btn-warning  #}
+		  
+			  {% ifequal   k1.public_or_private 1 %}
+			  	<span style="font-size: 60%; color: black;" class="label label-default ">Private</span>
+			  {% endifequal %}
+			  {% ifequal   k1.public_or_private 2 %}
+			  	<span style="font-size: 60%; color: black;" class="label label-default">Public</span>
+			  {% endifequal %}
+			  {% ifequal   k1.public_or_private 3 %}
+			  	<span style="font-size: 60%;  color: black;" class="label label-default ">Private/Public</span>
+			  {% endifequal %}
+		  
+		   {% endif %}
+		  
+		  
+		 
+		  {% if search_view %}
+		  
+		  		{# July 23, 2014: dirty trick: instead of using the snippet_date.html component we're making an ad hoc version for the search view.. #}
+
+			    <span class=" text-muted " style="font-size: 60%;">&nbsp;&nbsp;
+			  	  {% if mykoncepts %}
+	  
+			  	    {% ifequal k1.created_at this_snippet.updated_at  %}
+			  	    	{# {{ this_snippet.created_at|date:"d M Y, f a"}} #}
+			  	  	Added on {{k1.created_at}}
+			  	    {% else %}
+			  	    	{# {{ i.created_at|date:"d M Y, f a"}} (modified on {{ i.updated_at|date:"d M Y, f a"}}) #}
+			  	  	Added on {{ k1.created_at}} (modified on {{ k1.updated_at}})
+			  	    {% endifequal %}
+		
+			  	  {% else %}
+	  
+			  	  		{{k1.created_at}}
+	  	
+			  	  {% endif %}
+
+			    </span>
+				
+		  {% endif %}
+		 
+		 
+		 
+   		  {% if 1 %}  {# June 18, 2014: test to show snippets num as labels #}
+   	      	 {% if mykoncepts %}
+
+
+   	  			{% with k1|koncept_privateIntFrags|length as n %}
+   	  			  <span class="badge badge-snippet-count">{{n}} {{SNIPPET_LABEL}}{{ n|pluralize }}</span>
+   	  			{% endwith %}
+			
+
+   	     	 {% else %}
+
+	
+   	  			{% with k1|koncept_publicIntFrags|length as n %}
+   	  			   <span class="badge badge-snippet-count">{{n}} {{SNIPPET_LABEL}}{{ n|pluralize }}</span>
+   	  			{% endwith %}
+
+
+   	     	 {% endif %}
+		 
+   		 {% endif %}
+
+		  	
+		</p>
+		

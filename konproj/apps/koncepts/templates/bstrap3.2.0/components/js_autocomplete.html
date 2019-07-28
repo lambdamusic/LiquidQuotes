@@ -1,0 +1,168 @@
+<script>
+	
+	{% if not increaseKoncept %}
+	
+	
+	$('#id_name').typeahead({
+		items: 8, 
+		minLength: 2,
+		template: '<p><strong>{{name}}</strong> – {{id}}</p>',
+	    source: function (query, process) {
+			// clean the automatically loaded preview link first				
+			$("#koncept_preview_link").text("");		
+			
+	        $.get('{% url autocomplete_koncepts %}', { term: query }, function (data) {
+	            return process(data);
+	        });
+		},		
+		
+	    updater:function (item) {
+			// defines what to do after something has been selected..				
+	        //item = selected item
+
+			konPreviewInfo(item);
+		
+	        //dont forget to return the item to reflect them into input
+	        return item;
+	    }
+		
+			
+	});
+	
+	{% endif  %}
+
+
+
+	// code that refreshes the info generated after a koncept is selected
+	
+	function konPreviewInfo(item) {
+		
+        $.get('{% url autocomplete_koncept_details %}', { title: item }, function (data) {
+			// return JSON data 
+			
+			$("#koncept_preview_link").text("");
+			
+			var preview_html = "&nbsp;Fragments previously associated with this {{KONCEPT_LABEL}}: <b>" + data.fragcount + "</b>&nbsp;&nbsp;(<span class=\"glyphicon glyphicon-search\"></span><a target=\"_blank\" class=\"text-info\" title=\"Opens the selected koncept in new window\" href=\"" + data.link + "\">view</a>)";
+		
+			$("#koncept_preview_link").append(preview_html);
+		
+        });
+		
+	}
+
+
+
+
+
+
+
+
+	
+	// http://stackoverflow.com/questions/14136973/bootstrap-typeahead-return-name-and-id?rq=1
+	// http://tatiyants.com/how-to-use-json-objects-with-twitter-bootstrap-typeahead/
+		
+	$('#id_sourcetitle').typeahead({
+		items: 8, 
+		minLength: 2,
+	    source: function (query, process) {
+		
+			// clean the automatically loaded preview link first				
+			$("#source_preview_link").text("");				
+		
+	        $.get('{% url autocomplete_sources %}', { term: query }, function (data) {
+				// return JSON data as a complex object; it'll be broken later
+	            return process(data);
+	        });
+		},
+
+	    matcher: function(item) {
+			//defines how the query should be matched
+			var x = item.title.toLowerCase();
+	        return x.indexOf(this.query.toLowerCase()) >= 0;
+	    },
+
+	    sorter: function(items) {
+			// defines how to sort the results
+			var results = [];
+			$.each(items, function(index, value){
+				results.push(value.title);
+			});
+			return results.sort();
+	    },
+							
+	    updater:function (item) {
+			// defines what to do after something has been selected..				
+	        //item = selected item
+			
+			docPreviewInfo(item);
+		
+	        //dont forget to return the item to reflect them into input
+	        return item;
+	    }			
+	});
+
+
+
+	// code that refreshes the info generated after a document is selected
+	
+	function docPreviewInfo(item) {
+		
+		$("#source_preview_link").text("");	
+		
+        $.get('{% url autocomplete_source_details %}', { title: item }, function (data) {
+			// return JSON data 
+            $("#id_sourceurl").val(data.url);
+            $("#id_sourceauthor").val(data.author);
+            $("#id_sourcepubyear").val(data.pubyear);
+            $("#id_sourcedesc").val(data.desc);
+
+			var preview_html = "&nbsp;{{KONCEPT_LABEL}}s previously associated with this {{DOCUMENT_LABEL}}: <b>" + data.koncount + "</b>&nbsp;&nbsp;(<i class=\"icon-search\"></i><a target=\"_blank\" class=\"text-info\" title=\"Opens the selected document in new window\" href=\"" + data.link + "\">view</a>)";
+
+				
+			$("#source_preview_link").append(preview_html);
+		
+        });
+		
+	}
+	
+	
+	
+
+
+	// hack: extract tags within the page 
+
+	var tags_list = [{% for t in usertags %}"{{t}}", {% endfor %}]
+
+
+	// TAGS: using SELECT2 library: seems the best, but multi.. how?
+
+	$("#id_tags").select2({
+		tags:tags_list, 
+		minimumInputLength: 2,
+	});
+
+
+
+
+	// make tabs open via mouse over
+	// http://stackoverflow.com/questions/9815247/how-to-make-with-twitter-bootstrap-tabs-on-hover-instead-of-clicking
+
+	// March 11, 2014:disabled
+
+	//     $('.nav-tabs > li ').hover( function(){
+	//      if($(this).hasClass('hoverblock'))
+	//          return;
+	//      else
+	//      $(this).find('a').tab('show');
+	// 	});
+	// 
+	// 
+	// $('.nav-tabs > li').find('a').click( function(){
+	//  	   $(this).parent()
+	//      .siblings().addClass('hoverblock');
+	// 	});
+	
+
+						
+
+</script>

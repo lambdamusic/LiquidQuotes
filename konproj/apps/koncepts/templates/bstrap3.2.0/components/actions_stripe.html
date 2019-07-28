@@ -1,0 +1,41 @@
+
+{% load konceptstags %}
+
+
+<!-- 2016-05-23: the actions row below the user badge stripe-->
+
+
+<div class="row" style="margin-top: 35px; margin-left: 8.5%;" >
+	
+	<div class="col-md-8 c-ol-md-offset-1" style="-margin-bottom: 20px;">
+		<h5>
+			<small class="text-lowercase quietlink6">&nbsp;Actions:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+				{% if document_detail_page %}
+
+				<a href="javascript:confirmDownload({{snippet.id}});" title="Download" style="text-decoration: none;" class="quietlink15">
+					<i class="glyphicon glyphicon-save -icon-black"></i>
+				&nbsp;Download	
+				</a>	
+
+				{% endif %}
+
+				{% if quote_detail_page %}		
+
+				<a href="javascript:confirmDownload({{snippet.id}});" title="Download" style="text-decoration: none;" class="quietlink15">
+							<i class="glyphicon glyphicon-save -icon-black"></i>
+						&nbsp;Download	
+				</a>					
+
+				{% endif %}		
+
+			</small>
+		</h5>
+	</div>
+</div>
+
+
+
+
+
+

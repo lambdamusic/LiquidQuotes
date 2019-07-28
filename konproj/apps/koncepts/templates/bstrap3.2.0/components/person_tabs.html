@@ -1,0 +1,21 @@
+{% load konceptstags %}
+
+{# June 28, 2014: this doesnt seem to be used anymore #}
+
+
+	<ul class="nav nav-tabs">
+		
+	  <li {% if tab_profile %}class="active"{% endif %}>
+	    <a href="{% url person_home person.username %}" title="Home">Home</a>
+	  </li>
+	  
+	  <li {% if tab_koncepts %}class="active"{% endif %}>
+		  <a href="{% url search_user_koncepts person.username %}{% if tab_documents %}{% if searchval %}?q={{searchval}}{% endif %}{% endif %}" 
+			title="Click to view user {{KONCEPT_LABEL}}s">{{KONCEPT_LABEL}}s</a></li>
+		  
+	  <li {% if tab_documents %}class="active"{% endif %}>
+		  <a href="{% url search_user_documents person.username %}{% if tab_koncepts %}{% if searchval %}?q={{searchval}}{% endif %}{% endif %}"
+			title="Click to view user {{DOCUMENT_LABEL}}s">{{DOCUMENT_LABEL}}s</a></li>
+	</ul>
+	
+	

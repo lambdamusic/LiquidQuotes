@@ -1,0 +1,73 @@
+{% load konceptstags %}
+
+
+<div class="table-responsive">
+
+    
+	 <table id="mytable" class="table table-bordred table-striped">
+       
+	  <thead>
+       
+	     <th><input type="checkbox" id="checkall" /></th>
+	     {# <th>Type</th> #}
+		 <th>Created</th>
+	     <th>Title</th>
+	     <th>{{SNIPPET_LABEL}}s</th>
+	     <th>Parent</th>
+	     {# <th>Edit</th>                       #}
+	     <th>Delete</th>
+	   </thead>
+   
+	   <tbody>
+				
+				
+		{% for k1 in page_object  %}
+
+
+				    <tr>
+				    <td><input type="checkbox" class="checkthis" /></td>
+				    {# <td> <span class="badge">Thread<span></td> #}
+					<td><span class="text-muted"><small>{{k1.created_at|date:"d M Y"}}</small></span></td>
+						
+				    <td><a href="{{k1.get_absolute_url}}" title="View {{ SNIPPET_LABEL|lower }}s" class="label label-warning"> {# kon_list_item class removed #}
+					{{k1.name|highlightText:searchval|safe}}
+				</a></td>				    
+				    <td>
+                        {% with k1.fragment_set.all|length as ccount %}
+                            {% if ccount < 2 %}
+                                <span class="label label-default">{{ccount}}</span>
+                            {% endif %}
+                            {% if ccount > 1 and ccount < 10 %}
+                                <span class="label label-info">{{ccount}}</span>
+                            {% endif %}
+                            {% if ccount > 9  %}
+                                <span class="label label-success">{{ccount}}</span>
+                            {% endif %}
+                        {% endwith %}
+
+                    </td>
+					<td>{% if k1.parent %}
+{#						<a href="{{k1.parent.get_absolute_url}}" class=" konceptcolor underline -lead">{{k1.parent.name}}</a>#}
+                        {{k1.parent.name}}
+						{% else %}
+						---
+						{% endif %}</td>
+				    {# <td><p data-placement="top" data-toggle="tooltip" title="Edit"><button class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit" ><span class="glyphicon glyphicon-pencil"></span></button></p></td> #}
+					
+					{# TODO #}
+				    <td><p data-placement="top" data-toggle="tooltip" title="Delete"><a href="javascript:confirmDeleteSubject({{k1.id}})"><button class="btn btn-danger btn-xs" ><span class="glyphicon glyphicon-trash"></span></button></a></p></td>
+				    </tr>
+
+
+
+		{% endfor %}
+		
+		
+		
+		
+		</tbody>
+		</table>
+		
+		
+		
+		</div>  {# end of table-responsive #}

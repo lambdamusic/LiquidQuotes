@@ -1,0 +1,41 @@
+{% load konceptstags %}
+
+{# not really a table.. but whatever (used when listing collections - eg in dashboard) #}
+
+
+<div class="row">
+	
+	{% if forloop.first %}<br /><br />{% endif %}
+	
+	
+	{# SIDEBAR #}
+
+	<div class="col-md-2" style="margin-bottom: 40px;">
+	
+		<a href="{{k1.get_absolute_url}}" class="quietlink3" title="Go to this {{KONCEPT_LABEL}}'s homepage">
+			<span class="glyphicon glyphicon-list-alt" aria-hidden="true" style="font-size: 90px;"></span>
+		</a>
+		
+	
+		
+	</div>
+
+
+	{# MAIN CONTENT #}
+	<div class="col-md-9 ">
+	
+	
+		<li style="font-size: 100%;">
+			<a href="{{k1.get_absolute_url}}" class="lead kon_list_item konceptcolor" title="Go to this {{KONCEPT_LABEL}}'s homepage">{{k1.name}}</a>
+		</li>
+	
+		<hr>
+	
+	</div>
+
+	
+</div>
+
+
+
+

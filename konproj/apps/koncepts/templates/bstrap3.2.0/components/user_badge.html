@@ -1,0 +1,68 @@
+
+{# user badge for various pages  :: displayed normally for non-owned content #}
+
+
+{% if document_detail or koncept_detail %}
+<small class="label label-info">Created By</small>
+{% endif %}
+
+{% if quote_detail_page %}
+<h5 class="-margin-top-50 text-right -text-muted">saved by</h5>
+<hr>
+{% endif %}
+
+{% if document_detail_page_top %}
+	<h3 style="margin-top: 10px; margin-bottom: 0px;">
+	<small class="text-uppercase quietlink7" style="font-size: 11px; text-transform: uppercase;">Saved by:&nbsp;</small>
+	</h3>
+{% endif %}
+
+
+{% if quote_detail_page_top or document_detail_page_top %}
+
+
+	{# December 26, 2015 #}
+	<h5 style="font-size: 12px;">
+	<a href="{% url person_public_page person %}" title="View {{person.profile.pretty_name|capfirst}}'s profile" style="text-decoration: none;" class="quietlink7">
+
+		<button type="button" class="btn btn-default btn-circle btn-info btn-xs"><i class="glyphicon glyphicon-user"></i></button>
+
+		{{person.profile.pretty_name|capfirst}}{% if mykoncepts %}&nbsp;(you!){% endif %}
+	</a> 
+	
+	{# creation dates #}
+	
+	{% if mykoncepts %}
+    <small class="source_metadata quietlink4">{# Added #}&nbsp;on
+	{% ifequal object.created_at object.updated_at  %}
+  		{{object.created_at|date:"M d Y"}}
+    {% else %}
+  		{{ object.created_at|date:"M d Y"}} (last modified on {{ object.updated_at|date:"M d Y"}})
+    {% endifequal %}
+	</small>
+	{% endif %}
+					
+	
+	</h5>
+
+
+{% else %}
+	
+
+	<h5 {% if quote_detail_page_side %}style="font-size: 12px;"{% endif %} class="text-{{ALIGNMENT|default:'left'}}">
+	
+		<a href="{% url person_public_page person %}" title="View {{person.profile.pretty_name|capfirst}}'s profile" style="text-decoration: none;" class="text-info">
+	
+			<button type="button" class="btn btn-default btn-circle btn-info"><i class="glyphicon glyphicon-user"></i></button>
+	
+			{{person.profile.pretty_name|capfirst}}
+		</a> 
+		{% if mykoncepts %}
+			<span class="text-info">(you!)</span>
+		{% endif %}
+
+	</h5>
+	
+{% endif %}
+
+</div>

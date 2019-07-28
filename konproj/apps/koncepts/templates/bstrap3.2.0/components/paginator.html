@@ -1,0 +1,83 @@
+
+
+
+
+{% if page_object.object_list %}
+{% load konceptstags %}
+
+
+
+
+{% with page_object as items  %}
+
+
+
+<nav class="text-right" style="margin-top: 100px;">
+	
+  <ul class="pagination pagination-lg">
+	  
+
+		
+		{% if items.has_previous %}
+		    <li><a href="?sort={{sort_var}}&amp;page={{ items.previous_page_number }}&amp;g={{active_group|default:""}}&amp;q={{searchval|default:""}}">
+				<span aria-hidden="true">&laquo;</span><span class="sr-only">Previous</span></a></li>
+			
+				{% if page_object.number|paginator_showOne %}
+			    <li><a href="?sort={{sort_var}}&amp;page=1&amp;g={{active_group|default:""}}&amp;q={{searchval|default:""}}">
+					1</a></li>
+				<li class="disabled"><a href="#">...</a></li>
+				{% endif %}
+
+		 {% else %}
+	   	 	<li class="disabled"><a href="#"><span aria-hidden="true">&laquo;</span><span class="sr-only">Previous</span></a></li>
+		 {% endif %}
+		 
+		 
+	 	{% for el in items.extrastuff %}
+
+	 		{% ifequal el items.number %}
+	 		<li class="active"><a href="#">{{ el }}</a></li>
+	 		{% else %}
+	 		<li><a href="?sort={{sort_var}}&amp;page={{ el }}&amp;g={{active_group|default:""}}&amp;q={{searchval|default:""}}">
+	 			{{ el }}</a></li>
+	 		{% endifequal %}
+
+	 	{% endfor %}
+		
+
+
+		{% if items.has_next %}
+	
+			{% if page_object.number|paginator_showLast:items.paginator.num_pages %}
+		
+			<li class="disabled"><a href="#">...</a></li>
+		    <li><a href="?sort={{sort_var}}&amp;page={{ items.paginator.num_pages }}&amp;g={{active_group|default:""}}&amp;q={{searchval|default:""}}">
+				{{items.paginator.num_pages}}</a></li>
+			
+			{% endif %}			
+			
+		    <li><a href="?sort={{sort_var}}&amp;page={{ items.next_page_number }}&amp;g={{active_group|default:""}}&amp;q={{searchval|default:""}}">
+				<span aria-hidden="true">&raquo;</span><span class="sr-only">Next</span></a></li>
+
+			{% else %}
+			<li class="disabled"><a href="#"><span aria-hidden="true">&raquo;</span><span class="sr-only">Next</span></a></li>
+
+	     {% endif %}
+
+  </ul>
+  
+  
+
+</nav>
+
+	<p class="text-right text-muted">
+  	  Listing items <strong>{{ page_object.start_index }}</strong> to <strong>{{ page_object.end_index }}</strong>, 
+ 	 &nbsp;{{page_object.totcount}} in total
+	</p>		
+	&nbsp;&nbsp;&nbsp;
+
+{% endwith %}
+
+
+{% endif %}
+

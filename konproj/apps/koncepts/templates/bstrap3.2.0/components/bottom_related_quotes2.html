@@ -1,0 +1,140 @@
+{% load konceptstags %}
+
+
+
+<div class="abovefooter" style="background: rgb(247, 247, 247);">
+
+
+
+{# =========== #}
+{# QUOTE #}
+{# =========== #}
+
+
+
+	<div class="container" style="margin-top: 0px; margin-bottom: 100px;">
+
+
+		{% if quotesSameSource %}
+
+			<div class="row ">
+				<div class="col-md-12 -margin-bottom-50">
+
+					<h5 class="text-muted">More {{ SNIPPET_LABEL|lower }}S<small>&nbsp;From the same {{DOCUMENT_LABEL|lower}}</small>
+						&nbsp;<span class="glyphicon glyphicon-info-sign jstooltip icon-xs"  title="Note: only a selection of {{SNIPPET_LABEL|lower}}s are displayed below."></span>
+					</h5>
+
+
+					<hr>
+
+				</div>
+			</div>
+
+			{# <h5 class="text-muted">From the same {{DOCUMENT_LABEL|lower}}</h5> #}
+
+
+			<div class="row" style="margin-top: 10px; margin-bottom: 40px;">
+
+			{% for q in quotesSameSource %}
+			{% ifnotequal snippet.id fragment.id %}
+
+                <div class="col-md-10 col-md-offset-1  text-left" style="margin-bottom: 20px;">
+
+
+	                <li>
+	                    <a href="{{q.get_absolute_url}}" class="quietlink15">"{{ q.title|upper }}"</a>
+
+	                    &nbsp;&nbsp;from <span class="glyphicon glyphicon-book icon-xs" aria-hidden="true"></span>&nbsp;<a href="{{q.source.get_absolute_url}}" class="snippet-source-prev quietlink5">{{ q.source.title }}</a>
+
+	                    &nbsp;
+	                    {% for s1 in q.subjects.all  %}
+	                        <small>
+	                            <a href="{{s1.get_absolute_url}}" class="text-muted btn btn-xs btn-default"><span class="glyphicon glyphicon-tag icon-xs" aria-hidden="true"></span>&nbsp;{{ s1.name }}</a>
+	                        </small>
+	                    {% endfor %}
+
+                      <div>
+                        <blockquote class="">
+                          <a href="{{q.get_absolute_url}}#title" class="quietlink10" title="Open {{SNIPPET_LABEL}} homepage">
+                          {{q.text|truncatewords:100}}
+                          </a>
+                        </blockquote>
+                      </div>
+
+	                </li>
+
+
+                </div>
+
+
+			{% endifnotequal %}
+			{% endfor %}
+
+			</div> {# end of row #}
+
+
+		{% endif %}
+
+
+
+
+		{% if similarQuotesTags %}
+
+
+			<div class="row ">
+				<div class="col-md-12 -margin-bottom-50">
+
+					<h5 class="text-muted">Related {{ SNIPPET_LABEL|lower }}S<small>&nbsp;From other {{DOCUMENT_LABEL|lower}}s</small>
+						&nbsp;<span class="glyphicon glyphicon-info-sign jstooltip icon-xs"  title="Note: only a selection of {{SNIPPET_LABEL|lower}}s are displayed below."></span>
+					</h5>
+
+
+					<hr>
+
+				</div>
+			</div>
+
+
+    		<div class="row" style="margin-top: 10px; margin-bottom: 40px;">
+
+
+
+                    {% for q in similarQuotesTags %}
+
+                    <div class="col-md-10 col-md-offset-1  text-left" style="margin-bottom: 20px;">
+
+
+                    <li>
+                        <a href="{{q.get_absolute_url}}" class="quietlink15">"{{ q.title }}"</a>
+
+                        <br />
+                        from <a href="{{q.source.get_absolute_url}}" class="snippet-source-prev">{{ q.source.title }}</a>
+
+                        &nbsp;
+                        {% for s1 in q.subjects.all  %}
+                            <small>
+                                <a href="{{s1.get_absolute_url}}" class="text-muted btn btn-xs btn-default">{{ s1.name }}</a>
+                            </small>
+                        {% endfor %}
+                    </li>
+
+
+                    </div>
+
+
+                    {% endfor %}
+
+            </div>
+
+        {% endif %}  {# similarQuotesTags #}
+
+
+
+
+    </div>
+
+	</div>
+
+
+
+</div>

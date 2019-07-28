@@ -1,0 +1,119 @@
+{% extends "bstrap3.2.0/base.html" %}
+{% load konceptstags %}
+
+
+
+
+{% block extrahead %}
+
+<style type="text/css" media="screen">
+	p.glossary {
+		font-size: 12px;
+		line-height: 10px;
+	}
+	
+	.popover
+	{
+	background-color: #ffffff;
+	color: black;
+	}
+
+	.popover-title {
+	color: black;
+	border-bottom: 0;
+	}
+
+	.popover-title {
+	background-color: #f7f7f7;
+	}
+	
+	.popover.top .arrow:after {
+		border-top-color: white;
+	}
+	
+	</style>
+
+{% endblock extrahead %}
+
+
+{% block pagecontents %}
+
+
+	<div class="row">
+		<div class="col-md-3" id="message">
+
+
+		</div>
+
+
+
+		
+		<div class="col-md-9">
+			
+			<div class="">
+			{% for l in letters   %}
+					<a href="?start={{l}}" class="btn btn-xs {% ifequal active_letter l  %}active{% endifequal %}">{{l|upper}}</a>		
+			{% endfor %}
+
+			<hr>
+			</div>
+			
+		{% for k1 in data  %}
+			<p class="glossary">{# {{k1.get_absolute_url}} #}
+				&gt;&nbsp;<a href="{{k1.get_absolute_url}}" title="{{k1.name|truncatewords:5}}" data-content="
+				{% with k1.getstats_private as k_stats  %}
+			
+						<span class='label badge-snippet-count'>
+							{{k_stats.quotes}} {{SNIPPET_LABEL}}{{ k_stats.quotes|pluralize }}
+						</span>
+						<span style='font-size: 11px;'>&nbsp;from&nbsp;</span>
+						<span class='label'>
+							{{k_stats.sources}} {{DOCUMENT_LABEL}}{{ k_stats.sources|pluralize }}
+						</span>
+			
+				 {% endwith %}
+				 
+ 				 {% for source in k1.getSourcesPrivate  %}
+ 				 	<li style='margin-left: 10px; 
+					{% if forloop.first %} margin-top: 10px;{% endif %}'>						
+ 						<small><a style='color: gray;' href='{{source.get_absolute_url}}' title='View {{DOCUMENT_LABEL}} details' rel='category tag'>
+ 							{{source.title|truncatewords:15}}
+ 						</a>
+ 						</small>								
+ 					</li>
+ 				 {% endfor %}
+					
+					"
+				class="kon_list_item konceptcolor underline">
+					{{k1.name}}
+				</a>
+			</p>
+		{% endfor %}
+		</div>
+		
+		
+	</div>
+	
+
+
+{% endblock  %}
+
+
+
+
+{% block closingbody %}
+
+		
+	<script>
+	$(function ()
+		{ $(".kon_list_item").popover({   // can be tooltip too
+			placement: 'top', 
+			trigger: 'hover', 
+			html: true,
+			delay: { show: 500, hide: 300 },
+		});
+	});
+	</script>
+
+
+{% endblock  %}

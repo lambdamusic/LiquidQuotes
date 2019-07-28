@@ -1,0 +1,114 @@
+{% extends "bstrap3.2.0/base.html" %}
+{% load konceptstags %}
+
+
+
+
+{% block belownavigation %}
+
+
+	{% with people_detail=1 %}
+		{% include "bstrap3.2.0/components/navbar_second.html" %}
+	{% endwith %}
+
+{% endblock belownavigation %}
+
+
+
+
+
+
+{% block pagecontents %}
+
+  <div class="row">
+
+    <div class="col-md-12">
+    	<div class="page-header">
+		<h2>{{person.profile.pretty_name}} </h2>
+		</div>
+	</div>
+  </div>
+
+
+  <div class="row">
+
+    <div class="col-md-12">
+    	
+		
+		<div class="well well-large">
+		  Personal public info here, stats on tot koncepts and sources, follow links, send a message etc..
+		</div>	
+		
+	</div>
+	
+	 <div class="col-md-12">
+		
+
+		<h3>
+			Latest 5 koncepts:
+		</h3>
+		<hr>
+
+		{% for k1 in latest_koncepts  %}
+	
+			<p class="lead">
+				<i class="icon"></i><a href="{{k1.get_absolute_url}}" title="View {{KONCEPT_LABEL}}" class="kon_list_item">{{k1.name|upper}}</a>	
+			
+			
+				<br />
+			
+				<small>Updated on {{ k1.updated_at|date}}
+					{% with k1|koncept_userIntFrags:person|length as n %}
+					    , {{n}} fragment{{n|pluralize}}
+					{% endwith %}
+				</small>
+			
+			</p>
+		
+			<blockquote class="">
+			  {# <p>{{k1|get_sample_fragment:person|truncatewords:30}}</p> #}
+			  <p>
+		  		{% with k1.sampleFragmentPublic as fragment  %}					
+		  			{{fragment.text|truncatewords:30}}			
+		  		{% endwith %}
+			  </p>
+			  
+  			{% for i in k1|koncept_userIntFrags:person  %}
+  			{% ifchanged i.fragment.source %}
+  				{% if i.fragment.source %}
+				
+				
+  					<small><a style="color: gray;" href="{{i.fragment.source.get_absolute_url}}" title="View Source Record" rel="category tag">{{i.fragment.source|truncatewords:10}}</a><span class="glyphicon glyphicon-file"></i></small>		
+  				{% endif %}
+  			{% endifchanged %}
+  			{% endfor %}
+		
+			</blockquote>
+			
+
+			<br /><br /><br />
+
+		{% endfor %}
+
+
+
+		<p class="text-right"><small ><a href="">Show more</a> [todo: where will it take you?]</small></p>
+
+
+
+
+	{# ends routine #}
+
+
+
+
+
+
+
+
+
+    </div>
+  </div>
+  
+
+{% endblock pagecontents %}

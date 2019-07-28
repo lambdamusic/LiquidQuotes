@@ -1,0 +1,15 @@
+
+
+{# makes the breadcrumbs section sticky #}
+
+
+
+	<script type="text/javascript" charset="utf-8">
+	var $window = $(window),
+	       $stickyEl = $('#breadcrumb'),
+	       elTop = $stickyEl.offset().top + $("#page_title").height();   // - $(".navbar").height();
+
+	   $window.scroll(function() {
+	        $stickyEl.toggleClass('sticky', $window.scrollTop() > elTop);
+	    });
+	</script>

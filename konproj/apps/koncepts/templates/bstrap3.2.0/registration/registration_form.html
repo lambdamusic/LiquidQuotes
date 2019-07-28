@@ -1,0 +1,228 @@
+{% extends "bstrap3.2.0/registration/base.html" %}
+{% load konceptstags %}
+
+{% block content %}
+
+  {# is there a better space to add empty space? #}
+ 
+  
+  
+<div class="row-fluid" style="margin-top: 50px;">
+	
+	<div class="col-md-6 col-md-offset-3">
+	
+	    <ul class="nav nav-tabs">
+    	      <li><a href="{% url auth_login %}">Sign In</a></li>
+    	      <li class="active"><a href="{% url registration_register %}">Register</a></li>
+
+
+	    </ul>
+		
+	    <div id="myTabContent" class="tab-content">
+			
+		  
+		  
+		  {# SIGN UP #}
+		  
+		  
+	      <div class="tab-pane active in" id="signup">
+
+              <form role="form" method="post" action="">
+				  
+				  {% csrf_token %}
+				  
+				  
+                  <div class="heading">
+                      <h3 class="form-heading">&nbsp;Create a new account:</h3>
+                  </div>
+
+				  <br />				  
+				  {% if form.errors %}
+                    <div class="alert alert-danger">
+                        <button type="button" class="close" data-dismiss="alert">×</button>
+                        <strong>Could not complete the registration.</strong> Please correct the errors below.
+                    </div>
+				  {% endif %}
+				  <br />
+				  
+
+				  {% if 0 %}   {# April 11, 2014: removed invitation code #}
+	                  <div class="form-group">
+					  
+					      {% if form.invitationcode.errors %}
+	                      <div class="alert alert-danger">
+	                          <button type="button" class="close" data-dismiss="alert">×</button>
+	                          {{ form.invitationcode.errors.as_text }}
+	                      </div>
+					      {% endif %}
+					  
+	                      <label class="control-label" for="id_invitationcode">Invitation Code *</label>
+	                      <div class="">
+	                          <input type="password" class="form-control" name="invitationcode" id="id_invitationcode" placeholder="Welcome beta testers!"
+							  	value="{{form.invitationcode.value|default_if_none:""}}">
+	                      </div>
+	                  </div>
+				  {% endif %}
+				  
+				  
+				  {% if 0 %}   {# April 11, 2014: removed name and surname #}				  
+	                  <div class="control-group">
+					  
+					      {% if form.firstname.errors %}
+	                      <div class="alert">
+	                          <button type="button" class="close" data-dismiss="alert">×</button>
+	                          {{ form.firstname.errors.as_text }}
+	                      </div>
+
+					      {% endif %}
+					  
+	                      <label class="control-label" for="id_firstname">First Name</label>
+	                      <div class="controls">
+	                          <input type="text" name="firstname" id="id_firstname" placeholder="E.g. Ashwin"
+							  	value="{{form.firstname.value|default_if_none:""}}">
+	                      </div>
+	                  </div>
+				  
+
+				  
+	                  <div class="control-group">
+					  
+					      {% if form.lastname.errors %}
+	                      <div class="alert">
+	                          <button type="button" class="close" data-dismiss="alert">×</button>
+	                          {{ form.lastname.errors.as_text }}
+	                      </div>
+
+					      {% endif %}
+					  
+	                      <label class="control-label" for="id_lastname">Last Name</label>
+	                      <div class="controls">
+	                          <input type="text" name="lastname" id="id_lastname" placeholder="E.g. Hegde"
+							  	value="{{form.lastname.value|default_if_none:""}}">
+	                      </div>
+	                  </div>
+					  
+					  
+				  {% endif %}
+				  
+				  
+				  
+                  <div class="form-group">
+					  
+				      {% if form.email.errors %}
+                      <div class="alert alert-danger">
+                          <button type="button" class="close" data-dismiss="alert">×</button>
+                          {{ form.email.errors.as_text }}
+                      </div>
+				        
+				      {% endif %}
+
+					  
+                      <label class="control-label" for="id_email">Email *</label>
+                      <div class="">
+                          <input type="text" class="form-control" name="email" id="id_email" placeholder="E.g. ashwinh@cybage.com"
+						  	value="{{form.email.value|default_if_none:""}}">
+                      </div>
+                  </div>
+				  
+				  
+                  <div class="form-group">
+					  
+				      {% if form.username.errors %}
+                      <div class="alert alert-danger">
+                          <button type="button" class="close" data-dismiss="alert">×</button>
+                          {{ form.username.errors.as_text }}
+                      </div>
+				        
+				      {% endif %}
+
+					  
+                      <label class="control-label" for="id_username">Username *</label>
+                      <div class="">
+                          <input type="text" class="form-control" name="username" id="id_username" placeholder="Min. X Characters"
+						  	value="{{form.username.value|default_if_none:""}}">
+                      </div>
+                  </div>
+				  
+				  
+                  <div class="form-group">
+					  
+				      {% if form.password1.errors %}
+                      <div class="alert alert-danger">
+                          <button type="button" class="close" data-dismiss="alert">×</button>
+                          {{ form.password1.errors.as_text }}
+                      </div>
+				        
+				      {% endif %}
+
+					  
+                      <label class="control-label" for="id_password1">Password *</label>
+                      <div class="">
+                          <input type="password" class="form-control" name="password1" id="id_password1" placeholder="Min. 6 Characters">
+                      </div>
+                  </div>
+	
+                  <div class="form-group">					  
+				      {% if form.password2.errors %}
+                      <div class="alert alert-danger">
+                          <button type="button" class="close" data-dismiss="alert">×</button>
+                          {{ form.password2.errors.as_text }}
+                      </div>				        
+				      {% endif %}
+					  
+                      <label class="control-label" for="id_password2">Password (confirm) *</label>
+                      <div class="">
+                          <input type="password" class="form-control" name="password2" id="id_password2" placeholder="Min. 6 Characters">
+                      </div>
+                  </div>			  			  
+				  
+				  
+				  
+
+				  
+				  <br />
+				  <div class="checkbox">
+				      {% if form.tos.errors %}
+		                  <div class="alert alert-danger">
+		                      <button type="button" class="close" data-dismiss="alert">×</button>
+		                      {{ form.tos.errors.as_text }}
+		                  </div>			        
+				      {% endif %}
+				      <label>
+                        <input type="checkbox" name="tos" id="id_tos" />&nbsp;I agree to all your <a href="{% url toc %}" target="_blank">Terms & Conditions</a>
+				      </label>
+				    </div>
+					
+					
+				 <br />	
+				 <button type="submit" class="btn btn-success">Sign Up</button>
+					
+									  	
+				  
+				  
+				  {# TODO #}
+				  {% if success_registration %}
+                  <div class="alert alert-info">
+                      <button type="button" class="close" data-dismiss="alert">×</button>
+                      <strong>Confirmation: </strong> A confirmation email has been sent to your email.<br>
+                      Thank you for your registration.
+                  </div>
+				  {% endif %}
+              </form>	
+
+
+	      </div>
+		  
+		  
+	
+	</div>
+
+	
+  </div>
+  
+  
+
+
+
+
+{% endblock %}

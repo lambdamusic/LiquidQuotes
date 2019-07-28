@@ -1,0 +1,158 @@
+
+
+<script src="{{ STATIC_URL }}dropzone/dropzone.js"></script>
+<link href="{{ STATIC_URL }}dropzone/css/dropzone.css" rel="stylesheet">
+
+
+<br />
+<h3>Select content</h3>
+<hr>
+
+
+<div class="tabbable" style="margin-top: 20px;"> 
+  <ul class="nav nav-tabs">
+    <li class="active"><a href="#tab1" data-toggle="tab">Upload a file</a></li>
+    <li><a href="#tab2" data-toggle="tab">Copy and Paste</a></li>
+  </ul>
+  <div class="tab-content">
+
+
+
+    <div class="tab-pane active fileform" id="tab1">
+
+		{# <div class="fileform"> #}
+			
+		<form enctype="multipart/form-data" method="post" action="#" class="dropzone" id="dropzone-form">
+		   {% csrf_token %}   
+	
+			  
+			  <div class="fallback">
+			      <input name="file" type="file" multiple />
+			    </div>
+				
+			  
+		 <p class="lead">Please select a file from your computer: </p>	  
+			  
+	      {% if form.file.errors %}
+              <div class="alert alert-danger">
+                  <button type="button" class="close" data-dismiss="alert">×</button>
+                  {{ form.file.errors.as_text|cut:"* " }}
+              </div>
+	      {% endif %}
+		  
+		  
+		  
+		  {% if 1 %}
+
+			<div class="well">
+
+							{# April 15, 2014: putting the well here breaks the file-upload popup.. #}
+
+				   			 <div style="position:relative;">
+				   			         <a class='btn' href='javascript:;'>
+				   			             Choose File...
+				   			             <input type="file" style='position:absolute;z-index:2;top:0;left:0;filter: alpha(opacity=0);-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";opacity:0;background-color:transparent;color:transparent;' name="file" size="40"  id="id_file" onchange='$("#upload-file-info").html($(this).val());'>
+				   			         </a>
+				   			         &nbsp;
+				   			         <span class='label label-info' id="upload-file-info"></span>
+				   			 </div>
+
+			</div>
+
+			 
+		
+		<br />	 
+		
+		{% endif %}
+		
+		<p class="text-left"><button id="submit-file" type="submit" class="btn btn-primary">Go!</button></p>
+		
+		
+		
+		
+		
+		{% if 0 %} {# prevents dropzone from uploading files immediately #}
+		
+		{# https://github.com/enyo/dropzone/wiki/FAQ #}
+		{# https://github.com/enyo/dropzone/wiki/Upload-all-files-with-a-button #}
+		{# http://stackoverflow.com/questions/25198331/autoprocessqueue-false-not-working-in-dropzone-js #}
+		
+		{# this is much better: #}
+		{# http://blueimp.github.io/jQuery-File-Upload/ #}
+		
+		
+        <script type="text/javascript">
+            Dropzone.options.myDropzone = {
+ 
+                // Prevents Dropzone from uploading dropped files immediately
+                autoProcessQueue : false,
+				maxFilesize: 3, // MB
+				uploadMultiple: false,
+				maxFiles: 1,
+ 
+                init : function() {
+                    var submitButton = document.querySelector("#submit-file")
+                    myDropzone = this;
+ 
+                    submitButton.addEventListener("click", function() {
+                        myDropzone.processQueue();
+                        // Tell Dropzone to process all queued files.
+                    });
+ 
+                    // You might want to show the submit button only when
+                    // files are dropped here:
+                    this.on("addedfile", function() {
+                        // Show submit button here and/or inform user to click it.
+                    });
+ 
+                }
+            };
+        </script>
+		{% endif %}
+		
+		
+		
+
+    </div>
+
+
+
+    <div class="tab-pane" id="tab2">
+
+
+		<p class="lead">Paste some text directly in the box below:</p>	  
+				 
+	
+	    {% if form.text.errors %}
+	        <div class="alert alert-danger">
+	            <button type="button" class="close" data-dismiss="alert">×</button>
+	            {{ form.text.errors.as_text|cut:"* " }}
+	        </div>
+	    {% endif %}
+		
+        <div style="position:relative;" class="well">
+	        <textarea id="id_text" name="text" rows="10" cols="80" class="width-90percent">{{form.text.value|default_if_none:""}}</textarea>
+		</div>
+
+
+		<br />		
+		<p class="text-left"><button type="submit" class="btn btn-primary">Go!</button></p>
+				
+		
+		
+		
+		</form>
+			
+			
+			
+    </div>
+
+
+
+  </div>
+</div>
+
+
+
+
+

@@ -1,0 +1,99 @@
+{% load konceptstags %}
+
+
+
+{# =========== #}
+{# NOTE: MUST use only single quotes in this template as it is embedded in an html tag #}
+{# =========== #}
+
+
+
+  	 {% if mykoncepts %}
+
+
+		{% with k1.getstats_private as k_stats  %}
+
+			<span class=''>   {# badge-snippet-coun #}
+				{{k_stats.quotes}} {{SNIPPET_LABEL}}{{ k_stats.quotes|pluralize }}
+			</span>
+			
+			{% if k_stats.sources %}
+			<span style='font-size: 11px;'>&nbsp;from&nbsp;</span>
+			<span class=''>
+				{{k_stats.sources}} {{DOCUMENT_LABEL}}{{ k_stats.sources|pluralize }}
+			</span>
+			{% endif %}
+		{% endwith %}
+	
+
+
+ 	 {% else %}
+
+		{% with k1.getstats_public as k_stats  %}
+
+			<span class=''>
+				{{k_stats.quotes}} {{SNIPPET_LABEL}}{{ k_stats.quotes|pluralize }}
+			</span>
+			
+			{% if k_stats.sources %}
+			<span style='font-size: 11px;'>&nbsp;from&nbsp;</span>
+			<span class=''>
+				{{k_stats.sources}} {{DOCUMENT_LABEL}}{{ k_stats.sources|pluralize }}
+			</span>
+			{% endif %}
+
+		{% endwith %}
+
+
+ 	 {% endif %}
+	 
+	 
+	 
+	 
+	 
+	 <div id='sources_info' class='sources_info'>			 	
+	 
+	 				 
+		 {% if mykoncepts %}
+
+			 {% for source in k1.getSourcesPrivate  %}
+			 	<p style='{% if forloop.first %} margin-top: 20px;{% endif %}'>						
+					<small>
+						<span class='glyphicon glyphicon-book'></span>
+						<a style='color: gray;' href='{{source.get_absolute_url}}' rel='category tag'>
+						{{source.title|truncatewords:10}}
+					</a>
+					</small>								
+				</p>
+			 {% endfor %}
+
+		{% else %}
+
+			 {% for source in k1.getSourcesPublic  %}
+			 	<p style='{% if forloop.first %} margin-top: 10px;{% endif %}'>						
+					<small>
+						<span class='glyphicon glyphicon-book'></span>
+						<a style='color: gray;' href='{{source.get_absolute_url}}' rel='category tag'>
+						{{source.title|truncatewords:10}}
+					</a>
+					</small>								
+				</p>
+			 {% endfor %}
+	 
+		{% endif %}
+ 
+ {# background: #d9534f; #}
+	  </div>
+	  <br />
+	  <p class='text-right'>
+	 	 <a role='button' class='btn btn-danger btn-xm konceptlink'  style='font-size: 9px; ' 
+		 href='{{k1.get_absolute_url}}
+		 {% if 0 %}  {# removed 2014-12-18 #}
+		 	{% if mykoncepts %}{{k1.sampleFragmentPrivate.get_absolute_url}}
+							{% else %}
+			{{k1.sampleFragmentPublic.get_absolute_url}}{% endif %}
+		 {% endif %}'>
+						<span class='glyphicon glyphicon-arrow-right' aria-hidden='true'></span>
+						View {{KONCEPT_LABEL}}</a>
+	  </p>
+	 

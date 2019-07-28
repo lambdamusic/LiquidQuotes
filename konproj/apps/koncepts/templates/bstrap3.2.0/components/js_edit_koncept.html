@@ -1,0 +1,184 @@
+
+
+{# March 11, 2014: the js for the koncept_detail template #}
+
+
+
+<script type="text/javascript">
+
+
+
+function editKonceptTitle(old_title) {	
+	bootbox.dialog({
+	                title: "Update {{KONCEPT_LABEL}} details.",
+                    className: "modal_koncept_title",
+	                message: '<div class="row">  ' +
+	                    '<div class="col-md-12"> ' +
+	                    '<div class="form-horizontal"> ' +
+	                    '<div class="form-group"> ' +
+	                    '<label class="col-md-3 control-label" for="title_edit">Title</label> ' +
+	                    '<div class="col-md-9"> ' +
+	                    '<input id="title_edit" name="title_edit" type="text" value="{{k1.name|escapejs}}" class="form-control input-md"> ' +
+	                    '<span class="help-block">This field is required</span> </div> ' +
+	                    '</div> ' +
+	                    '<div class="form-group"> ' +
+	                    '<label class="col-md-3 control-label" for="desc_edit">Description</label> ' +
+	                    '<div class="col-md-9"> ' +
+	                    '<textarea class="form-control" rows="4" id="desc_edit" name="desc_edit">{{k1.description|escapejs}}</textarea>' +
+	                    '<span class="help-block">A few words to describe what this {{KONCEPT_LABEL}} is about</span> </div> ' +
+	                    '</div> ' +
+	                    '</div>' +
+	                    '</div> </div>  </div>',
+	                buttons: {
+	                    success: {
+	                        label: "Save",
+	                        className: "btn-success",							
+						    callback: function(result) {
+								var newtitle = $('#title_edit').val();
+								var newdesc = $('#desc_edit').val();
+						        $.get('{% url edit_koncept_details k1.id %}', { name: newtitle, desc : newdesc }, function (data) {
+						            if (data.new_url) {
+										window.location.replace(data.new_url);
+						            } else {
+										alert("Ops - there was a server error with that.");
+									}
+						        });
+						    }						
+	                    },
+				     cancel: {
+				       label: "Cancel",
+				       className: "btn-default"
+				     },
+	                }
+	            }
+	        );
+			
+
+};	
+
+
+
+
+
+
+{% if 0 %}
+// 	function editKonceptTitle(old_title) {
+// 		bootbox.prompt({
+// 		    title: "Please enter a new title",
+// 		    value: old_title,
+// 		    callback: function(result) {
+// 		        $.get('{% url edit_koncept_name k1.id %}', { name: result }, function (data) {
+// 		            if (data.new_url) {
+// 						$("#konceptTitle").text(result);
+// 		            	window.location.replace(data.new_url);
+// 		            } else {
+// 						alert("Ops - there was a server error with that.");
+// 					}
+// 		        });
+// 		    }
+// 		});
+//
+// 	};
+//
+
+	
+	
+
+	//
+	//
+	//
+	//
+	// //  http://jsfiddle.net/U7SgK/1/
+	//
+	// function changeKonceptName() {
+	//
+	// 	bootbox.prompt("Please enter a new name", function(result) {
+	//
+	// 	  if (result != null) {
+	//
+	//         $.get('{% url edit_koncept_name k1.id %}', { name: result }, function (data) {
+	//             if (data.new_url) {
+	// 				$("#konceptTitle").text(result);
+	//             	window.location.replace(data.new_url);
+	//             } else {
+	// 				alert("Sorry can't update at this time");
+	// 			}
+	//         });
+	// 	  }
+	// 	});
+	// }
+	//
+	//
+	//
+	// // typeahead code wrapped into a function so to be used with changeKonceptName()
+	//
+	// function modalTypeahead() {
+	//
+	// 	$(".bootbox.modal.fade.in input").typeahead({
+	// 		items: 4,
+	// 		minLength: 2,
+	// 		template: '<p><strong></strong> – </p>',
+	// 	    source: function (query, process) {
+	//
+	// 	        $.get('{% url autocomplete_koncepts %}', { term: query }, function (data) {
+	// 	            return process(data);
+	// 	        });
+	// 		},
+	//
+	// 	    updater:function (item) {
+	// 	        return item;
+	// 	    }
+	// 	});
+	// }
+	//
+	//
+	// // March 8, 2014: hack to add the event-typeahead to the modal input after it gets loaded
+	//
+	//
+	// $("body").on("show", ".bootbox", function () {
+	// 	// wait a second for the modal to load properly - then set the value
+	// 	setTimeout(function(){
+	// 		$(".bootbox.modal.fade.in input").val("{{k1.name}}");
+	// 		$(".bootbox.modal.fade.in input").parent().append("<br /><br /><p class='text-muted'>Tip: use autocomplete to merge with an already existing {{KONCEPT_LABEL}}.</p>");
+	// 	}, 1000);
+	// });
+	//
+	// $("body").on("keyup", ".bootbox.modal.fade.in input", function () {
+	// 	modalTypeahead();
+	// });
+
+
+
+
+
+  
+  // star rating behaviour
+  
+  // $( "input[type=radio]").on( "click",function() {
+  // 	  	  var int_id = $(this).attr('int');
+  // 		  var val_id = $(this).val();
+  // 		  alert( "Handler for .click() called. " + val_id + " " + int_id  );
+  // 	  });
+
+
+
+
+
+// highlight the koncept title edit button on mouseover
+
+// $( "h1.konceptTitle" )
+//   .mouseover(function() {
+//    // $("#konceptTitleEdit").css({"background" : "red", 'color' : 'white'});
+//    $("#konceptTitleEdit").removeClass("text-warning").addClass("text-error");
+//   })
+//   .mouseout(function() {
+//     $("#konceptTitleEdit").removeClass("text-error").addClass("text-warning");
+//     // $("#konceptTitleEdit").addClass( {"background" : "white", 'color' : 'red'});
+//   });
+//
+//
+  
+ 	{% endif %}
+
+
+</script>
